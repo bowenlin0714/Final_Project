@@ -53,9 +53,12 @@ const upload = multer({
   }
 })
 
+// 增加商品
 export const create = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
+  } else if (req.session.user.account !== 'bowen125125') {
+    res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
   if (!req.headers['content-type'] || !req.headers['content-type'].includes('multipart/form-data')) {
@@ -88,6 +91,10 @@ export const create = async (req, res) => {
         const result = await albums.create({
           user: req.session.user._id,
           description: req.body.description,
+          productName: req.body.productName,
+          category: req.body.category,
+          amount: req.body.amount,
+          price: req.body.price,
           file
         })
         res.status(200).send({ success: true, message: '', result })
@@ -96,6 +103,8 @@ export const create = async (req, res) => {
           const key = Object.keys(error.errors)[0]
           const message = error.errors[key].message
           res.status(400).send({ success: false, message })
+        } else if (error.name === 'CastError') {
+          res.status(400).send({ success: false, message: '請輸入有效數字' })
         } else {
           res.status(500).send({ success: false, message: '伺服器錯誤' })
         }
@@ -104,12 +113,15 @@ export const create = async (req, res) => {
   })
 }
 
+// 修改商品
 export const edit = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
+  } else if (req.session.user.account !== 'bowen125125') {
+    res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
-  if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
+  if (!req.headers['content-type']) {
     res.status(400).send({ success: false, message: '資料格式不符' })
     return
   }
@@ -137,9 +149,12 @@ export const edit = async (req, res) => {
   }
 }
 
+// 刪除商品
 export const deletee = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
+  } else if (req.session.user.account !== 'bowen125125') {
+    res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
 

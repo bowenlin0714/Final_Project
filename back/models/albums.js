@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import beautifyUnique from 'mongoose-beautiful-unique-validation'
 
 const Schema = mongoose.Schema
 
@@ -10,8 +11,13 @@ const albumSchema = new Schema(
     },
     productName: {
       type: String,
-      required: [true, '商品名字不可為空'],
+      unique: '商品名稱重複',
+      required: [true, '缺少商品名稱'],
       minlength: [1, '說明必須 2 字以上']
+    },
+    category: {
+      type: String,
+      required: [true, '商品類別不可為空']
     },
     description: {
       type: String,
@@ -23,12 +29,11 @@ const albumSchema = new Schema(
       type: Number,
       min: [0, '請輸入有效數量'],
       required: [true, '缺少商品數量']
-
     },
     price: {
       type: Number,
       min: [0, '請輸入有效價格'],
-      required: [true, '缺少商品數量']
+      required: [true, '缺少商品價格']
     },
     file: {
       type: String,
@@ -39,6 +44,8 @@ const albumSchema = new Schema(
     versionKey: false
   }
 )
+
+albumSchema.plugin(beautifyUnique)
 
 const albums = mongoose.model('albums', albumSchema)
 
