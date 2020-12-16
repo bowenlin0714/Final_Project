@@ -85,3 +85,24 @@ export const heartbeat = async (req, res) => {
   }
   res.status(200).send(isLogin)
 }
+
+// 會員名單
+export const accounts = async (req, res) => {
+  if (req.session.user === undefined) {
+    res.status(401).send({ success: false, message: '未登入' })
+    return
+  }
+  if (req.session.user.account !== 'bowen125125') {
+    res.status(403).send({ success: false, message: '沒有權限' })
+    return
+  }
+
+  try {
+    const result = await users.find()
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).send({ success: false, message: '發生錯誤' })
+  }
+}

@@ -1,9 +1,10 @@
 import express from 'express'
-import { create, del } from '../controllers/forms.js'
+import { create, del, lists } from '../controllers/forms.js'
 
 const router = express.Router()
 
-router.post('/', create)
+router.post('/create', create)
 router.delete('/:id', del)
+router.get('/', lists)
 
 export default router
