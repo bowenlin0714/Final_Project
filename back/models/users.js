@@ -33,7 +33,7 @@ const userSchema = new Schema(
         message: '信箱格式錯誤'
       }
     },
-    number: {
+    phone: {
       type: String,
       required: [true, '請輸入手機號碼']
     }

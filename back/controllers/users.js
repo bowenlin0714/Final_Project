@@ -8,7 +8,7 @@ export const create = async (req, res) => {
   }
 
   try {
-    if (!(/^09[0-9]{8}$/.test(req.body.number))) {
+    if (!(/^09[0-9]{8}$/.test(req.body.phone))) {
       res.status(400).send({ success: false, message: '手機格式不符' })
     } else if (req.body.password.length < 4) {
       res.status(400).send({ success: false, message: '密碼必須四個字以上' })
@@ -20,7 +20,7 @@ export const create = async (req, res) => {
         account: req.body.account,
         password: md5(req.body.password),
         email: req.body.email,
-        number: req.body.number
+        phone: req.body.phone
       })
       res.status(200).send({ success: true, message: '' })
     }
