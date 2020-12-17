@@ -5,7 +5,7 @@ import path from 'path'
 import fs from 'fs'
 import dotenv from 'dotenv'
 
-import albums from '../models/albums.js'
+import banners from '../models/banners.js'
 
 let storage
 
@@ -47,10 +47,13 @@ const upload = multer({
     } else {
       callback(null, true)
     }
+  },
+  limits: {
+    fileSize: 1024 * 1024
   }
 })
 
-// 上傳
+// 增加商品
 export const create = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
@@ -68,12 +71,15 @@ export const create = async (req, res) => {
       let message = ''
       if (error.code === 'LIMIT_FILE_SIZE') {
         message = '檔案太大'
+      } else if (error.code === 'LIMIT_FORMAT') {
+        message = '格式不符'
       } else {
         message = '上傳錯誤'
       }
 
       res.status(400).send({ success: false, message })
     } else if (error) {
+      console.log(error)
       res.status(500).send({ success: false, message: '伺服器錯誤' })
     } else {
       try {
@@ -83,7 +89,8 @@ export const create = async (req, res) => {
         } else {
           file = path.basename(req.file.path)
         }
-        const result = await albums.create({
+        const result = await banners.create({
+          user: req.session.user._id,
           description: req.body.description,
           file
         })
@@ -93,6 +100,8 @@ export const create = async (req, res) => {
           const key = Object.keys(error.errors)[0]
           const message = error.errors[key].message
           res.status(400).send({ success: false, message })
+        } else if (error.name === 'CastError') {
+          res.status(400).send({ success: false, message: '請輸入有效數字' })
         } else {
           res.status(500).send({ success: false, message: '伺服器錯誤' })
         }
@@ -101,7 +110,7 @@ export const create = async (req, res) => {
   })
 }
 
-// 刪除
+// 刪除商品
 export const del = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
@@ -111,13 +120,13 @@ export const del = async (req, res) => {
   }
 
   try {
-    let result = await albums.findById(req.params.id)
+    let result = await banners.findById(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else if (result.user !== req.session.user._id) {
       res.status(403).send({ success: false, message: '沒有權限' })
     } else {
-      result = await albums.findByIdAndDelete(req.params.id)
+      result = await banners.findByIdAndDelete(req.params.id)
       res.status(200).send({ success: true, message: '', result })
 
       // 刪除本機圖片檔
@@ -134,22 +143,49 @@ export const del = async (req, res) => {
   }
 }
 
-export const banners = async (req, res) => {
-  if (req.session.user === undefined) {
-    res.status(401).send({ success: false, message: '未登入' })
-    return
-  }
-  if (req.session.user.account !== 'bowen125125') {
-    res.status(403).send({ success: false, message: '沒有權限' })
-    return
-  }
+// export const user = async (req, res) => {
+//   if (req.session.user === undefined) {
+//     res.status(401).send({ success: false, message: '未登入' })
+//     return
+//   }
+//   if (req.session.user._id !== req.params.user) {
+//     res.status(403).send({ success: false, message: '沒有權限' })
+//     return
+//   }
 
-  try {
-    const result = await banners.find()
-    res.status(200).send({ success: true, message: '', result })
-  } catch (error) {
-    console.log(error)
+//   try {
+//     const result = await banners.find({ user: req.params.user })
+//     res.status(200).send({ success: true, message: '', result })
+//   } catch (error) {
+//     res.status(500).send({ success: false, message: '伺服器錯誤' })
+//   }
+// }
 
-    res.status(500).send({ success: false, message: '發生錯誤' })
-  }
-}
+// export const file = async (req, res) => {
+//   if (req.session.user === undefined) {
+//     res.status(401).send({ success: false, message: '未登入' })
+//     return
+//   }
+
+//   // 開發環境回傳本機圖片
+//   if (process.env.DEV === 'true') {
+//     const path = process.cwd() + '/images/banners' + req.params.file
+//     const exists = fs.existsSync(path)
+
+//     if (exists) {
+//       res.status(200).sendFile(path)
+//     } else {
+//       res.status(404).send({ success: false, message: '找不到圖片' })
+//     }
+//   } else {
+//     axios({
+//       method: 'GET',
+//       url: 'http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.file,
+//       responseType: 'stream'
+//     }).then(ress => {
+//       ress.data.pipe(res)
+//     }).catch(error => {
+//       res.status(error.response.status).send({ success: false, message: '取得圖片失敗' })
+//     })
+//   }
+// }
