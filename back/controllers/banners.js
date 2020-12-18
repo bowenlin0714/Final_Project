@@ -90,6 +90,7 @@ export const create = async (req, res) => {
           file = path.basename(req.file.path)
         }
         const result = await banners.create({
+          name: req.body.name,
           user: req.session.user._id,
           description: req.body.description,
           file

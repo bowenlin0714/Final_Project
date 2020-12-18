@@ -4,6 +4,10 @@ const Schema = mongoose.Schema
 
 const bannerSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, '缺少名稱']
+    },
     user: {
       type: String,
       required: [true, '缺少使用者欄位']

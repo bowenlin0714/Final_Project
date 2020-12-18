@@ -150,7 +150,7 @@ export const edit = async (req, res) => {
 }
 
 // 刪除商品
-export const deletee = async (req, res) => {
+export const del = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
   } else if (req.session.user.account !== 'bowen125125') {
