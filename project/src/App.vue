@@ -1,19 +1,83 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<template lang="pug">
+  #app
+    b-navbar(toggleable='lg' type='dark' variant='success')
+      b-container
+        b-navbar-brand(to='/') 大北化工
+        b-navbar-toggle(target='nav-collapse')
+        b-collapse#nav-collapse(is-nav)
+          b-navbar-nav.ml-auto
+            b-nav-item(v-if="user.id.length === 0" to="/login") 登入
+            b-nav-item(v-if="user.id.length === 0" to="/reg") 註冊
+            b-nav-item(v-if="isAdmin" to="/admin") 管理者頁面
+            b-nav-item(v-if="user.id.length > 0" @click = "logout") 登出
+
+    router-view
 </template>
 
-<style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
-</style>
+<script>
+export default {
+  name: 'App',
+  computed: {
+    user () {
+      return this.$store.state.user
+    },
+    isAdmin: function () {
+      let result = null
+      if (this.$store.state.user.account === 'bowen125125' && this.$store.state.user.account !== '') {
+        result = true
+        return result
+      }
+      return result
+    }
+
+  },
+  methods: {
+    logout () {
+      this.axios.delete(process.env.VUE_APP_API + '/users/logout')
+        .then(res => {
+          if (res.data.success) {
+            alert('登出成功')
+            this.$store.commit('logouts')
+
+            if (this.$router.path !== '/') {
+              this.$router.push('/')
+            } else {
+              alert(res.data.message)
+            }
+          }
+        })
+        .catch(err => {
+          alert(err.res.data.message)
+        })
+    },
+    heartbeat () {
+      this.axios.get(process.env.VUE_APP_API + '/users/heartbeat')
+        .then(res => {
+          if (this.user.id.length > 0) {
+            if (!res.data) {
+              alert('登入時效已過')
+              this.$store.commit('logout')
+              if (this.$router.path !== '/') {
+                this.$router.push('/')
+              }
+            }
+          }
+        })
+        .catch(() => {
+          alert('發生錯誤')
+
+          this.$store.commit('logout')
+          if (this.$router.path !== '/') {
+            this.$router.push('/')
+          }
+        })
+    }
+  },
+  mounted () {
+    this.heartbeat()
+    setInterval(() => {
+      this.heartbeat()
+    }, 5000)
+  }
+}
+</script>

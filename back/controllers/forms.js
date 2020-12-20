@@ -71,12 +71,6 @@ export const lists = async (req, res) => {
   }
 
   try {
-    // const search = {}
-
-    // if (Object.keys(req.query).length > 0) {
-    //   search.$and = []
-    // }
-
     const result = await forms.find()
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
