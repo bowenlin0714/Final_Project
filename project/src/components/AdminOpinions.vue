@@ -1,12 +1,12 @@
 <template lang="pug">
-  #home
-    h1 首頁
+  #adminopinions
+    h1 意見表管理
 </template>
 
 <script>
 
 export default {
-  name: 'Home'
+  name: 'AdminOpinions'
 
 }
 </script>

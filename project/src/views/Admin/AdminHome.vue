@@ -1,34 +1,93 @@
 
 <template lang="pug">
-  #adminhome
+  #adminhome(style="margin-top:56px")
     b-container-fluid
-      b-row(class="d-flex" )
-        b-col(cols="2" align-self="stretch" style="height: 100vh" class="bg-warning")
-          b-nav(vertical class="w-100")
+      b-row(class="" )
+        b-col(cols="12" lg="2" align-self="stretch"  class=" bgleft d-none d-lg-block")
+          b-nav(vertical class="")
             h1  管理者後台
-            b-nav-item
-              router-link(to="/admin/adminproducts") 商品上架
-            b-nav-item 會員資料
-            b-nav-item 訂單資料
-            b-nav-item 意見表管理
-        b-col(cols="10" align-self="stretch" style="height: 100vh" class="bg-info")
-          router-view
+            b-nav-item(@click="showProducts") 商品管理
+            b-nav-item(@click="showMembers") 會員資料管理
+            b-nav-item(@click="showOrders") 訂單管理
+            b-nav-item(@click="showOpinions") 意見表管理
+            b-nav-item(@click="showBanners") 輪播圖管理
+        b-col(cols="12" lg="10" align-self="stretch"  class="bgright")
+          AdminProducdts(v-if="products")
+          AdminMembers(v-if="members")
+          AdminBanners(v-if="banners")
+          AdminOrders(v-if="orders")
+          AdminOpinions(v-if="opinions")
+      div(class="block d-lg-none")
+        b-nav(vertical class="")
+            b-nav-item(@click="showProducts") 商品管理
+            b-nav-item(@click="showMembers") 會員資料管理
+            b-nav-item(@click="showOrders") 訂單管理
+            b-nav-item(@click="showOpinions") 意見表管理
+            b-nav-item(@click="showBanners") 輪播圖管理
 </template>
 
 <style lang="stylus">
-html,body
-  height: 100vh;
-  background-color: black
+
 </style>
 
 <script>
+import '@/assets/css/back.stylus'
+import AdminProducts from '@/components/AdminProducts'
+import AdminMembers from '@/components/AdminMembers'
+import AdminBanners from '@/components/AdminBanners'
+import AdminOrders from '@/components/AdminOrders'
+import AdminOpinions from '@/components/AdminOpinions'
+
 export default {
   name: 'AdminHome',
-
+  components: { AdminProducts, AdminMembers, AdminBanners, AdminOrders, AdminOpinions },
   data () {
     return {
-
+      products: true,
+      members: false,
+      opinions: false,
+      banners: false,
+      orders: false
     }
+  },
+  methods: {
+    showProducts () {
+      this.products = true
+      this.members = false
+      this.opinions = false
+      this.banners = false
+      this.orders = false
+    },
+    showMembers () {
+      this.products = false
+      this.members = true
+      this.opinions = false
+      this.banners = false
+      this.orders = false
+    },
+    showOpinions () {
+      this.products = false
+      this.members = false
+      this.opinions = true
+      this.banners = false
+      this.orders = false
+    },
+    showBanners () {
+      this.products = false
+      this.members = false
+      this.opinions = false
+      this.banners = true
+      this.orders = false
+    },
+    showOrders () {
+      this.products = false
+      this.members = false
+      this.opinions = false
+      this.banners = false
+      this.orders = true
+    }
+  },
+  mounted: {
   }
 }
 </script>

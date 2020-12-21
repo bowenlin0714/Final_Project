@@ -36,6 +36,9 @@ const userSchema = new Schema(
     phone: {
       type: String,
       required: [true, '請輸入手機號碼']
+    },
+    isAdmin: {
+      type: Boolean
     }
   },
   {

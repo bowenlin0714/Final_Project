@@ -60,18 +60,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "admin" */ '../views/Admin/AdminHome.vue'),
     meta: {
       title: '管理者後台'
-    },
-    children: [
-      {
-        path: '/adminproducts',
-        name: 'AdminProducts',
-        component: () => import(/* webpackChunkName: "adminproducts" */'../views/Admin/AdminProducts.vue'),
-        meta: {
-          title: '商品管理'
-        }
-      }
-    ]
-
+    }
   }
 ]
 

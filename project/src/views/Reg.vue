@@ -42,6 +42,21 @@ export default {
           console.log(err)
         })
     }
+
+  },
+  created: {
+    // adminCreate () {
+    //   const secetCode = [73, 83, 65, 68, 77, 73, 78]
+    //   const input = []
+
+    //   window.addEventListener('keyup', function (e) {
+    //     input.push(e.keyCode)
+    //     console.log(e.keyCode)
+    //     if (input.join('|') === secetCode.join('|')) {
+    //       alert('成功')
+    //     }
+    //   })
+    // }
   }
 }
 </script>

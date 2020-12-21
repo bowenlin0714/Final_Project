@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    b-navbar(toggleable='lg' type='dark' variant='success')
+    b-navbar(toggleable='lg' type='dark' variant='success' class="fixed-top" )
       b-container
         b-navbar-brand(to='/') 大北化工
         b-navbar-toggle(target='nav-collapse')
@@ -22,8 +22,8 @@ export default {
       return this.$store.state.user
     },
     isAdmin: function () {
-      let result = null
-      if (this.$store.state.user.account === 'bowen125125' && this.$store.state.user.account !== '') {
+      let result
+      if (this.$store.state.user.isAdmin === true && this.$store.state.user.account !== '') {
         result = true
         return result
       }
@@ -81,3 +81,7 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+
+</style>
