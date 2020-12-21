@@ -1,7 +1,6 @@
-
 <template lang="pug">
   #adminhome(style="margin-top:56px")
-    b-container-fluid
+    b-container(fluid)
       b-row(class="" )
         b-col(cols="12" lg="2" align-self="stretch"  class=" bgleft d-none d-lg-block")
           b-nav(vertical class="")
@@ -12,7 +11,7 @@
             b-nav-item(@click="showOpinions") 意見表管理
             b-nav-item(@click="showBanners") 輪播圖管理
         b-col(cols="12" lg="10" align-self="stretch"  class="bgright")
-          AdminProducdts(v-if="products")
+          AdminProducts(v-if="products")
           AdminMembers(v-if="members")
           AdminBanners(v-if="banners")
           AdminOrders(v-if="orders")
@@ -25,10 +24,6 @@
             b-nav-item(@click="showOpinions") 意見表管理
             b-nav-item(@click="showBanners") 輪播圖管理
 </template>
-
-<style lang="stylus">
-
-</style>
 
 <script>
 import '@/assets/css/back.stylus'
@@ -86,8 +81,6 @@ export default {
       this.banners = false
       this.orders = true
     }
-  },
-  mounted: {
   }
 }
 </script>

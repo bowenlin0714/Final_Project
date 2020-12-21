@@ -2,7 +2,7 @@
   #reg
     b-container
       form
-        h1 稱謂/公司行號 &emsp;
+        h1 姓名 &emsp;
           input(v-model="name")
         h1 帳號 &emsp;
           input(v-model="account")
@@ -12,6 +12,8 @@
           input(v-model="email")
         h1 手機 &emsp;
           input(v-model="phone")
+        input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
+        br
         button(@click="onSubmit") 送出
 
 </template>
@@ -25,7 +27,8 @@ export default {
       account: '',
       password: '',
       email: '',
-      phone: ''
+      phone: '',
+      isAdmin: false
     }
   },
   methods: {
@@ -34,6 +37,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             alert('註冊成功')
+            this.$router.push('/')
           } else {
             alert('註冊失敗')
           }
@@ -42,21 +46,19 @@ export default {
           console.log(err)
         })
     }
-
   },
-  created: {
-    // adminCreate () {
-    //   const secetCode = [73, 83, 65, 68, 77, 73, 78]
-    //   const input = []
+  mounted () {
+    const pressed = []
+    const secretCode = 'isadmin'
 
-    //   window.addEventListener('keyup', function (e) {
-    //     input.push(e.keyCode)
-    //     console.log(e.keyCode)
-    //     if (input.join('|') === secetCode.join('|')) {
-    //       alert('成功')
-    //     }
-    //   })
-    // }
+    window.addEventListener('keyup', (e) => {
+      pressed.push(e.key)
+      pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length)
+      if (pressed.join('').includes(secretCode)) {
+        this.$data.isAdmin = true
+        console.log('success')
+      }
+    })
   }
 }
 </script>

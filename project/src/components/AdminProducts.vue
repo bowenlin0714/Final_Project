@@ -6,15 +6,7 @@
 <script>
 
 export default {
-  name: 'AdminProducts',
-  mounted: {
-
-  },
-  created () {
-    this.axios.get('http://data.taipei/youbike').then((response) => {
-      console.log(response.data)
-    })
-  }
+  name: 'AdminProducts'
 
 }
 </script>

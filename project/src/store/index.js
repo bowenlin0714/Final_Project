@@ -11,7 +11,8 @@ export default new Vuex.Store({
       account: '',
       id: '',
       isAdmin: false
-    }
+    },
+    memberlists: null
 
   },
   mutations: {
@@ -26,6 +27,13 @@ export default new Vuex.Store({
       state.user.id = ''
       state.user.account = ''
       state.user.isAdmin = false
+    },
+    memberlists (state, data) {
+      state.memberlists = []
+      state.memberlists = (data)
+    },
+    delmember (state, index) {
+      state.memberlists.splice(index, 1)
     }
   },
   actions: {

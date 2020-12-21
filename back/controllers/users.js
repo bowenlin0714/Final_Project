@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import users from '../models/users.js'
 
+// 註冊
 export const create = async (req, res) => {
   if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
     res.status(400).send({ success: false, message: '資料格式不符' })
@@ -39,6 +40,7 @@ export const create = async (req, res) => {
   }
 }
 
+// 登入
 export const login = async (req, res) => {
   if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
     res.status(400).send({ success: false, message: '資料格式不符' })
@@ -68,6 +70,7 @@ export const login = async (req, res) => {
   }
 }
 
+// 登出
 export const logout = async (req, res) => {
   req.session.destroy(error => {
     if (error) {
@@ -93,13 +96,34 @@ export const accounts = async (req, res) => {
     res.status(401).send({ success: false, message: '未登入' })
     return
   }
-  if (req.session.user.account !== 'bowen125125') {
+  if (req.session.user.isAdmin !== true) {
     res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
 
   try {
     const result = await users.find()
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).send({ success: false, message: '發生錯誤' })
+  }
+}
+
+// 刪除
+export const del = async (req, res) => {
+  if (req.session.user === undefined) {
+    res.status(401).send({ success: false, message: '未登入' })
+    return
+  }
+  if (req.session.user.isAdmin !== true) {
+    res.status(403).send({ success: false, message: '沒有權限' })
+    return
+  }
+
+  try {
+    const result = await users.findByIdAndDelete(req.params.id)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     console.log(error)
