@@ -1,12 +1,11 @@
-html,body
-  overflow: hidden
 
+#adminhome
+  background:black
 .bgleft
-  background: black
+  background:black
   color: deepgrey
   transition: 0.3s
 .bgright
-  height 100vh
   background: deepblue
 
 
@@ -20,6 +19,7 @@ html,body
   position: fixed
   left -130px
   top: 50%
+  border-radius: 0 10% 10% 0
   transform: translate(0,-50%)
   border: 1px solid white
   background: white

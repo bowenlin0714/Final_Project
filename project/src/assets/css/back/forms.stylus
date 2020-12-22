@@ -1,11 +1,19 @@
-  #adminopinions
+#adminopinions
+  color: grey
+  table 
+    font-size: 13px
     color: grey
-    table 
-      font-size: 13px
-      color: grey
-      td
-        line-height: 63px
-      thead
-        th
-          font-size: 16px
-          margin: auto
+    td
+      line-height: 63px
+    thead
+      th
+        font-size: 16px
+        margin: auto
+.formDetail
+  position: absolute
+  top: 0
+  color: red
+.crossButton
+  position: absolute
+  top: 0
+  right: 0

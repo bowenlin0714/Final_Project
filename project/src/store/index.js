@@ -39,6 +39,9 @@ export default new Vuex.Store({
     },
     delmember (state, index) {
       state.memberlists.splice(index, 1)
+    },
+    delforms (state, index) {
+      state.formlists.splice(index, 1)
     }
   },
   actions: {

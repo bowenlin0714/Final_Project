@@ -9,7 +9,7 @@
         h1 手機 &emsp;
           input(v-model="phone")
         h1 意見與回饋 &emsp;
-          input(v-model="opinion")
+          textarea(v-model="opinion")
         br
         button(@click="onSubmit") 送出
         button 重置
@@ -23,11 +23,18 @@ export default {
       email: '',
       phone: '',
       opinion: '',
+      date: null,
       isRes: false
     }
   },
   methods: {
     onSubmit () {
+      var now = new Date()
+      var year = now.getFullYear()
+      var month = now.getMonth()
+      var day = now.getDate()
+      this.$data.date = `${year}/${month}/${day}`
+      console.log(this.$data.date)
       this.axios.post(process.env.VUE_APP_API + '/forms/create', this.$data)
         .then(res => {
           if (res.data.success) {

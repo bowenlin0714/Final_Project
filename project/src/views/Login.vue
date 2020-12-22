@@ -25,7 +25,11 @@ export default {
           if (res.data.success) {
             this.$store.commit('login', res.data.result)
             alert('登入成功')
-            this.$router.push('/')
+            if (res.data.result.isAdmin) {
+              this.$router.push('/admin')
+            } else {
+              this.$router.push('/')
+            }
           } else {
             alert('登入失敗')
           }
@@ -38,3 +42,9 @@ export default {
 }
 
 </script>
+
+<style lang="stylus">
+ #login
+   background-color: red
+
+</style>

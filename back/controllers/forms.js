@@ -10,13 +10,17 @@ export const create = async (req, res) => {
   try {
     if (!(/^09[0-9]{8}$/.test(req.body.phone))) {
       res.status(400).send({ success: false, message: '手機格式不符' })
+    } else if (
+      !(/^[0-9]{4}[/\-](0[1-9]|1[012])[/\-](0[1-9]|[12][0-9]|3[01])$/).test(req.body.date)) {
+      res.status(400).send({ success: false, message: '日期格式不符' })
     } else {
       await forms.create({
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
         opinion: req.body.opinion,
-        isRes: req.body.isRes
+        isRes: req.body.isRes,
+        date: req.body.date
       })
       res.status(200).send({ success: true, message: '' })
     }

@@ -32,6 +32,10 @@ const formsSchema = new Schema(
     isRes: {
       type: Boolean,
       required: [true, '沒有回覆值']
+    },
+    date: {
+      type: String,
+      required: [true, '缺少日期']
     }
   },
   {

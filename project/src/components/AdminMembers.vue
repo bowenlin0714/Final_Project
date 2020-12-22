@@ -1,10 +1,11 @@
 <template lang="pug">
   #adminmembers
-    b-container(class="")
+    b-container()
       h1(class="my-3 mb-2") 會員資料管理
       b-row
         b-col(cols='12')
           b-table(
+            stacked="md"
             id="membertable"
             class="mx-auto"
             :items='memberlists'
@@ -15,13 +16,13 @@
             )
             template(#cell(delete)='data')
               b-button(variant="danger" @click="delmember(data, data.index)") 刪除
-    b-pagination(
-      v-model="currentPage"
-      :total-rows="rows"
-      aria-controls="membertable"
-      :per-page="perPage"
-      align="center"
-      )
+      b-pagination(
+        v-model="currentPage"
+        :total-rows="rows"
+        aria-controls="membertable"
+        :per-page="perPage"
+        align="center"
+        )
 </template>
 
 <script>

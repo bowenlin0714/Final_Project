@@ -11,7 +11,7 @@
             b-nav-item(v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
             b-nav-item(v-if="isAdmin" to="/admin") 管理者頁面
             b-nav-item(v-if="user.id.length > 0" @click = "logout") 登出
-    router-view(style="margin-top: 56px")
+    router-view(style="margin-top: 56px" )
 </template>
 
 <script>
@@ -82,6 +82,5 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-
+<style lang="stylus">
 </style>
