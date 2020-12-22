@@ -12,7 +12,8 @@ export default new Vuex.Store({
       id: '',
       isAdmin: false
     },
-    memberlists: null
+    memberlists: null,
+    formlists: null
 
   },
   mutations: {
@@ -31,6 +32,10 @@ export default new Vuex.Store({
     memberlists (state, data) {
       state.memberlists = []
       state.memberlists = (data)
+    },
+    formlists (state, data) {
+      state.formlists = []
+      state.formlists = (data)
     },
     delmember (state, index) {
       state.memberlists.splice(index, 1)

@@ -15,7 +15,8 @@ export const create = async (req, res) => {
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
-        opinion: req.body.opinion
+        opinion: req.body.opinion,
+        isRes: req.body.isRes
       })
       res.status(200).send({ success: true, message: '' })
     }
@@ -35,7 +36,7 @@ export const create = async (req, res) => {
 export const del = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.account !== 'bowen125125') {
+  } else if (req.session.user.isAdmin !== true) {
     res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
@@ -44,7 +45,7 @@ export const del = async (req, res) => {
     let result = await forms.findById(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
-    } else if (req.session.user.account !== 'bowen125125') {
+    } else if (req.session.user.isAdmin !== true) {
       res.status(403).send({ success: false, message: '沒有權限' })
     } else {
       result = await forms.findByIdAndDelete(req.params.id)
@@ -65,7 +66,7 @@ export const lists = async (req, res) => {
     res.status(401).send({ success: false, message: '未登入' })
     return
   }
-  if (req.session.user.account !== 'bowen125125') {
+  if (req.session.user.isAdmin !== true) {
     res.status(403).send({ success: false, message: '沒有權限' })
     return
   }

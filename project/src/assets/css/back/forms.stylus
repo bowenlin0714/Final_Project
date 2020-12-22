@@ -1,0 +1,11 @@
+  #adminopinions
+    color: grey
+    table 
+      font-size: 13px
+      color: grey
+      td
+        line-height: 63px
+      thead
+        th
+          font-size: 16px
+          margin: auto

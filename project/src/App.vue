@@ -8,7 +8,7 @@
           b-navbar-nav.ml-auto
             b-nav-item(to="/contact") 聯絡我們
             b-nav-item(v-if="user.id.length === 0" to="/login") 登入
-            b-nav-item(v-if="user.id.length === 0" to="/reg") 註冊
+            b-nav-item(v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
             b-nav-item(v-if="isAdmin" to="/admin") 管理者頁面
             b-nav-item(v-if="user.id.length > 0" @click = "logout") 登出
     router-view(style="margin-top: 56px")
