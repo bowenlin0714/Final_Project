@@ -1,10 +1,10 @@
 <template lang="pug">
   #adminhome(style="margin-top:56px;" class="" )
     b-container(fluid class="")
-      b-row(class="" )
+      b-row(class="vh-100" )
         b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block vh-100" style="")
-          b-nav(vertical class="")
-            h1  管理者後台
+          b-nav(vertical class="" style="text-align:center")
+            h1 管理者後台
             b-nav-item(@click="showProducts") 商品管理
             b-nav-item(@click="showMembers") 會員資料管理
             b-nav-item(@click="showOrders") 訂單管理
@@ -20,7 +20,7 @@
         b-nav(vertical class="")
             b-nav-item(@click="showProducts") 商品管理
             b-nav-item(@click="showMembers") 會員資料管理
-            b-nav-item(@click="showOrders") 訂單管理
+            b-nav-item(@click="showOrders") 訂單管理`
             b-nav-item(@click="showOpinions") 意見表管理
             b-nav-item(@click="showBanners") 輪播圖管理
 </template>

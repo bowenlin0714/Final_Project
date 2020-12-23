@@ -1,7 +1,7 @@
 <template lang="pug">
   #contact
     b-container
-      form
+      form(@keyup.enter="onSubmit")
         h1 姓名 &emsp;
           input(v-model="name")
         h1 e-mail &emsp;

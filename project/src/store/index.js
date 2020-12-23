@@ -14,7 +14,6 @@ export default new Vuex.Store({
     },
     memberlists: null,
     formlists: null
-
   },
   mutations: {
     login (state, data) {
@@ -42,6 +41,9 @@ export default new Vuex.Store({
     },
     delforms (state, index) {
       state.formlists.splice(index, 1)
+    },
+    checkRes (state, index) {
+      state.formlists[index].isRes = !state.formlists[index].isRes
     }
   },
   actions: {

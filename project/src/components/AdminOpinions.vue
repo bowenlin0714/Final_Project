@@ -15,14 +15,19 @@
             :per-page="perPage"
             striped=true
             @row-clicked="(item, index) => showForm1( item, index)"
+            row-contextmenu
             v-b-modal.modal-1
             )
             template(#cell(opinion)='data')
-              b-button(variant="info" @click="showForm2(data, data.index)" v-b-modal.modal-1) 完整訊息
+              b-button(variant="info" @click.stop="showForm2(data, data.index)" v-b-modal.modal-1) 完整訊息
+            template(#cell(isRes)='data')
+              b-button(style="border-style:none;" @click.stop="checkRes(data, data.index)").bg-transparent.border-none
+                font-awesome-icon(v-if="data.item.isRes" :icon=['fas', 'check'] ).text-success
+                font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
             template(#cell(delete)='data')
-              b-button(variant="danger" @click="delforms(data, data.index)") 刪除
-      b-modal(id="modal-1" :title="detailTexts.name")
-        p.text-break {{detailTexts.opinion}}
+              b-button(variant="danger" @click.stop="delforms(data, data.index)") 刪除
+        b-modal(id="modal-1" :title="detailTexts.name")
+          p.text-break {{detailTexts.opinion}}
 
       b-pagination(
         v-model="currentPage"
@@ -68,6 +73,10 @@ export default {
           label: '意見與回饋'
         },
         {
+          key: 'isRes',
+          label: '已回覆'
+        },
+        {
           key: 'delete',
           label: '刪除'
         }
@@ -106,6 +115,7 @@ export default {
       console.log(this.detailTexts)
     },
     delforms (data, index) {
+      console.log(data)
       this.axios.delete(process.env.VUE_APP_API + '/forms/del/' + data.item._id)
         .then(res => {
           if (res.data.success) {
@@ -118,6 +128,20 @@ export default {
           alert(err.response.data.message)
         })
       console.log(data.item._id, index)
+    },
+    checkRes (data, index) {
+      this.axios.patch(process.env.VUE_APP_API + '/forms/edit/' + data.item._id, data)
+        .then(res => {
+          if (res.data.success) {
+            this.$store.commit('checkRes', index)
+          } else {
+            alert('發生錯誤')
+          }
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
+      console.log(data.item._id)
     }
   }
 
