@@ -5,6 +5,9 @@
   background:black
   color: deepgrey
   transition: 0.3s
+  h1
+    color: white
+  
 .bgright
   background: deepblue
 

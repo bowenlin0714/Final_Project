@@ -1,8 +1,8 @@
 <template lang="pug">
   #app
-    b-navbar(toggleable='lg' type='dark' variant='success' class="fixed-top" )
+    b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
-        b-navbar-brand(to='/') 大北化工
+        b-navbar-brand(to='/') FigBuy
         b-navbar-toggle(target='nav-collapse')
         b-collapse#nav-collapse(is-nav)
           b-navbar-nav.ml-auto
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import '@/assets/css/front.stylus'
 export default {
   name: 'App',
   computed: {

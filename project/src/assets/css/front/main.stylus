@@ -1,0 +1,7 @@
+html,body 
+  background-color: smoke
+
+.navbar
+  background-color: #000 
+.nav-link a
+  color: blue !important

@@ -3,6 +3,18 @@
     b-container(class="")
       h1(class="my-3 mb-2") 意見表管理
       b-row
+        b-col(cols="12" lg="6")
+          b-form-group()
+            b-form-radio-group
+              b-form-radio(v-model="selected" value = "全部" checked) 顯示全部
+              b-form-radio(v-model="selected" value = '已回覆') 顯示已回覆
+              b-form-radio(v-model="selected" value = '未回覆') 顯示未回覆
+        b-col(cols="12" lg="3").mb-4.ml-auto
+          b-form-input(
+            type="text"
+            placeholder="Type to Search"
+            v-model="keyword"
+          )
         b-col(cols='12' class="")
           b-table(
             class=""
@@ -44,6 +56,9 @@ export default {
   name: 'AdminOpinions',
   data () {
     return {
+      keyword: '',
+      selected: null,
+      selectedForm: null,
       showDetail: false,
       detailTexts: {
         name: '',
@@ -85,9 +100,16 @@ export default {
   },
   computed: {
     formlists () {
-      var result = null
-      result = this.$store.state.formlists
-      return result
+      if (this.selected === '已回覆') {
+        return this.$store.state.formlists.filter(item => item.isRes === true)
+      } else if (this.selected === '未回覆') {
+        return this.$store.state.formlists.filter(item => item.isRes === false)
+      } else {
+        return this.$store.state.formlists
+      }
+      // return this.keyword
+      //   ? this.$store.state.formlists.filter(item => item.name.includes(this.keyword) || item.email.includes(this.keyword))
+      //   : this.$store.state.formlists
     },
     rows () {
       return this.formlists.length

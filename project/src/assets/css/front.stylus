@@ -1,0 +1,2 @@
+@import "front/frontcolor.stylus";
+@import "front/main.stylus";
