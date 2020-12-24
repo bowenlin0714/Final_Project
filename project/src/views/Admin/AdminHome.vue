@@ -1,8 +1,8 @@
 <template lang="pug">
-  #adminhome(style="margin-top:56px;" class="" )
-    b-container(fluid class="")
-      b-row(class="vh-100" )
-        b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block vh-100" style="")
+  #adminhome(style="margin-top:56px;" class="" ).h-100
+    b-container(fluid class="").h-100
+      b-row(class="h-100" )
+        b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block " style="").h-100
           b-nav(vertical class="navleft" style="text-align:center" )
             h1.mt-3 管理者後台
             b-nav-item(@click="showProducts").text-left.ml-4 商品管理

@@ -1,2 +1,7 @@
-h1
-  color: black
+#adminbanners
+  h1
+    color: grey
+#brtable
+  color: grey
+  td
+    line-height: 212.5px

@@ -91,8 +91,7 @@ export const create = async (req, res) => {
           file = path.basename(req.file.path)
         }
         const result = await banners.create({
-          user: req.session.user.name,
-          name: req.body.name,
+          isEdit: false,
           description: req.body.description,
           file
         })
@@ -113,12 +112,31 @@ export const create = async (req, res) => {
 }
 
 // 讀取輪播圖
-export const show = async (req, res) => {
+export const bannertxt = async (req, res) => {
+  if (req.session.user === undefined) {
+    res.status(401).send({ success: false, message: '未登入' })
+    return
+  }
+  if (req.session.user.isAdmin !== true) {
+    res.status(403).send({ success: false, message: '沒有權限' })
+    return
+  }
+
+  try {
+    const result = await banners.find()
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).send({ success: false, message: '發生錯誤' })
+  }
+}
+
+export const bannerpic = async (req, res) => {
   // 開發環境回傳本機圖片
   if (process.env.DEV === 'true') {
     const path = process.cwd() + '/images/banners/' + req.params.file
     const exists = fs.existsSync(path)
-    console.log(path)
     if (exists) {
       res.status(200).sendFile(path)
     } else {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app
+  #app.h-100
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
         b-navbar-brand(to='/') FigBuy

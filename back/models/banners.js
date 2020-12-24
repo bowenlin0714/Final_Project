@@ -4,14 +4,7 @@ const Schema = mongoose.Schema
 
 const bannerSchema = new Schema(
   {
-    user: {
-      type: String,
-      required: [true, '缺少上傳者名稱']
-    },
-    name: {
-      type: String,
-      required: [true, '缺少名稱']
-    },
+
     file: {
       type: String,
       required: [true, '缺少檔案名稱']
@@ -19,6 +12,9 @@ const bannerSchema = new Schema(
     description: {
       type: String,
       required: [true, '缺少檔案敘述']
+    },
+    isEdit: {
+      type: Boolean
     }
 
   },

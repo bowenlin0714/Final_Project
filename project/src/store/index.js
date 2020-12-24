@@ -13,7 +13,8 @@ export default new Vuex.Store({
       isAdmin: false
     },
     memberlists: null,
-    formlists: null
+    formlists: null,
+    bannerlists: null
   },
   mutations: {
     login (state, data) {
@@ -35,6 +36,10 @@ export default new Vuex.Store({
     formlists (state, data) {
       state.formlists = []
       state.formlists = (data)
+    },
+    bannerlists (state, data) {
+      state.bannerlists = []
+      state.bannerlists = (data)
     },
     delmember (state, index) {
       state.memberlists.splice(index, 1)

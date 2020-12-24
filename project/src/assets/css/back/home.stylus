@@ -1,4 +1,6 @@
 
+html
+  background:black
 #adminhome
   background:black
 .bgleft
