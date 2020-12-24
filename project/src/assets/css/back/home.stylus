@@ -5,14 +5,7 @@
   background:black
   color: deepgrey
   transition: 0.3s
-  h1
-    color: white
-  
-.bgright
-  background: deepblue
-
-.nav-item
-  border-radius 10%
+.navleft   
   a 
     color: white
     transition 0.2s
@@ -20,6 +13,14 @@
       color black
       background grey
       filter: contrast(200%)
+  h1
+    color: white
+  
+.bgright
+  background: deepblue
+
+
+
 
 
 @media (max-width:767px) {

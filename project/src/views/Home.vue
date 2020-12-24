@@ -1,6 +1,7 @@
 <template lang="pug">
   #home
-    h1 首頁
+    b-container.border.shadow
+      h1 首頁
 </template>
 
 <script>

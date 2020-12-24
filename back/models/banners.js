@@ -4,13 +4,13 @@ const Schema = mongoose.Schema
 
 const bannerSchema = new Schema(
   {
+    user: {
+      type: String,
+      required: [true, '缺少上傳者名稱']
+    },
     name: {
       type: String,
       required: [true, '缺少名稱']
-    },
-    user: {
-      type: String,
-      required: [true, '缺少使用者欄位']
     },
     file: {
       type: String,

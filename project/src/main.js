@@ -11,9 +11,10 @@ import router from './router'
 import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCircle, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faTimes, faCheck, faChevronCircleUp } from '@fortawesome/free-solid-svg-icons'
+import { faFacebookSquare, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faCircle, faTimes, faCheck)
+library.add(faCircle, faTimes, faCheck, faFacebookSquare, faChevronCircleUp, faInstagram)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

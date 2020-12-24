@@ -11,7 +11,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      title: '大北化工'
+      title: 'FigBuy'
     }
   },
   {

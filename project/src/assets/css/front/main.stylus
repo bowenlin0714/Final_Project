@@ -1,7 +1,58 @@
 html,body 
+  background-color: smoke  
+#socialLink
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  position: fixed;
+  right: 10%;
+  top: 50%;
+  a:nth-child(1)
+    color: #4267B2
+  a:nth-child(2)
+    color: #A67829
+
+
+.mainnav a {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.5rem;
+  transition: color 0.5s;
+}
+
+.mainnav a::before {
+  content: '';
+  width: 0;
+  height: 1px;
+  background-color: transparent;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s;
+}
+
+.mainnav a:hover::before {
+  width: 100%;
+  background-color: smoke 
+}
+
+.mainnav a::after {
+  content: '';
+  width: 0;
+  height: 1px;
   background-color: smoke
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transition: width 0.3s;
+}
+
+.mainnav a:hover::after {
+  width: 100%;
+  background-color: transparent;
+}
 
 .navbar
   background-color: #000 
 .nav-link a
-  color: blue !important
+  color: blue

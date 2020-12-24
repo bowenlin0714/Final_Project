@@ -208,9 +208,9 @@ export const file = async (req, res) => {
 
   // 開發環境回傳本機圖片
   if (process.env.DEV === 'true') {
-    const path = process.cwd() + '/images/products' + req.params.file
+    const path = process.cwd() + '/images/products/' + req.params.file
     const exists = fs.existsSync(path)
-
+    console.log(path)
     if (exists) {
       res.status(200).sendFile(path)
     } else {

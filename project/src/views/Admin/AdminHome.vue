@@ -3,7 +3,7 @@
     b-container(fluid class="")
       b-row(class="vh-100" )
         b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block vh-100" style="")
-          b-nav(vertical class="" style="text-align:center" )
+          b-nav(vertical class="navleft" style="text-align:center" )
             h1.mt-3 管理者後台
             b-nav-item(@click="showProducts").text-left.ml-4 商品管理
             b-nav-item(@click="showMembers").text-left.ml-4 會員資料管理

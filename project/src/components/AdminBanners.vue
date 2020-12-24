@@ -2,10 +2,12 @@
   #adminbanners
     b-container
       h1(class="my-3 mb-2") 輪播圖管理
-      cols(col="12")
+      b-col(cols="12")
         b-table(
           :fields='fields'
+          :items='images'
         )
+        img(:src="'http://localhost:3000/banners/1608795785238.jpg'")
 
 </template>
 
@@ -15,18 +17,17 @@ export default {
   name: 'AdminBanners',
   data () {
     return {
+      image: null,
+      description: '',
+      images: [],
       fields: [
-        {
-          key: 'name',
-          label: '名稱'
-        },
-        {
-          key: 'edit',
-          label: '編輯'
-        }
+
       ]
     }
-  }
+  },
+  mounted () {
 
+  }
 }
+
 </script>
