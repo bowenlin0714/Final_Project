@@ -5,3 +5,8 @@
   color: grey
   td
     line-height: 212.5px
+
+ 
+@media (max-width: 576px )
+  .nameOfTheClass
+    width 100%     

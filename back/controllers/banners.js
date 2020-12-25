@@ -159,7 +159,7 @@ export const bannerpic = async (req, res) => {
 export const del = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.account !== 'bowen125125') {
+  } else if (req.session.user.isAdmin !== true) {
     res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
@@ -168,8 +168,6 @@ export const del = async (req, res) => {
     let result = await banners.findById(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
-    } else if (result.user !== req.session.user._id) {
-      res.status(403).send({ success: false, message: '沒有權限' })
     } else {
       result = await banners.findByIdAndDelete(req.params.id)
       res.status(200).send({ success: true, message: '', result })

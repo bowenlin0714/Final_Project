@@ -2,23 +2,30 @@
   #app.h-100
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
-        b-navbar-brand(to='/') FigBuy
+        b-navbar-brand(to='/') BuyFig
+        a(href="#/shopcar", title="title").class.ml-auto.d-flex.position-relative
+            font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
+            .orange
         b-navbar-toggle(target='nav-collapse')
-        b-collapse#nav-collapse(is-nav)
+        b-collapse#nav-collapse(is-nav style="width:100px !important")
           b-navbar-nav(class = "mainnav").ml-auto
-            b-nav-item(to="/contact") 聯絡我們
-            b-nav-item(v-if="user.id.length === 0" to="/login") 登入
-            b-nav-item(v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
-            b-nav-item(v-if="isAdmin" to="/admin") 管理者頁面
-            b-nav-item(v-if="user.id.length > 0" @click = "logout") 登出
+            b-nav-item(class="mainNavitem" to="/contact") 聯絡我們
+            b-nav-item(class="mainNavitem" v-if="user.id.length === 0" to="/login") 登入
+            b-nav-item(class="mainNavitem" v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
+            b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin") 管理者頁面
+            b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout") 登出
     #socialLink()
-      a(href="https://www.facebook.com/")
+      a(href="https://www.facebook.com/" target="_blank")
        font-awesome-icon(:icon="['fab','facebook-square']")
-      a(href="https://www.instagram.com/")
+      a(href="https://www.instagram.com/" target="_blank")
        font-awesome-icon(:icon="['fab','instagram']")
       a(href="#")
        font-awesome-icon(:icon="['fas','chevron-circle-up']")
     router-view(style="margin-top: 56px" )
+    b-container(style="background:black;height:50vh").my-5
+      b-row
+        b-col(cols="12")
+          h1 footer
 </template>
 
 <script>

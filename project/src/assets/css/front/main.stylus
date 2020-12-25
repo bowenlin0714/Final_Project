@@ -1,6 +1,30 @@
 html,body 
   background-color: smoke  
 
+@media (max-width: 576px)
+  .carousel-item
+    img 
+      height: 250px
+@media (min-width: 1200px)
+  .carousel-item
+    img 
+      height: 533px
+@media (min-width: 992px) and (max-width:1200px)
+  .carousel-item
+    img 
+      height: 450px
+@media (min-width: 768px) and (max-width:992px)
+  .carousel-item
+    img 
+      height: 336px
+.navbar-brand
+  color: watermelon !important   
+.mainNavitem
+  a
+    color: rgba(255,255,255,0.8)  !important
+    &:hover
+      color: rgba(255,255,255,1)  !important
+
 #socialLink
   display: flex;
   flex-direction: column;
@@ -12,14 +36,34 @@ html,body
     color: #4267B2
   a:nth-child(2)
     color: #A67829
+  a
+    svg   
+      filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.2))
 
+.shopicon
+  color: white
+  font-size: 25px
+.orange
+  width:20px;
+  height:20px;
+  background:orange;
+  border-radius:50%;
+  position:absolute
+  right:-30%
+  bottom: -30%
 
 .mainnav a {
   display: inline-block;
   position: relative;
   padding-bottom: 0.5rem;
   transition: color 0.5s;
+  
 }
+.mainNavitem
+  a
+    color: rgba(255,255,255,0.8)  
+    &:hover
+      color: rgba(255,255,255,1)  
 
 .mainnav a::before {
   content: '';

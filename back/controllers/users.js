@@ -22,6 +22,7 @@ export const create = async (req, res) => {
         password: md5(req.body.password),
         email: req.body.email,
         phone: req.body.phone,
+        address: req.body.address,
         isAdmin: req.body.isAdmin
       })
       res.status(200).send({ success: true, message: '' })

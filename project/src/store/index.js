@@ -47,9 +47,13 @@ export default new Vuex.Store({
     delforms (state, index) {
       state.formlists.splice(index, 1)
     },
+    delbanners (state, index) {
+      state.bannerlists.splice(index, 1)
+    },
     checkRes (state, index) {
       state.formlists[index].isRes = !state.formlists[index].isRes
     }
+
   },
   actions: {
   },

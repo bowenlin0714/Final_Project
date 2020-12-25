@@ -10,11 +10,16 @@
             :fields="fields"
             stacked="md"
             )
-          template(#cell(src)='data').w-75
-            img(:src= 'data.item.src' style="width:400px")
+          template(#cell(description)='data')
+              input(v-if="data.item.isEdit" style="height:30px;")
+              span(v-else) {{data.item.description}}
+          template(#cell(src)='data' class="test")
+            img(:src= 'data.item.src' style="width:400px;height:187.5px")
           template(#cell(edit)='data')
             b-button(variant="success" v-if="data.item.isEdit" @click="save(data)") 保存
             b-button(variant="success" v-else @click="edit(data)") 更改
+          template(#cell(del)='data')
+            b-button(variant="danger" @click="delbanners(data, data.index)") 刪除
 
 </template>
 
@@ -29,7 +34,8 @@ export default {
       fields: [
         {
           key: 'description',
-          label: '檔案名'
+          label: '檔案名',
+          tdClass: 'nameOfTheClass'
         },
         {
           key: 'src',
@@ -38,6 +44,10 @@ export default {
         {
           key: 'edit',
           label: '編輯'
+        },
+        {
+          key: 'del',
+          label: '刪除'
         }
 
       ]
@@ -51,9 +61,23 @@ export default {
   methods: {
     edit (data) {
       data.item.isEdit = true
+      console.log(data.item.isEdit)
     },
     save (data) {
       data.item.isEdit = false
+    },
+    delbanners (data, index) {
+      this.axios.delete(process.env.VUE_APP_API + '/banners/del/' + data.item._id)
+        .then(res => {
+          if (res.data.success) {
+            this.$store.commit('delbanners', index)
+          } else {
+            alert('發生錯誤')
+          }
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
     }
   },
   mounted () {
@@ -69,3 +93,7 @@ export default {
 }
 
 </script>
+
+<style lang="stylus">
+
+</style>

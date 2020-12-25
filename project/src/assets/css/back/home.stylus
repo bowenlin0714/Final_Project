@@ -12,7 +12,7 @@ html
     color: white
     transition 0.2s
     &:hover
-      color black
+      color black 
       background grey
       filter: contrast(200%)
   h1
@@ -40,6 +40,10 @@ html
   border: 1px solid white
   background: white
   transition: 0.3s
+  a   
+    color: black
+    &:hover
+      color: deepblue
 .block::before
   content: ''
   font-size: 10px

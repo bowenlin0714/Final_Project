@@ -21,6 +21,7 @@
             stacked="md"
             id="formstable"
             class="mx-auto"
+            :key="key"
             :items='formlists'
             :fields='fields'
             :current-page="currentPage"

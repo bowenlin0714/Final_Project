@@ -37,6 +37,10 @@ const userSchema = new Schema(
       type: String,
       required: [true, '請輸入手機號碼']
     },
+    address: {
+      type: String,
+      required: [true, '請輸入地址']
+    },
     isAdmin: {
       type: Boolean
     }

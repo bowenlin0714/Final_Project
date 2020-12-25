@@ -14,6 +14,8 @@
             :per-page="perPage"
             striped=true
             )
+            template(#cell(address)='data')
+              b-button(variant="info" ) 會員地址
             template(#cell(delete)='data')
               b-button(variant="danger" @click="delmember(data, data.index)") 刪除
       b-pagination(
@@ -49,6 +51,10 @@ export default {
         {
           key: 'phone',
           label: '電話號碼'
+        },
+        {
+          key: 'address',
+          label: '會員地址'
         },
         {
           key: 'delete',
