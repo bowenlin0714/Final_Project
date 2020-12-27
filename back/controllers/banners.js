@@ -111,7 +111,7 @@ export const create = async (req, res) => {
   })
 }
 
-// 讀取輪播圖
+// 讀取輪播圖資訊
 export const bannertxt = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
@@ -132,6 +132,7 @@ export const bannertxt = async (req, res) => {
   }
 }
 
+// 讀取輪播圖
 export const bannerpic = async (req, res) => {
   // 開發環境回傳本機圖片
   if (process.env.DEV === 'true') {
@@ -185,6 +186,7 @@ export const del = async (req, res) => {
     }
   }
 }
+// 編輯輪播圖
 export const edit = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })

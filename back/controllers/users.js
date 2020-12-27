@@ -23,7 +23,8 @@ export const create = async (req, res) => {
         email: req.body.email,
         phone: req.body.phone,
         address: req.body.address,
-        isAdmin: req.body.isAdmin
+        isAdmin: req.body.isAdmin,
+        isBan: req.body.isBan
       })
       res.status(200).send({ success: true, message: '' })
     }

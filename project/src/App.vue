@@ -1,37 +1,36 @@
 <template lang="pug">
-  #app.h-100
+  #app(style="height:100%" ).d-flex.flex-column.justify-content-between
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
-        b-navbar-brand(to='/') BuyFig
+        b-navbar-brand(to='/') BUYFIG
         a(href="#/shopcar", title="title").class.ml-auto.d-flex.position-relative
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange
         b-navbar-toggle(target='nav-collapse')
         b-collapse#nav-collapse(is-nav style="width:100px !important")
           b-navbar-nav(class = "mainnav").ml-auto
+            b-nav-item(class="mainNavitem" to="/products") 商品列表
             b-nav-item(class="mainNavitem" to="/contact") 聯絡我們
+            b-nav-item(class="mainNavitem" to="/about") 關於我們
             b-nav-item(class="mainNavitem" v-if="user.id.length === 0" to="/login") 登入
-            b-nav-item(class="mainNavitem" v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
             b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin") 管理者頁面
+            b-nav-item(class="mainNavitem" v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
             b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout") 登出
-    #socialLink()
-      a(href="https://www.facebook.com/" target="_blank")
-       font-awesome-icon(:icon="['fab','facebook-square']")
-      a(href="https://www.instagram.com/" target="_blank")
-       font-awesome-icon(:icon="['fab','instagram']")
+    #socialLink(v-if="$route.path!=='/admin'")
       a(href="#")
        font-awesome-icon(:icon="['fas','chevron-circle-up']")
     router-view(style="margin-top: 56px" )
-    b-container(style="background:black;height:50vh").my-5
-      b-row
-        b-col(cols="12")
-          h1 footer
+    Footer(v-if="$route.path!=='/admin'")
+
 </template>
 
 <script>
 import '@/assets/css/front.stylus'
+import Footer from '@/components/Footer'
+
 export default {
   name: 'App',
+  components: { Footer },
   computed: {
     user () {
       return this.$store.state.user

@@ -18,8 +18,13 @@
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.1.0",
     "register-service-worker": "^1.7.1",
+    "simple-parallax-js": "^5.6.2",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.0",
+    "vue-flux": "^6.3.1",
+    "vue-parallax": "^1.1.1",
+    "vue-parallax-js": "^0.2.3",
+    "vue-parallaxy": "^1.1.1",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
     "vuex-persistedstate": "^3.1.0"

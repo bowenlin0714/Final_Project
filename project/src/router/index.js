@@ -11,7 +11,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      title: 'FigBuy'
+      title: 'BUYFIG'
     }
   },
   {
@@ -19,7 +19,7 @@ const routes = [
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     meta: {
-      title: '關於我們'
+      title: 'BUYFIG / 關於我們'
     }
   },
   {
@@ -27,7 +27,15 @@ const routes = [
     name: 'Shopcar',
     component: () => import(/* webpackChunkName: "shopcar" */ '../views/Shopcar.vue'),
     meta: {
-      title: '購物車'
+      title: 'BUYFIG / 購物車'
+    }
+  },
+  {
+    path: '/products',
+    name: 'Products',
+    component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue'),
+    meta: {
+      title: 'BUYFIG / 商品列表'
     }
   },
   {
@@ -35,7 +43,7 @@ const routes = [
     name: 'Contact',
     component: () => import(/* webpackChunkName: "contact" */ '../views/Contact.vue'),
     meta: {
-      title: '聯絡我們'
+      title: 'BUYFIG / 聯絡我們'
     }
   },
   {
@@ -43,7 +51,7 @@ const routes = [
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
     meta: {
-      title: '登入'
+      title: 'BUYFIG / 登入'
     }
   },
   {
@@ -51,7 +59,7 @@ const routes = [
     name: 'Reg',
     component: () => import(/* webpackChunkName: "reg" */ '../views/Reg.vue'),
     meta: {
-      title: '註冊'
+      title: 'BUYFIG / 註冊'
     }
   },
   {
@@ -59,7 +67,7 @@ const routes = [
     name: 'Admin',
     component: () => import(/* webpackChunkName: "admin" */ '../views/Admin/AdminHome.vue'),
     meta: {
-      title: '管理者後台'
+      title: 'BUYFIG / 管理者後台'
     }
   }
 ]

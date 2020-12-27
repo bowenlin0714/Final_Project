@@ -1,0 +1,38 @@
+.footContainer
+  bottom:0
+
+.footer
+  background:  #444B53
+  height auto
+  .text-md-left
+    &::after
+      content: ''
+      width: 1px
+      height 60%
+      background-color: sky
+      position: absolute
+      right 0
+      top: 25%
+      transform: translate(-50%)
+    &:not(.col-12)
+      p
+        color: sky
+        padding-top: 25px
+        font-size: 20px
+
+    svg 
+      margin-right: 5px
+    a
+      color: white
+      font-size: 14px
+.copyright
+  background-color: black
+
+@media (min-width: 768px)
+  .footer
+    .row
+      height: 100%
+    .text-md-left
+      &:last-child::after
+        content: ''
+        width: 0px

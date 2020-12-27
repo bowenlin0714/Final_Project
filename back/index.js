@@ -7,7 +7,7 @@ import cors from 'cors'
 import session from 'express-session'
 
 import routerUser from './routes/users.js'
-import routerAlbum from './routes/albums.js'
+import routerProduct from './routes/products.js'
 import routerForm from './routes/forms.js'
 import bannersForm from './routes/banners.js'
 // import routerProduct from './routes/productss.js'
@@ -68,7 +68,7 @@ app.use(session(sessionSettings))
 app.set('trust proxy', 1)
 
 app.use('/users', routerUser)
-app.use('/albums', routerAlbum)
+app.use('/products', routerProduct)
 app.use('/forms', routerForm)
 app.use('/banners', bannersForm)
 // app.use('/products', routerProduct)

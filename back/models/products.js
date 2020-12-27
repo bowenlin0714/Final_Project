@@ -3,7 +3,7 @@ import beautifyUnique from 'mongoose-beautiful-unique-validation'
 
 const Schema = mongoose.Schema
 
-const albumSchema = new Schema(
+const productSchema = new Schema(
   {
     user: {
       type: String,
@@ -45,8 +45,8 @@ const albumSchema = new Schema(
   }
 )
 
-albumSchema.plugin(beautifyUnique)
+productSchema.plugin(beautifyUnique)
 
-const albums = mongoose.model('albums', albumSchema)
+const products = mongoose.model('products', productSchema)
 
-export default albums
+export default products

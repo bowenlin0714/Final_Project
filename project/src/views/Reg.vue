@@ -12,6 +12,8 @@
           input(v-model="email")
         h1 手機 &emsp;
           input(v-model="phone")
+        h1 地址 &emsp;
+          input(v-model="address")
         input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
         br
         button(@click="onSubmit") 送出
@@ -28,6 +30,7 @@ export default {
       password: '',
       email: '',
       phone: '',
+      address: '',
       isAdmin: false
     }
   },
@@ -37,7 +40,9 @@ export default {
         .then(res => {
           if (res.data.success) {
             alert('註冊成功')
-            this.$router.push('/')
+            if (!this.$store.state.user.isAdmin) {
+              this.$router.push('/')
+            }
           } else {
             alert('註冊失敗')
           }

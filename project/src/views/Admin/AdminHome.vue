@@ -1,8 +1,8 @@
 <template lang="pug">
   #adminhome(style="margin-top:56px;" class="" ).h-100
     b-container(fluid class="").h-100
-      b-row(class="h-100" )
-        b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block " style="").h-100
+      b-row().h-100
+        b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block " ).min-vh-100
           b-nav(vertical class="navleft" style="text-align:center" )
             h1.mt-3 管理者後台
             b-nav-item(@click="showProducts").text-left.ml-4 商品管理
@@ -10,7 +10,7 @@
             b-nav-item(@click="showOrders").text-left.ml-4 訂單管理
             b-nav-item(@click="showOpinions").text-left.ml-4 意見表管理
             b-nav-item(@click="showBanners").text-left.ml-4 輪播圖管理
-        b-col(cols="12" lg="10"  class="bgright")
+        b-col(cols="12" lg="10"  class="bgright").min-vh-100
           AdminProducts(v-if="products")
           AdminMembers(v-if="members")
           AdminBanners(v-if="banners")
@@ -25,7 +25,7 @@
             b-nav-item(@click="showBanners") 輪播圖管理
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   html,body
     height 100%
 </style>

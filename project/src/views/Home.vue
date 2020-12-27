@@ -37,6 +37,16 @@ export default {
     onSlideEnd (slide) {
       this.sliding = false
     }
+  },
+  mounted () {
+    this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
+      this.images = response.data.result.map(image => {
+        image.src = process.env.VUE_APP_API + '/banners/' + image.file
+        return image
+      })
+      var data = this.images
+      this.$store.commit('bannerlists', data)
+    })
   }
 
 }

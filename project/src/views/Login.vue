@@ -1,12 +1,15 @@
 <template lang="pug">
   #login
-    b-container
-        form
-          h1 帳號 &emsp;
-            input(v-model="account")
-          h1 密碼 &emsp;
-            input(v-model="password")
-          button(@click="onSubmit") 登入
+    b-container().shadow
+      b-row
+        b-col(cols="12")
+          b-breadcrumb(:items="breads")
+          form
+            h1 帳號 &emsp;
+              input(v-model="account")
+            h1 密碼 &emsp;
+              input(v-model="password")
+            button(@click="onSubmit") 登入
 </template>
 
 <script>
@@ -14,6 +17,16 @@ export default {
   name: 'Login',
   data () {
     return {
+      breads: [
+        {
+          text: '首頁',
+          to: '/'
+        },
+        {
+          text: '登入',
+          active: true
+        }
+      ],
       account: '',
       password: ''
     }
@@ -44,7 +57,5 @@ export default {
 </script>
 
 <style lang="stylus">
- #login
-   background-color: red
 
 </style>

@@ -1,5 +1,5 @@
 import express from 'express'
-import { create, edit, del, user, file } from '../controllers/albums.js'
+import { create, edit, del, user, file } from '../controllers/products.js'
 
 const router = express.Router()
 

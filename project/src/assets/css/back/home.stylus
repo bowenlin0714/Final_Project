@@ -1,6 +1,5 @@
 
-html
-  background:black
+
 #adminhome
   background:black
 .bgleft
@@ -20,7 +19,8 @@ html
   
 .bgright
   background: deepblue
-
+  width: 100%
+  box-sizing: border-box;
 
 
 

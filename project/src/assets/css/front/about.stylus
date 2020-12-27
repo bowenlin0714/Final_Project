@@ -1,0 +1,220 @@
+.mask
+  width:100%;
+  height 402px
+  margin:0 auto;
+  background: linear-gradient(to right,white, black);
+  overflow: hidden;
+  position relative
+  box-shadow: 0px 5px 5px black
+.mask
+  img 
+    filter: brightness(0.6);
+    margin-top: -20%
+    width:100%;
+    display:block;
+    mix-blend-mode: multiply ;
+  .maskText
+    z-index: 99
+    width: 100%
+    text-align: center
+    position: absolute  
+    top: 50%
+    left 50%
+    transform: translate(-50%,-50%)
+    h1
+      color: watermelon 
+      font-size: 100px
+      text-shadow: 2px 2px 2px white
+    h3
+      color: white  
+
+.aboutPage
+  width: 100%
+  background-color: smoke
+  h1
+    font-size: 500%
+    font-weight: bold
+  .row
+    .col-12
+      padding-top: 25vh
+      padding-bottom: 25vh
+      // 第一張
+    &:nth-child(1)
+      .col-12
+        &:nth-child(2)
+          background-image: url('~@/assets/about/darkWar.jpg')    
+          &:after
+            content:''
+            width 100%
+            height 100%
+            background: linear-gradient(to bottom,white,rgba(0,0,0,0.7))
+            position: absolute
+            top: 50%
+            left 50%
+            transform: translate(-50%,-50%)
+            mix-blend-mode: multiply ;  
+        .fine
+          div 
+            font-weight: bold
+            color: black
+            position: absolute
+            top: 50%
+            left 50%
+            width: 80%
+            transform: translate(-50%,-50%)
+          &::before
+            content:'FINE'  
+            line-height: 117.3px
+            padding-left: 15%
+            font-size: 500%
+            text-shadow: 2px 2px 2px black
+            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+            width 70%
+            height 25%
+            font-weight: bold
+            background-color: watermelon
+            position: absolute
+            color: white
+            border: 1px solid black
+            top: -4%
+            left -10%
+          &:after
+            content:''
+            width 100%
+            height 1px
+            background-color: black
+            position: absolute
+            top: -10%
+            left 50%  
+    // 第二張
+    &:nth-child(even)
+      .col-12
+        &:nth-child(1)   
+          background-image: url('~@/assets/about/bleach.jpg')
+          background-size: cover
+          background-position: 100%
+          &:before
+            content:''
+            width 100%
+            height 100%
+            background: linear-gradient(to left,white,rgba(0,0,0,0.7))
+            position: absolute
+            top: 50%
+            left 50%
+            transform: translate(-50%,-50%)
+            mix-blend-mode: multiply ;
+        .fast  
+          div 
+            font-weight: bold
+            color: black
+            position: absolute
+            top: 50%
+            left 50%
+            width: 80%
+            transform: translate(-50%,-50%)
+          &::before
+            content:'FAST'  
+            line-height: 117.3px
+            padding-left:  20%
+            font-size: 500%
+            text-shadow: 2px 2px 2px black
+            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+            width 70%
+            height 25%
+            font-weight: bold
+            background-color: watermelon
+            position: absolute
+            color: white
+            border: 1px solid black
+            top: -4%
+            right -10%
+    // 第三張
+    &:nth-child(3)
+      .col-12
+        &:nth-child(2)  
+          background-image: url('~@/assets/about/BRODLY.jpg')
+          background-size: cover
+          &:after
+            content:''
+            width 100%
+            height 100%
+            background: linear-gradient(to bottom,white,rgba(0,0,0,0.7))
+            position: absolute
+            top: 50%
+            left 50%
+            transform: translate(-50%,-50%)
+            mix-blend-mode: multiply ;  
+        .fair  
+          div 
+            font-weight: bold
+            color: black
+            position: absolute
+            top: 50%
+            left 50%
+            width: 80%
+            transform: translate(-50%,-50%)
+          &::before
+            content:'FAIR'  
+            line-height: 117.3px
+            padding-left: 15%
+            font-size: 500%
+            text-shadow: 2px 2px 2px black
+            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+            width 70%
+            height 25%
+            font-weight: bold
+            background-color: watermelon
+            position: absolute
+            color: white
+            border: 1px solid black
+            top: -4%
+            left -10%
+@media (max-width: 576px)
+  .fine
+    div 
+    &:after
+      width: 70% !important
+      left 17% !important
+
+  .aboutPage
+    h1
+      font-size: 400%
+  .mask
+    width:100vw;
+    height 220px
+  .maskText
+    h1
+      font-size: 60px !important
+    h3  
+      font-size: 30px !important
+
+@media (min-width: 576px) and (max-width:768px)
+  .fine
+    div 
+    &:after
+      width: 70% !important
+      left 17% !important
+  .mask
+    height 200px
+  .maskText
+    h1
+      font-size: 50px !important
+    h3  
+      font-size: 25px !important
+@media (min-width: 768px) and (max-width:992px)
+  .fine
+      div 
+      &:after
+        width: 70% !important
+        left 17% !important
+  .mask
+      height 300px
+  .maskText
+    h1
+      font-size: 70px !important
+    h3  
+      font-size: 30px !important
+@media (min-width: 992px) and (max-width:1200px)
+  .mask
+      height 320px            
+          

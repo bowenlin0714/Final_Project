@@ -5,7 +5,7 @@ import path from 'path'
 import fs from 'fs'
 import dotenv from 'dotenv'
 
-import albums from '../models/albums.js'
+import products from '../models/products.js'
 
 let storage
 
@@ -88,7 +88,7 @@ export const create = async (req, res) => {
         } else {
           file = path.basename(req.file.path)
         }
-        const result = await albums.create({
+        const result = await products.create({
           user: req.session.user._id,
           description: req.body.description,
           productName: req.body.productName,
@@ -127,13 +127,13 @@ export const edit = async (req, res) => {
   }
 
   try {
-    let result = await albums.findById(req.params.id)
+    let result = await products.findById(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else if (result.user !== req.session.user._id) {
       res.status(403).send({ success: false, message: '沒有權限' })
     } else {
-      result = await albums.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      result = await products.findByIdAndUpdate(req.params.id, req.body, { new: true })
       res.status(200).send({ success: true, message: '', result })
     }
   } catch (error) {
@@ -159,13 +159,13 @@ export const del = async (req, res) => {
   }
 
   try {
-    let result = await albums.findById(req.params.id)
+    let result = await products.findById(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else if (result.user !== req.session.user._id) {
       res.status(403).send({ success: false, message: '沒有權限' })
     } else {
-      result = await albums.findByIdAndDelete(req.params.id)
+      result = await products.findByIdAndDelete(req.params.id)
       res.status(200).send({ success: true, message: '', result })
 
       // 刪除本機圖片檔
@@ -193,7 +193,7 @@ export const user = async (req, res) => {
   }
 
   try {
-    const result = await albums.find({ user: req.params.user })
+    const result = await products.find({ user: req.params.user })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })

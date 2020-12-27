@@ -1,5 +1,5 @@
 <template lang="pug">
-  #adminmembers
+  #adminmembers.min-vh-100
     b-container()
       h1(class="my-3 mb-2") 會員資料管理
       b-row
@@ -14,10 +14,14 @@
             :per-page="perPage"
             striped=true
             )
-            template(#cell(address)='data')
-              b-button(variant="info" ) 會員地址
+            template(#cell(address)='row')
+              b-button(variant="info" @click.stop="row.toggleDetails") 會員地址
+            template(v-slot:row-details="row")
+              p 地址: {{row.item.address}}
+              b-button( @click="row.toggleDetails").bg-info 關閉
             template(#cell(delete)='data')
               b-button(variant="danger" @click="delmember(data, data.index)") 刪除
+      p(style="text-align:center").text-center 第 {{currentPage}} 頁 共 {{memberlists.length}} 筆結果
       b-pagination(
         v-model="currentPage"
         :total-rows="rows"
@@ -33,6 +37,10 @@ export default {
   name: 'AdminMembers',
   data () {
     return {
+      address: {
+        name: '',
+        address: ''
+      },
       perPage: 6,
       currentPage: 1,
       fields: [
@@ -84,18 +92,40 @@ export default {
   },
   methods: {
     delmember (data, index) {
-      this.axios.delete(process.env.VUE_APP_API + '/users/del/' + data.item._id)
-        .then(res => {
-          if (res.data.success) {
-            this.$store.commit('delmember', index)
-          } else {
-            alert('發生錯誤')
+      var deldata = data
+      var delIndex = index
+      console.log(deldata, delIndex)
+      this.checkDel = ''
+      this.$bvModal.msgBoxConfirm('確定要刪除嗎', {
+        title: data.item.date,
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        cancelTitle: '取消',
+        okTitle: '確認',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+        .then((data) => {
+          if (data) {
+            this.axios.delete(process.env.VUE_APP_API + '/users/del/' + deldata.item._id)
+              .then(res => {
+                if (res.data.success) {
+                  this.$store.commit('delmember', delIndex)
+                } else {
+                  alert('發生錯誤')
+                }
+              })
+              .catch(err => {
+                alert(err.response.data.message)
+              })
           }
         })
-        .catch(err => {
-          alert(err.response.data.message)
-        })
-      console.log(data.item._id, index)
+    },
+    showAdddress (data, index) {
+      this.address.name = data.item.name
+      this.address.address = data.item.address
     }
   }
 

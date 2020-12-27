@@ -1,2 +1,4 @@
 @import "front/frontcolor.stylus";
 @import "front/main.stylus";
+@import "front/footer.stylus";
+@import "front/about.stylus";
