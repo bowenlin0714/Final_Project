@@ -1,0 +1,22 @@
+.logright
+  background-color: watermelon
+.logleft
+  > div
+    position: absolute
+    top: 0
+    color: white
+    left 50%
+    transform: translate(-50%,-50%)
+    width:100px
+    height: 100px
+    line-height: 100px
+    background-color: watermelon
+    border-radius: 50%
+    margin: auto
+    font-size: 60px
+  span 
+    color: grey
+    line-height: 60px
+  button
+    background-color: sky
+    height: 60px

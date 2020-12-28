@@ -3,6 +3,7 @@
     b-container
       h1(class="my-3 mb-2") 輪播圖管理
       b-col(cols="12")
+        b-button.bg-success.mb-3 新增
         b-table(
             id="brtable"
             class="mx-auto"
@@ -100,7 +101,14 @@ export default {
     }
   },
   mounted () {
-
+    this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
+      this.images = response.data.result.map(image => {
+        image.src = process.env.VUE_APP_API + '/banners/' + image.file
+        return image
+      })
+      var data = this.images
+      this.$store.commit('bannerlists', data)
+    })
   }
 }
 

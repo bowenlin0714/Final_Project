@@ -186,7 +186,7 @@ export const del = async (req, res) => {
     }
   }
 }
-// 編輯輪播圖
+// 編輯輪播圖資訊
 export const edit = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
@@ -201,7 +201,6 @@ export const edit = async (req, res) => {
 
   try {
     let result = await banners.findById(req.params.id)
-    console.log(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else if (req.session.user.isAdmin !== true) {

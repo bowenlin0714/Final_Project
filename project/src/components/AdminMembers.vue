@@ -19,8 +19,14 @@
             template(v-slot:row-details="row")
               p 地址: {{row.item.address}}
               b-button( @click="row.toggleDetails").bg-info 關閉
+            template(#cell(isBan)='data')
+              b-button(style="border-style:none;" @click.stop="checkBan(data, data.index)").bg-transparent.border-none
+                font-awesome-icon(v-if="data.item.isBan" :icon=['fas', 'check'] ).text-success
+                font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
             template(#cell(delete)='data')
               b-button(variant="danger" @click="delmember(data, data.index)") 刪除
+          div.w-100
+            p(v-if="memberlists.length == 0").text-center.h1 目前沒有內容
       p(style="text-align:center").text-center 第 {{currentPage}} 頁 共 {{memberlists.length}} 筆結果
       b-pagination(
         v-model="currentPage"
@@ -46,11 +52,13 @@ export default {
       fields: [
         {
           key: 'name',
-          label: '姓名'
+          label: '姓名',
+          sortable: true
         },
         {
           key: 'account',
-          label: '帳號'
+          label: '帳號',
+          sortable: true
         },
         {
           key: 'email',
@@ -63,6 +71,10 @@ export default {
         {
           key: 'address',
           label: '會員地址'
+        },
+        {
+          key: 'isBan',
+          label: '會員狀態'
         },
         {
           key: 'delete',
@@ -91,6 +103,20 @@ export default {
     })
   },
   methods: {
+    checkBan (data, index) {
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + data.item._id, data)
+        .then(res => {
+          if (res.data.success) {
+            this.$store.commit('checkRes', index)
+          } else {
+            alert('發生錯誤')
+          }
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
+      console.log(data.item._id)
+    },
     delmember (data, index) {
       var deldata = data
       var delIndex = index

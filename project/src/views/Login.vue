@@ -4,12 +4,48 @@
       b-row
         b-col(cols="12")
           b-breadcrumb(:items="breads")
-          form
-            h1 帳號 &emsp;
-              input(v-model="account")
-            h1 密碼 &emsp;
-              input(v-model="password")
-            button(@click="onSubmit") 登入
+          b-container()
+            b-row.pb-5
+              b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.p-5
+                div.text-center
+                  font-awesome-icon(:icon="['fas','user-astronaut']").text-black
+                b-form(@submit="onSubmit")
+                  b-form-group(
+                    id="input-group-1"
+                    label="帳號 :"
+                    label-for="input-1"
+                    description=""
+                  )
+                    b-form-input(
+                      id="input-1"
+                      v-model="account"
+                      type="email"
+                      required
+                      placeholder="請輸入帳號"
+                    )
+                  b-form-group(
+                    id="input-group-2"
+                    label="密碼 :"
+                    label-for="input-1"
+                    description=""
+                  )
+                    b-form-input(
+                      id="input-2"
+                      v-model="password"
+                      type="password"
+                      required
+                      placeholder="請輸入密碼"
+                    )
+                  b-row
+                    b-col(cols="6")
+                      span 還沒有帳號嗎?點我註冊
+                    b-col(cols="6")
+                      button(@click="onSubmit").rounded.w-100.mr-0 登入
+              b-col(cols="12" lg="5" class="logright").border.mr-auto.rounded-right
+                div.text-white
+                  h1 Welcome
+                  h1 Back!!
+
 </template>
 
 <script>

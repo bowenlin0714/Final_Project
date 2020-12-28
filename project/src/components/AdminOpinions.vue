@@ -11,7 +11,8 @@
               b-form-radio(v-model="selected" value = '未回覆') 顯示未回覆
         b-col(cols="12" lg="3").mb-4.ml-auto
           b-form-input(
-            type="text"
+            id="filter-input"
+            type="search"
             placeholder="Type to Search"
             v-model="keyword"
           )
@@ -21,10 +22,14 @@
             stacked="md"
             id="formstable"
             class="mx-auto"
+            :filter = "keyword"
+            :filter-included-fields="filterOn"
             :items='formlists'
             :fields='fields'
             :current-page="currentPage"
             :per-page="perPage"
+            :sort-by.sync="sortBy"
+            primary-key="_id"
             striped=true
             row-contextmenu
             v-b-modal.modal-1
@@ -40,6 +45,9 @@
                 font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
             template(#cell(delete)='data')
               b-button(variant="danger" @click.stop="delforms(data, data.index)" ) 刪除 {{checkDel}}
+        div.w-100
+          p(v-if="formlists.length == 0").text-center.ml-center 目前沒有內容
+      p(style="text-align:center").text-center 分類排序:{{ sortBy }}
       p(style="text-align:center").text-center 第 {{currentPage}} 頁 共 {{formlists.length}} 筆結果
       b-pagination(
         v-model="currentPage"
@@ -56,8 +64,11 @@ export default {
   name: 'AdminOpinions',
   data () {
     return {
+      sortBy: 'date',
+      sortDesc: false,
       checkDel: '',
-      keyword: '',
+      keyword: null,
+      filterOn: [],
       selected: null,
       selectedForm: null,
       showDetail: false,
@@ -70,11 +81,13 @@ export default {
       fields: [
         {
           key: 'date',
-          label: '日期'
+          label: '日期',
+          sortable: true
         },
         {
           key: 'name',
-          label: '姓名'
+          label: '姓名',
+          sortable: true
         },
         {
           key: 'email',
@@ -90,7 +103,8 @@ export default {
         },
         {
           key: 'isRes',
-          label: '已回覆'
+          label: '已回覆',
+          sortable: true
         },
         {
           key: 'delete',
@@ -101,6 +115,7 @@ export default {
   },
   computed: {
     formlists () {
+      // var arrays = []
       if (this.selected === '已回覆') {
         return this.$store.state.formlists.filter(item => item.isRes === true)
       } else if (this.selected === '未回覆') {
@@ -170,11 +185,12 @@ export default {
       console.log(this.detailTexts)
     },
 
-    checkRes (data, index) {
-      this.axios.patch(process.env.VUE_APP_API + '/forms/edit/' + data.item._id, data)
+    checkRes (data) {
+      this.axios.patch(process.env.VUE_APP_API + '/forms/edit/' + data.item._id, { isRes: !data.item.isRes })
         .then(res => {
           if (res.data.success) {
-            this.$store.commit('checkRes', index)
+            this.$store.commit('checkRes', data.item._id)
+            this.$root.$emit('bv::refresh::table', 'formstable')
           } else {
             alert('發生錯誤')
           }

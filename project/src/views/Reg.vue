@@ -1,22 +1,28 @@
 <template lang="pug">
   #reg
-    b-container
-      form
-        h1 姓名 &emsp;
-          input(v-model="name")
-        h1 帳號 &emsp;
-          input(v-model="account")
-        h1 密碼 &emsp;
-          input(v-model="password")
-        h1 e-mail &emsp;
-          input(v-model="email")
-        h1 手機 &emsp;
-          input(v-model="phone")
-        h1 地址 &emsp;
-          input(v-model="address")
-        input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
-        br
-        button(@click="onSubmit") 送出
+    b-container.shadow
+      b-row
+        b-col(cols="12")
+          b-breadcrumb(:items="breads")
+          b-container
+            b-row
+              b-col(cols="6")
+                form
+                  h1 姓名 &emsp;
+                    input(v-model="name")
+                  h1 帳號 &emsp;
+                    input(v-model="account")
+                  h1 密碼 &emsp;
+                    input(v-model="password")
+                  h1 e-mail &emsp;
+                    input(v-model="email")
+                  h1 手機 &emsp;
+                    input(v-model="phone")
+                  h1 地址 &emsp;
+                    input(v-model="address")
+                  input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
+                  br
+                  b-button(@click="onSubmit") 送出
 
 </template>
 
@@ -25,13 +31,24 @@ export default {
   name: 'Reg',
   data () {
     return {
+      breads: [
+        {
+          text: '首頁',
+          to: '/'
+        },
+        {
+          text: '註冊',
+          active: true
+        }
+      ],
       name: '',
       account: '',
       password: '',
       email: '',
       phone: '',
       address: '',
-      isAdmin: false
+      isAdmin: false,
+      isBan: false
     }
   },
   methods: {
