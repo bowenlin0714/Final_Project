@@ -41,11 +41,17 @@ export default new Vuex.Store({
       state.bannerlists = []
       state.bannerlists = (data)
     },
-    delmember (state, index) {
-      state.memberlists.splice(index, 1)
+    delmember (state, id) {
+      const idx = state.memberlists.findIndex(user => {
+        return user._id === id
+      })
+      state.memberlists.splice(idx, 1)
     },
-    delforms (state, index) {
-      state.formlists.splice(index, 1)
+    delforms (state, id) {
+      const idx = state.formlists.findIndex(form => {
+        return form._id === id
+      })
+      state.formlists.splice(idx, 1)
     },
     delbanners (state, index) {
       state.bannerlists.splice(index, 1)
@@ -55,6 +61,12 @@ export default new Vuex.Store({
         return form._id === id
       })
       state.formlists[idx].isRes = !state.formlists[idx].isRes
+    },
+    checkBan (state, id) {
+      const idx = state.memberlists.findIndex(user => {
+        return user._id === id
+      })
+      state.memberlists[idx].isBan = !state.memberlists[idx].isBan
     }
 
   },

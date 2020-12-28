@@ -160,7 +160,7 @@ export default {
             this.axios.delete(process.env.VUE_APP_API + '/forms/del/' + deldata.item._id)
               .then(res => {
                 if (res.data.success) {
-                  this.$store.commit('delforms', delIndex)
+                  this.$store.commit('delforms', deldata.item._id)
                 } else {
                   alert('發生錯誤')
                 }

@@ -21,8 +21,8 @@
               b-button( @click="row.toggleDetails").bg-info 關閉
             template(#cell(isBan)='data')
               b-button(style="border-style:none;" @click.stop="checkBan(data, data.index)").bg-transparent.border-none
-                font-awesome-icon(v-if="data.item.isBan" :icon=['fas', 'check'] ).text-success
-                font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
+                span(v-if="data.item.isBan").text-danger 封鎖中
+                span(v-else ).text-success 正常
             template(#cell(delete)='data')
               b-button(variant="danger" @click="delmember(data, data.index)") 刪除
           div.w-100
@@ -96,18 +96,19 @@ export default {
     }
   },
   mounted () {
-    this.axios.get(process.env.VUE_APP_API + '/users/accounts').then((response) => {
+    this.axios.get(process.env.VUE_APP_API + '/users/').then((response) => {
       console.log(response.data.result)
       var data = response.data.result
       this.$store.commit('memberlists', data)
     })
   },
   methods: {
-    checkBan (data, index) {
-      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + data.item._id, data)
+    checkBan (data) {
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + data.item._id, { isBan: !data.item.isBan })
         .then(res => {
           if (res.data.success) {
-            this.$store.commit('checkRes', index)
+            this.$store.commit('checkBan', data.item._id)
+            this.$root.$emit('bv::refresh::table', 'formstable')
           } else {
             alert('發生錯誤')
           }
@@ -138,7 +139,7 @@ export default {
             this.axios.delete(process.env.VUE_APP_API + '/users/del/' + deldata.item._id)
               .then(res => {
                 if (res.data.success) {
-                  this.$store.commit('delmember', delIndex)
+                  this.$store.commit('delmember', deldata.item._id)
                 } else {
                   alert('發生錯誤')
                 }
