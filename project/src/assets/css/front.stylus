@@ -3,3 +3,4 @@
 @import "front/footer.stylus";
 @import "front/about.stylus";
 @import "front/login.stylus";
+@import "front/banners.stylus";

@@ -1,0 +1,3 @@
+#addBanner___BV_modal_body_
+  display: flex
+  flex-direction: column

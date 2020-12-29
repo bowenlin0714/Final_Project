@@ -5,6 +5,10 @@ import './plugins/bootstrap-vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueParallaxJs from 'vue-parallax-js'
+import ImgInputer from 'vue-img-inputer'
+import 'vue-img-inputer/dist/index.css'
+
+import $ from 'jquery'
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -25,8 +29,9 @@ axios.defaults.withCredentials = true
 
 Vue.config.productionTip = false
 
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios, $)
 Vue.use(VueParallaxJs)
+Vue.component('ImgInputer', ImgInputer)
 
 new Vue({
   router,

@@ -5,10 +5,10 @@
         b-col(cols="12").p-0
           b-breadcrumb(:items="breads")
           .mask()
-            div.maskText
-              h1 WHY BUYFIG
-              h3 一 為什麼選擇BUYFIG 一
-            img(src="../assets/about/spider.jpg")
+            div(class="bgTest" id="bgTest" :style="{'background-position-y':positionY1+'px'}")
+              div.maskText
+                h1 WHY BUYFIG
+                h3 一 為什麼選擇BUYFIG 一
           .aboutPage
             h1.text-center.pt-5.pb-5 三大保證
             b-container(fluid)
@@ -47,6 +47,9 @@ export default {
   components: { Parallax },
   data () {
     return {
+      positionY1: 0, // 背景Y轴偏移量
+      Y1: 0,
+      ratio: 0.5, // 视差偏移率
       breads: [
         {
           text: '首頁',
@@ -58,7 +61,22 @@ export default {
         }
       ]
     }
-  }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+    const bgTest = document.getElementById('bgTest')
+    this.Y1 = bgTest.offsetTop * this.ratio
+  },
+  methods: {
+
+    handleScroll: function () {
+      const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop
+      this.positionY1 = this.Y1 - scrollTop * this.ratio // 原始高度-滚动距离*视差系数
+    }
+  },
 }
 </script>
 

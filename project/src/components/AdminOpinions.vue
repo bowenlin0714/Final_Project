@@ -4,6 +4,7 @@
       h1(class="my-3 mb-2") 意見表管理
       b-row
         b-col(cols="12" lg="6")
+          //- b-form-select(v-if="" v-model="selected" :options="options")
           b-form-group()
             b-form-radio-group
               b-form-radio(v-model="selected" value = "全部" checked) 顯示全部
@@ -15,7 +16,7 @@
             type="search"
             placeholder="Type to Search"
             v-model="keyword"
-          )
+          ).position-sticky
         b-col(cols='12' class="")
           b-table(
             class=""
@@ -72,6 +73,12 @@ export default {
       selected: null,
       selectedForm: null,
       showDetail: false,
+      options: [
+        { value: null, text: '意見表回覆狀態' },
+        { value: '全部', text: '全部' },
+        { value: '已回覆', text: '已回覆' },
+        { value: '未回覆', text: '未回覆' }
+      ],
       detailTexts: {
         name: '',
         opinion: ''

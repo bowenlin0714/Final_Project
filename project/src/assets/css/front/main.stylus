@@ -9,7 +9,11 @@ html,body
 @media (max-width: 576px)
   .carousel-item
     img 
-      height: 250px
+      height: 250px 
+@media (min-width: 576px) and (max-width: 768px)
+  .carousel-item
+    img 
+      height: 252px
 @media (min-width: 768px) and (max-width:992px)
   .carousel-item
     img 

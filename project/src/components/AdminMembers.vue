@@ -3,6 +3,19 @@
     b-container()
       h1(class="my-3 mb-2") 會員資料管理
       b-row
+        b-col(cols="12" lg="6")
+          b-form-group()
+            b-form-radio-group
+              b-form-radio(v-model="selected" value = "全部" checked) 顯示全部
+              b-form-radio(v-model="selected" value = '顯示正常會員') 顯示正常會員
+              b-form-radio(v-model="selected" value = '顯示已封鎖會員') 顯示已封鎖會員
+        b-col(cols="12" lg="3").mb-4.ml-auto
+          b-form-input(
+            id="filter-input"
+            type="search"
+            placeholder="Type to Search"
+            v-model="keyword"
+          )
         b-col(cols='12')
           b-table(
             stacked="md"
@@ -10,7 +23,10 @@
             class="mx-auto"
             :items='memberlists'
             :fields='fields' fixed
+            :filter = "keyword"
+            :filter-included-fields="filterOn"
             :current-page="currentPage"
+            :sort-by.sync="sortBy"
             :per-page="perPage"
             striped=true
             )
@@ -47,7 +63,12 @@ export default {
         name: '',
         address: ''
       },
+      sortBy: 'account',
+      keyword: null,
+      filterOn: [],
       perPage: 6,
+      selected: null,
+      selectedForm: null,
       currentPage: 1,
       fields: [
         {
@@ -85,11 +106,18 @@ export default {
   },
   computed: {
     memberlists () {
-      var result = null
-      result = this.$store.state.memberlists.filter((item) => {
-        return item.isAdmin === false
-      })
-      return result
+      // var result = null
+      // result = this.$store.state.memberlists.filter((item) => {
+      //   return item.isAdmin === false
+      // })
+      if (this.selected === '顯示正常會員') {
+        return this.$store.state.memberlists.filter(item => item.isBan === false)
+      } else if (this.selected === '顯示已封鎖會員') {
+        return this.$store.state.memberlists.filter(item => item.isBan === true)
+      } else {
+        return this.$store.state.memberlists
+      }
+      // return result
     },
     rows () {
       return this.memberlists.length
@@ -98,7 +126,9 @@ export default {
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/users/').then((response) => {
       console.log(response.data.result)
-      var data = response.data.result
+      var data = response.data.result.filter((item) => {
+        return item.isAdmin === false
+      })
       this.$store.commit('memberlists', data)
     })
   },

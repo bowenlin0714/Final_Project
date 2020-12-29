@@ -56,6 +56,11 @@ export default new Vuex.Store({
     delbanners (state, index) {
       state.bannerlists.splice(index, 1)
     },
+    editBanners (state, data) {
+      console.log(data)
+      // console.log(state.bannerlists[data.index].)
+      state.bannerlists[data.index].description = data.description
+    },
     checkRes (state, id) {
       const idx = state.formlists.findIndex(form => {
         return form._id === id
