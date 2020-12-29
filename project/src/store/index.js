@@ -57,15 +57,22 @@ export default new Vuex.Store({
       state.bannerlists.splice(index, 1)
     },
     editBanners (state, data) {
-      console.log(data)
+      console.log(data.description)
       // console.log(state.bannerlists[data.index].)
       state.bannerlists[data.index].description = data.description
+      console.log(state.bannerlists[data.index].description)
     },
     checkRes (state, id) {
       const idx = state.formlists.findIndex(form => {
         return form._id === id
       })
       state.formlists[idx].isRes = !state.formlists[idx].isRes
+    },
+    checkisShow (state, id) {
+      const idx = state.bannerlists.findIndex(banner => {
+        return banner._id === id
+      })
+      state.bannerlists[idx].isShow = !state.bannerlists[idx].isShow
     },
     checkBan (state, id) {
       const idx = state.memberlists.findIndex(user => {

@@ -91,6 +91,7 @@ export const create = async (req, res) => {
           file = path.basename(req.file.path)
         }
         const result = await banners.create({
+          isShow: true,
           isEdit: false,
           description: req.body.description,
           file

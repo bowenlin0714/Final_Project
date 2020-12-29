@@ -39,8 +39,12 @@ export default {
     }
   },
   mounted () {
-    this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
-      this.images = response.data.result.map(image => {
+    this.axios.get(process.env.VUE_APP_API + '/banners').then((res) => {
+      const result = res.data.result.filter((banner) => {
+        return banner.isShow === true
+      })
+      console.log(result)
+      this.images = result.map(image => {
         image.src = process.env.VUE_APP_API + '/banners/' + image.file
         return image
       })

@@ -15,6 +15,9 @@ const bannerSchema = new Schema(
     },
     isEdit: {
       type: Boolean
+    },
+    isShow: {
+      type: Boolean
     }
 
   },

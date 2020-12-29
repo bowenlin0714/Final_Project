@@ -10,39 +10,54 @@
           label.py-2 上傳圖片 :
           img-inputer(v-model="image" theme="light" size="middle" )
           b-button(@click="onSubmit()").bg-success.mt-3 新增
-        b-table(
+        b-table(s
+            small
             id="brtable"
             class="mx-auto"
             :items="bannerlists"
             :fields="fields"
             stacked="md"
-            )
-          template(v-slot:cell(description)="data" )
-            b-button(variant="danger" @click="delbanners(data, data.index)") 刪除
+            ).text-left.text-lg-center
+          template(v-slot:cell(isShow)="data" )
+            b-button(style="border-style:none;" @click="checkisShow(data, data.index)").bg-transparent.border-none
+              font-awesome-icon(v-if="data.item.isShow" :icon=['fas', 'check'] ).text-success
+              font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
           template(#cell(description)='data')
             span() {{data.item.description}}
-          template(#cell(src)='data' class="test")
+          template(#cell(src)='data' class="test" style="width:20px")
             img(:src= 'data.item.src' style="width:400px;height:187.5px")
           template(#cell(edit)='data')
             b-button(variant="success"  v-b-modal.change @click="sendData(data.item, data.index)") 更改
           template(#cell(del)='data')
             b-button(variant="danger" @click="delbanners(data, data.index)") 刪除
-        b-modal(id="change" title="新增輪播圖" size="sm" hide-footer ).d-flex.flex-column
-            label 檔案敘述 :
-            input(type="input" placeholder="請輸入" v-model="description")
-            label.py-2 上傳圖片 :
-            img-inputer(v-model="image" theme="light" size="middle" )
-            b-button(@click="editBanners(selected , selectedIndex)").bg-success.mt-3 新增
+        b-modal(
+          id="change"
+          title="編輯"
+          size="sm"
+          :ok-title="oktitle"
+          :cancel-title="canceltitle"
+          ok-variant="success"
+          @ok="editBanners(selected , selectedIndex)"
+          ).d-flex.flex-column
+          label.mr-2 檔案名 :
+          input(type="input" placeholder="請輸入" v-model="description")
+          img(:src="selected.src" style="width:100%").pt-3
+      div.w-100
+        p(v-if="bannerlists.length == 0").text-center.h1.text-white 目前沒有內容
 
 </template>
+<style lang="stylus">
 
+</style>
 <script>
 
 export default {
   name: 'AdminBanners',
   data () {
     return {
-      selected: null,
+      oktitle: '確定',
+      canceltitle: '取消',
+      selected: '',
       selectedIndex: '',
       image: null,
       description: '',
@@ -52,6 +67,10 @@ export default {
           key: 'description',
           label: '檔案名',
           tdClass: 'nameOfTheClass'
+        },
+        {
+          key: 'isShow',
+          label: '是否展示'
         },
         {
           key: 'src',
@@ -75,6 +94,21 @@ export default {
     }
   },
   methods: {
+    checkisShow (data) {
+      this.axios.patch(process.env.VUE_APP_API + '/banners/edit/' + data.item._id, { isShow: !data.item.isShow })
+        .then(res => {
+          if (res.data.success) {
+            this.$store.commit('checkisShow', data.item._id)
+            this.$root.$emit('bv::refresh::table', 'formstable')
+          } else {
+            alert('發生錯誤')
+          }
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
+      console.log(data.item._id)
+    },
     sendData (data, index) {
       this.selected = data
       this.selectedIndex = index
@@ -120,7 +154,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             console.log(res)
-            this.$store.commit('editBanners', { description: data.description, index })
+            this.$store.commit('editBanners', { description: this.description, index })
           } else {
             alert('發生錯誤')
           }
