@@ -6,6 +6,7 @@ import fs from 'fs'
 import dotenv from 'dotenv'
 
 import products from '../models/products.js'
+import { log } from 'console'
 
 let storage
 
@@ -16,7 +17,7 @@ dotenv.config()
 if (process.env.DEV === 'true') {
   storage = multer.diskStorage({
     destination (req, file, callback) {
-      callback(null, 'images/products')
+      callback(null, 'images/products/')
     },
     filename (req, file, callback) {
       callback(null, Date.now() + path.extname(file.originalname))
@@ -54,10 +55,10 @@ const upload = multer({
 })
 
 // 增加商品
-export const create = async (req, res) => {
+export const createProductinfo = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.account !== 'bowen125125') {
+  } else if (req.session.user.isAdmin !== true) {
     res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
@@ -69,9 +70,7 @@ export const create = async (req, res) => {
   upload.single('image')(req, res, async error => {
     if (error instanceof multer.MulterError) {
       let message = ''
-      if (error.code === 'LIMIT_FILE_SIZE') {
-        message = '檔案太大'
-      } else if (error.code === 'LIMIT_FORMAT') {
+      if (error.code === 'LIMIT_FORMAT') {
         message = '格式不符'
       } else {
         message = '上傳錯誤'
@@ -90,12 +89,23 @@ export const create = async (req, res) => {
         }
         const result = await products.create({
           user: req.session.user._id,
-          description: req.body.description,
-          productName: req.body.productName,
+          name: req.body.name,
           category: req.body.category,
+          productNumber: req.body.productNumber,
+          onShop: true,
+          description: req.body.description,
           amount: req.body.amount,
+          sold: req.body.sold,
           price: req.body.price,
-          file
+          onsale: false,
+          countPrice: req.body.countPrice,
+          date: req.body.date,
+          images: [
+            {
+              file,
+              display: true
+            }
+          ]
         })
         res.status(200).send({ success: true, message: '', result })
       } catch (error) {
@@ -113,47 +123,81 @@ export const create = async (req, res) => {
   })
 }
 
+// 取得商品資訊
+export const producttxt = async (req, res) => {
+  try {
+    const result = await products.find()
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).send({ success: false, message: '發生錯誤' })
+  }
+}
+export const productpic = async (req, res) => {
+  // 開發環境回傳本機圖片
+  if (process.env.DEV === 'true') {
+    console.log(req.params.file)
+    const path = process.cwd() + '/images/products/' + req.params.file
+    const exists = fs.existsSync(path)
+    if (exists) {
+      res.status(200).sendFile(path)
+    } else {
+      res.status(404).send({ success: false, message: '找不到圖片' })
+    }
+  } else {
+    axios({
+      method: 'GET',
+      url: 'http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.file,
+      responseType: 'stream'
+    }).then(ress => {
+      ress.data.pipe(res)
+    }).catch(error => {
+      res.status(error.response.status).send({ success: false, message: '取得圖片失敗' })
+    })
+  }
+}
 // 修改商品
 export const edit = async (req, res) => {
-  if (req.session.user === undefined) {
-    res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.account !== 'bowen125125') {
-    res.status(403).send({ success: false, message: '沒有權限' })
-    return
-  }
-  if (!req.headers['content-type']) {
-    res.status(400).send({ success: false, message: '資料格式不符' })
-    return
-  }
+  // if (req.session.user === undefined) {
+  //   res.status(401).send({ success: false, message: '未登入' })
+  // } else if (req.session.user.isAdmin !== true) {
+  //   res.status(403).send({ success: false, message: '沒有權限' })
+  //   return
+  // }
+  // if (!req.headers['content-type']) {
+  //   res.status(400).send({ success: false, message: '資料格式不符' })
+  //   return
+  // }
 
-  try {
-    let result = await products.findById(req.params.id)
-    if (result === null) {
-      res.status(404).send({ success: false, message: '找不到資料' })
-    } else if (result.user !== req.session.user._id) {
-      res.status(403).send({ success: false, message: '沒有權限' })
-    } else {
-      result = await products.findByIdAndUpdate(req.params.id, req.body, { new: true })
-      res.status(200).send({ success: true, message: '', result })
-    }
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      const key = Object.keys(error.errors)[0]
-      const message = error.errors[key].message
-      res.status(400).send({ success: false, message })
-    } else if (error.name === 'CastError') {
-      res.status(400).send({ success: false, message: 'ID 格式錯誤' })
-    } else {
-      res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-  }
+  // try {
+  //   let result = await products.findById(req.params.id)
+  //   if (result === null) {
+  //     res.status(404).send({ success: false, message: '找不到資料' })
+  //   } else if (result.user !== req.session.user._id) {
+  //     res.status(403).send({ success: false, message: '沒有權限' })
+  //   } else {
+  //     result = await products.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  //     res.status(200).send({ success: true, message: '', result })
+  //   }
+  // } catch (error) {
+  //   if (error.name === 'ValidationError') {
+  //     const key = Object.keys(error.errors)[0]
+  //     const message = error.errors[key].message
+  //     res.status(400).send({ success: false, message })
+  //   } else if (error.name === 'CastError') {
+  //     res.status(400).send({ success: false, message: 'ID 格式錯誤' })
+  //   } else {
+  //     res.status(500).send({ success: false, message: '伺服器錯誤' })
+  //   }
+  // }
 }
 
 // 刪除商品
 export const del = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.account !== 'bowen125125') {
+  } else if (req.session.user.isAdmin !== true) {
     res.status(403).send({ success: false, message: '沒有權限' })
     return
   }
@@ -162,8 +206,6 @@ export const del = async (req, res) => {
     let result = await products.findById(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
-    } else if (result.user !== req.session.user._id) {
-      res.status(403).send({ success: false, message: '沒有權限' })
     } else {
       result = await products.findByIdAndDelete(req.params.id)
       res.status(200).send({ success: true, message: '', result })

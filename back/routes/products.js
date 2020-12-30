@@ -1,12 +1,12 @@
 import express from 'express'
-import { create, edit, del, user, file } from '../controllers/products.js'
+import { edit, del, producttxt, productpic, createProductinfo } from '../controllers/products.js'
 
 const router = express.Router()
 
-router.post('/', create)
+router.post('/create', createProductinfo)
 router.patch('/:id', edit)
-router.delete('/:id', del)
-router.get('/user/:user', user)
-router.get('/file/:file', file)
+router.delete('/del/:id', del)
+router.get('/', producttxt)
+router.get('/:file', productpic)
 
 export default router

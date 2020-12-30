@@ -117,6 +117,7 @@ export default {
       if (!this.image.type.includes('image')) {
         alert('檔案格式不符')
       } else {
+        console.log(this.image)
         const fd = new FormData()
         fd.append('image', this.image)
         fd.append('description', this.description)
@@ -124,6 +125,7 @@ export default {
           .then(res => {
             if (res.data.success) {
               // 將新增的圖片塞進相簿陣列
+              console.log(res)
               res.data.result.src = process.env.VUE_APP_API + '/banners/file/' + res.data.result.file
               res.data.result.title = res.data.result.description
               res.data.result.isEdit = false

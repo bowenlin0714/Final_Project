@@ -14,7 +14,8 @@ export default new Vuex.Store({
     },
     memberlists: null,
     formlists: null,
-    bannerlists: null
+    bannerlists: null,
+    productlists: null
   },
   mutations: {
     login (state, data) {
@@ -41,6 +42,10 @@ export default new Vuex.Store({
       state.bannerlists = []
       state.bannerlists = (data)
     },
+    productlists (state, data) {
+      state.productlists = []
+      state.productlists = (data)
+    },
     delmember (state, id) {
       const idx = state.memberlists.findIndex(user => {
         return user._id === id
@@ -52,6 +57,12 @@ export default new Vuex.Store({
         return form._id === id
       })
       state.formlists.splice(idx, 1)
+    },
+    delProducts (state, id) {
+      const idx = state.productlists.findIndex(product => {
+        return product._id === id
+      })
+      state.productlists.splice(idx, 1)
     },
     delbanners (state, index) {
       state.bannerlists.splice(index, 1)

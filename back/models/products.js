@@ -1,43 +1,14 @@
 import mongoose from 'mongoose'
-import beautifyUnique from 'mongoose-beautiful-unique-validation'
 
 const Schema = mongoose.Schema
 
-const productSchema = new Schema(
+const productImageSchema = new Schema(
   {
-    user: {
-      type: String,
-      required: [true, '缺少使用者欄位']
-    },
-    productName: {
-      type: String,
-      unique: '商品名稱重複',
-      required: [true, '缺少商品名稱'],
-      minlength: [1, '說明必須 2 字以上']
-    },
-    category: {
-      type: String,
-      required: [true, '商品類別不可為空']
-    },
-    description: {
-      type: String,
-      required: [true, '缺少商品敘述'],
-      minlength: [1, '說明必須 2 字以上'],
-      maxlength: [200, '說明必須 200 字以下']
-    },
-    amount: {
-      type: Number,
-      min: [0, '請輸入有效數量'],
-      required: [true, '缺少商品數量']
-    },
-    price: {
-      type: Number,
-      min: [0, '請輸入有效價格'],
-      required: [true, '缺少商品價格']
-    },
     file: {
-      type: String,
-      required: [true, '缺少檔案名稱']
+      type: String
+    },
+    display: {
+      type: Boolean
     }
   },
   {
@@ -45,7 +16,60 @@ const productSchema = new Schema(
   }
 )
 
-productSchema.plugin(beautifyUnique)
+const productSchema = new Schema({
+  name: {
+    type: String,
+    unique: true,
+    required: [true, '缺少商品名稱'],
+    minlength: [2, '需兩字以上']
+  },
+  category: {
+    type: String,
+    required: [true, '缺少商品類別']
+  },
+  onShop: {
+    type: Boolean
+  },
+  amount: {
+    type: Number,
+    required: [true, '缺少商品數量'],
+    minlength: [0, '數量最小為0'],
+    maxlength: [999999, '請輸入正確數量']
+  },
+  productNumber: {
+    type: Number,
+    required: [true, '缺少商品編號'],
+    minlength: [1, '編號最小為1'],
+    uniqeu: true
+  },
+  description: {
+    type: String,
+    required: [true, '缺少商品敘述']
+  },
+  sold: {
+    type: Number,
+    minlength: [0, '數量最小為0']
+  },
+  price: {
+    type: Number,
+    required: [true, '缺少商品價格'],
+    minlength: [1, '數量最小為1']
+  },
+  onsale: {
+    type: Boolean
+  },
+  countPrice: {
+    type: Number
+  },
+  date: {
+    type: String,
+    required: [true, '缺少上架日期']
+
+  },
+  images: {
+    type: [productImageSchema]
+  }
+})
 
 const products = mongoose.model('products', productSchema)
 
