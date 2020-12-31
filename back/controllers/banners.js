@@ -149,8 +149,8 @@ export const bannerpic = async (req, res) => {
       method: 'GET',
       url: 'http://' + process.env.FTP_HOST + '/' + process.env.FTP_USER + '/' + req.params.file,
       responseType: 'stream'
-    }).then(ress => {
-      ress.data.pipe(res)
+    }).then(res => {
+      res.data.pipe(res)
     }).catch(error => {
       res.status(error.response.status).send({ success: false, message: '取得圖片失敗' })
     })

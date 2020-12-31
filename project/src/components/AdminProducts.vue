@@ -2,7 +2,7 @@
   #adminproducts.min-vh-100
     b-container
       h1(class="my-3 mb-2") 商品管理
-      b-button(v-b-modal.addForm).bg-success.ml-3.mb-3 新增
+      b-button(v-b-modal.addForm  ).bg-success.ml-3.mb-3 新增
       b-row
         b-col(cols="12")
           .products.p-4.pb-5
@@ -20,7 +20,7 @@
                   b-card-text.my-1 已售: {{item.sold}}
                   b-card-text.my-1 剩餘: {{item.amount}}
                   div(style="width:100%;display:flex;flex-direction:column;height:100px")
-                    b-button.bg-success.mt-2 編輯
+                    b-button(@click="editProducts(item)" v-b-modal.editForm).bg-success.mt-2 詳細內容 / 編輯
                     b-button(@click="delProducts(item)").bg-danger.mt-2.mr-0 刪除
           b-pagination(
             v-model="currentPage"
@@ -29,16 +29,58 @@
             aria-controls="itemList"
             align="center"
           ).pt-3
-          b-modal(id="addForm" title="新增商品" size="md" @ok="onSubmit()" okTitle='確定' cancelTitle="取消" okVariant= 'success')
+          b-modal(id="editForm" title="商品內容 / 編輯商品" size="lg" @ok="checkEdit()" okTitle='確定' cancelTitle="取消" okVariant= 'success' )
             b-form()
               b-col(cols="12")
+                p(v-model="editForm.productNumber") 商品編號: {{editForm.productNumber}}
+                b-container
+                  b-row
+                    b-col(cols="6").p-0
+                      p(v-model="editForm.date") 上架日期: {{editForm.date}}
+                    b-col(cols="6").p-0
+                      p(v-model="editForm.sold") 已售數量: {{editForm.sold}}
                 b-form-group(label="商品名稱").w-100
+                  b-form-input(v-model="editForm.name")
+              b-container
+                b-row
+                  b-col(cols="8")
+                    b-form-group(label="商品圖片 :" id="input-group-1")
+                      div(style="max-height:50vh;overflow:hidden").w-100
+                        img(:src="editForm.src" v-if="isEdit" ).w-100
+                  b-col(cols="4")
+                    b-form-group(label="商品價格 :" id="input-group-1")
+                      b-form-input(type="number"
+                           v-model.number="editForm.price")
+                    b-form-group(label="是否特價 :" id="input-group-3")
+                      span(v-if="editForm.onsale").text-danger 是
+                      span(v-else).text-info 否
+                    b-form-group(label="特價價格 :" id="input-group-3" v-if="editForm.onsale")
+                      b-form-input(type="number" v-model.number="editForm.countPrice")
+                    b-form-group(label="商品數量 :" id="input-group-1")
+                      b-form-input(type="number"
+                          v-model.number="editForm.amount")
+              b-col(cols="12")
+                 b-form-group(label="商品敘述 : " id="input-group-1" )
+                  b-form-input(v-model="editForm.description")
+              b-col(cols="12")
+                 b-form-group(label="商品類別 : " id="input-group-1")
+                  b-form-select(
+                    id="input-1" :options="categories" v-model="editForm.category")
+              b-col(cols="12")
+                 b-form-group(label="是否上架 : " id="input-group-1")
+                  b-form-radio(v-model="selected" value=true) 是
+                  b-form-radio(v-model="selected" value=false) 否
+
+          b-modal(id="addForm" title="增加商品 : " size="md" @ok="onSubmit()" okTitle='確定' cancelTitle="取消" okVariant= 'success' )
+            b-form()
+              b-col(cols="12")
+                b-form-group(label="商品名稱 :").w-100
                   b-form-input(v-model="newForm.name")
               b-container
                 b-row
                   b-col(cols="8")
                     b-form-group(label="商品圖片" id="input-group-1")
-                      img-inputer(size="normal" v-model="newForm.image[0].file")
+                      img-inputer(size="normal" v-model="image" )
                   b-col(cols="4")
                     b-form-group(label="商品價格" id="input-group-1")
                       b-form-input(type="number"
@@ -55,8 +97,8 @@
                     id="input-1" :options="categories" v-model="newForm.category")
               b-col(cols="12")
                  b-form-group(label="是否上架" id="input-group-1")
-                  b-form-radio 是
-                  b-form-radio 否
+                  b-form-radio(v-model="selected" name="radio" value = true) 是
+                  b-form-radio(v-model="selected" name="radio" value = false) 否
 
 </template>
 <style lang="stylus">
@@ -69,6 +111,28 @@ export default {
   data () {
     return {
       newForm: {
+        countPrice: null,
+        onsale: null,
+        src: '',
+        name: '',
+        category: '',
+        productNumber: 1,
+        description: '',
+        amount: 1,
+        price: 1,
+        sold: 0,
+        date: '',
+        image: [
+          {
+            display: true,
+            file: null
+          }
+        ]
+      },
+      editForm: {
+        countPrice: null,
+        onsale: null,
+        src: '',
         name: '',
         category: '',
         productNumber: 1,
@@ -85,6 +149,7 @@ export default {
         ]
       },
       checkDel: '',
+      isEdit: false,
       images: [],
       image: null,
       perPage: 8,
@@ -112,58 +177,63 @@ export default {
     }
   },
   methods: {
+    checkEdit () {
+      console.log('666')
+    },
     onSubmit () {
-      // if (!this.newForm.image[0].file.type.includes('image')) {
-      //   alert('檔案格式不符')
-      // } else {
-      const now = new Date()
-      const year = now.getFullYear()
-      const month = now.getMonth() + 1
-      const day = now.getDate()
-      this.newForm.date = year + '/' + month + '/' + day
-      var final = this.newForm
-      console.log(final)
-      const fd = new FormData()
-      fd.append('image', final.image[0].file)
-      fd.append('name', final.name)
-      fd.append('category', final.category)
-      fd.append('description', final.description)
-      fd.append('productNumber', 6)
-      fd.append('onShop', true)
-      fd.append('amount', final.amount)
-      fd.append('price', final.price)
-      fd.append('sold', final.sold)
-      fd.append('onsale', false)
-      fd.append('countPrice', 0)
-      fd.append('date', final.date)
-      fd.append('display', true)
-      console.log(fd)
-      this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
-        .then(res => {
-          if (res.data.success) {
-            // 將新增的圖片塞進相簿陣列
-            // res.data.result.images[0].file.src = process.env.VUE_APP_API + '/products/' + res.data.result.images[0].file
-            // console.log(res.data.result.images[0].file)
-            // res.data.result.images[0].display = true
-            // this.images.push(res.data.result)
-            // 送出後清空表單
-            // this.newForm = null
-            // this.axios.get(process.env.VUE_APP_API + '/products').then((response) => {
-            //   this.images = response.data.result.map(image => {
-            //     image.src = process.env.VUE_APP_API + '/products/' + image.file
-            //     return image
-            //   })
-            //   var data = this.images
-            //   this.$store.commit('productlists', data)
-            // })
-            location.reload()
-          }
-        }).catch(err => {
-          console.log(err)
-        })
+      if (!this.image.type.includes('image')) {
+        alert('檔案格式不符')
+      } else {
+        const now = new Date()
+        const year = now.getFullYear()
+        const month = now.getMonth() + 1
+        const day = now.getDate()
+        this.newForm.date = year + '/' + month + '/' + day
+        var final = this.newForm
+        const fd = new FormData()
+        fd.append('image', this.image)
+        fd.append('name', final.name)
+        fd.append('category', final.category)
+        fd.append('description', final.description)
+        fd.append('productNumber', 6)
+        fd.append('onShop', this.selected)
+        fd.append('amount', final.amount)
+        fd.append('price', final.price)
+        fd.append('sold', final.sold)
+        fd.append('onsale', false)
+        fd.append('countPrice', 0)
+        fd.append('date', final.date)
+        fd.append('display', true)
+        this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
+          .then(res => {
+            if (res.data.success) {
+              this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
+                this.images = response.data.result.map(image => {
+                  image.src = process.env.VUE_APP_API + '/products/' + image.images[0].file
+                  return image
+                })
+                var data = this.images
+                this.$store.commit('productlists', data)
+              })
+            }
+          }).catch(err => {
+            console.log(err)
+          })
 
-      this.newForm.productNumber++
-      // }
+        this.newForm.productNumber++
+      }
+    },
+    editProducts (data) {
+      console.log(data)
+      this.isEdit = true
+      var edited = this.editForm
+      edited.name = data.name
+      edited.productNumber = data.productNumber
+      edited.src = data.src
+      edited.description = data.description
+      edited.category = data.category
+      edited.sold = data.sold
+      edited.date = data.date
     },
     delProducts (data) {
       console.log(data._id)
