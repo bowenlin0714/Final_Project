@@ -69,9 +69,21 @@ export default new Vuex.Store({
     },
     editBanners (state, data) {
       console.log(data.description)
-      // console.log(state.bannerlists[data.index].)
       state.bannerlists[data.index].description = data.description
-      console.log(state.bannerlists[data.index].description)
+    },
+    editProducts (state, data) {
+      const idx = state.productlists.findIndex(product => {
+        return product._id === data._id
+      })
+      var newProducts = state.productlists[idx]
+      newProducts.name = data.name
+      newProducts.price = data.price
+      newProducts.amount = data.amount
+      newProducts.category = data.category
+      newProducts.onsale = data.onsale
+      newProducts.countPrice = data.countPrice
+      newProducts.onShop = data.onShop
+      newProducts.description = data.description
     },
     checkRes (state, id) {
       const idx = state.formlists.findIndex(form => {

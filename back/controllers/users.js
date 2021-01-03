@@ -11,6 +11,8 @@ export const create = async (req, res) => {
   try {
     if (!(/^09[0-9]{8}$/.test(req.body.phone))) {
       res.status(400).send({ success: false, message: '手機格式不符' })
+    } else if ((!(/^[0-9a-zA-Z_]+$/.test(req.body.account)))) {
+      res.status(400).send({ success: false, message: '帳號只能是中英文和空格' })
     } else if (req.body.password.length < 4) {
       res.status(400).send({ success: false, message: '密碼必須四個字以上' })
     } else if (req.body.password.length > 20) {

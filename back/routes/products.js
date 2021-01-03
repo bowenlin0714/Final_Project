@@ -4,7 +4,7 @@ import { edit, del, producttxt, productpic, createProductinfo } from '../control
 const router = express.Router()
 
 router.post('/create', createProductinfo)
-router.patch('/:id', edit)
+router.patch('/edit/:id', edit)
 router.delete('/del/:id', del)
 router.get('/', producttxt)
 router.get('/:file', productpic)

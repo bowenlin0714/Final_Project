@@ -10,7 +10,7 @@
           label.py-2 上傳圖片 :
           img-inputer(v-model="image" theme="light" size="middle" )
           b-button(@click="onSubmit()").bg-success.mt-3 新增
-        b-table(s
+        b-table(
             small
             id="brtable"
             class="mx-auto"
@@ -151,7 +151,6 @@ export default {
       }
     },
     editBanners (data, index) {
-      console.log(data, index, this.description)
       this.axios.patch(process.env.VUE_APP_API + '/banners/edit/' + data._id, { description: this.description })
         .then(res => {
           if (res.data.success) {

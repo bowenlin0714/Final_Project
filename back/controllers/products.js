@@ -11,6 +11,7 @@ import { log } from 'console'
 let storage
 
 dotenv.config()
+let number = 1
 
 // 本機開發，檔案存電腦
 // 雲端環境，檔案存 FTP
@@ -82,17 +83,21 @@ export const createProductinfo = async (req, res) => {
     } else {
       try {
         let file = ''
+        // let preview = ''
         if (process.env.DEV === 'true') {
           file = req.file.filename
+          // preview = 'pre' + req.file.filename
         } else {
           file = path.basename(req.file.path)
+          // preview = path.basename(req.file.path)
         }
         const result = await products.create({
+          // preview,
           user: req.session.user._id,
           name: req.body.name,
           category: req.body.category,
-          productNumber: req.body.productNumber,
-          onShop: true,
+          productNumber: number,
+          onShop: req.body.onShop,
           description: req.body.description,
           amount: req.body.amount,
           sold: req.body.sold,
@@ -121,6 +126,7 @@ export const createProductinfo = async (req, res) => {
       }
     }
   })
+  number++
 }
 
 // 取得商品資訊
@@ -157,40 +163,40 @@ export const productpic = async (req, res) => {
     })
   }
 }
-// 修改商品
+// 編輯商品
 export const edit = async (req, res) => {
-  // if (req.session.user === undefined) {
-  //   res.status(401).send({ success: false, message: '未登入' })
-  // } else if (req.session.user.isAdmin !== true) {
-  //   res.status(403).send({ success: false, message: '沒有權限' })
-  //   return
-  // }
-  // if (!req.headers['content-type']) {
-  //   res.status(400).send({ success: false, message: '資料格式不符' })
-  //   return
-  // }
-
-  // try {
-  //   let result = await products.findById(req.params.id)
-  //   if (result === null) {
-  //     res.status(404).send({ success: false, message: '找不到資料' })
-  //   } else if (result.user !== req.session.user._id) {
-  //     res.status(403).send({ success: false, message: '沒有權限' })
-  //   } else {
-  //     result = await products.findByIdAndUpdate(req.params.id, req.body, { new: true })
-  //     res.status(200).send({ success: true, message: '', result })
-  //   }
-  // } catch (error) {
-  //   if (error.name === 'ValidationError') {
-  //     const key = Object.keys(error.errors)[0]
-  //     const message = error.errors[key].message
-  //     res.status(400).send({ success: false, message })
-  //   } else if (error.name === 'CastError') {
-  //     res.status(400).send({ success: false, message: 'ID 格式錯誤' })
-  //   } else {
-  //     res.status(500).send({ success: false, message: '伺服器錯誤' })
-  //   }
-  // }
+  if (req.session.user === undefined) {
+    res.status(401).send({ success: false, message: '未登入' })
+  } else if (req.session.user.isAdmin !== true) {
+    res.status(403).send({ success: false, message: '沒有權限' })
+    return
+  }
+  if (!req.headers['content-type']) {
+    res.status(400).send({ success: false, message: '資料格式不符' })
+    return
+  }
+  try {
+    let result = await products.findById(req.params.id)
+    console.log(result)
+    if (result === null) {
+      res.status(404).send({ success: false, message: '找不到資料' })
+    } else if (req.session.user.isAdmin !== true) {
+      res.status(403).send({ success: false, message: '沒有權限' })
+    } else {
+      result = await products.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      res.status(200).send({ success: true, message: '', result })
+    }
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      res.status(400).send({ success: false, message })
+    } else if (error.name === 'CastError') {
+      res.status(400).send({ success: false, message: 'ID 格式錯誤' })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
 }
 
 // 刪除商品
@@ -212,7 +218,8 @@ export const del = async (req, res) => {
 
       // 刪除本機圖片檔
       if (process.env.DEV === 'true') {
-        fs.unlink('images/products' + result.file, () => {})
+        console.log(result)
+        fs.unlink('images/products/' + result.images[0].file, () => {})
       }
     }
   } catch (error) {
@@ -252,7 +259,6 @@ export const file = async (req, res) => {
   if (process.env.DEV === 'true') {
     const path = process.cwd() + '/images/products/' + req.params.file
     const exists = fs.existsSync(path)
-    console.log(path)
     if (exists) {
       res.status(200).sendFile(path)
     } else {

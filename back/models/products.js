@@ -37,10 +37,10 @@ const productSchema = new Schema({
     maxlength: [999999, '請輸入正確數量']
   },
   productNumber: {
-    type: Number,
+    type: String,
     required: [true, '缺少商品編號'],
     minlength: [1, '編號最小為1'],
-    uniqeu: true
+    unique: true
   },
   description: {
     type: String,
@@ -66,7 +66,12 @@ const productSchema = new Schema({
     required: [true, '缺少上架日期']
 
   },
+  // preview: {
+  //   type: String,
+  //   required: [true, '缺少預覽圖名稱']
+  // },
   images: {
+    required: [true, '缺少商品圖片'],
     type: [productImageSchema]
   }
 })

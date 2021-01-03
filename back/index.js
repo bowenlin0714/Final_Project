@@ -71,7 +71,6 @@ app.use('/users', routerUser)
 app.use('/products', routerProduct)
 app.use('/forms', routerForm)
 app.use('/banners', bannersForm)
-// app.use('/products', routerProduct)
 
 // bodyparser cors 之類的套件`發生錯誤時的處理
 // app.use((err, req, res, next) => {})
