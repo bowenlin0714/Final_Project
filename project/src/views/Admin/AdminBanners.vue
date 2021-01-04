@@ -6,7 +6,8 @@
         b-button(v-b-modal.addBanner).bg-success.mb-3 新增
         b-modal(id="addBanner" title="新增輪播圖" size="sm" hide-footer).d-flex.flex-column
           label 檔案敘述 :
-          input(type="input" placeholder="請輸入" v-model="description")
+          b-form-input(type="input" placeholder="請輸入" v-model="description" required class="form-control ")
+          .invalid-feedback 請輸入檔案敘述
           label.py-2 上傳圖片 :
           img-inputer(v-model="image" theme="light" size="middle" )
           b-button(@click="onSubmit()").bg-success.mt-3 新增
@@ -40,7 +41,7 @@
           @ok="editBanners(selected , selectedIndex)"
           ).d-flex.flex-column
           label.mr-2 檔案名 :
-          input(type="input" placeholder="請輸入" v-model="description")
+          input(type="input" placeholder="請輸入" v-model="description" )
           img(:src="selected.src" style="width:100%").pt-3
       div.w-100
         p(v-if="bannerlists.length == 0").text-center.h1.text-white 目前沒有內容
@@ -62,6 +63,12 @@ export default {
       image: null,
       description: '',
       images: [],
+      validations: {
+        name: {
+          // required,
+          // minLength: minLength(3)
+        }
+      },
       fields: [
         {
           key: 'description',

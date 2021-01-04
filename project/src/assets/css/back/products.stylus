@@ -1,4 +1,6 @@
 #adminproducts
+  .footer
+    color: grey
   h1
     color: grey
   .products

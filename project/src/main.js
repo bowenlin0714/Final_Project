@@ -8,8 +8,11 @@ import VueParallaxJs from 'vue-parallax-js'
 import ImgInputer from 'vue-img-inputer'
 import 'vue-img-inputer/dist/index.css'
 import Carousel3d from 'vue-carousel-3d'
-
+import Vuelidate from 'vuelidate'
 import $ from 'jquery'
+import VeeValidate from 'vee-validate'
+import zhTW from 'vee-validate/dist/locale/zh_TW'
+import VueI18n from 'vue-i18n'
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -33,10 +36,24 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, axios, $)
 Vue.use(VueParallaxJs)
 Vue.use(Carousel3d)
+Vue.use(Vuelidate)
+Vue.use(VueI18n)
+
+const i18n = new VueI18n({
+  locale: 'zhTW'
+})
+Vue.use(VeeValidate, {
+  events: 'input|blur', // 這是為了讓使用者離開該欄位時觸發驗證
+  i18n,
+  dictionary: {
+    zhTW
+  }
+})
 
 Vue.component('ImgInputer', ImgInputer)
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App)

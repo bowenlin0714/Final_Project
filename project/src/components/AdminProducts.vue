@@ -1,38 +1,21 @@
 <template lang="pug">
   #adminproducts.min-vh-100
     b-container
-      div.d-flex.align-items-center.justify-content-center.position-relative
-        h1(class="my-3 mb-2" style="z-index:2").text-center 商品管理
-      b-row
-        b-col(cols="12"  lg="3").ml-auto
-          b-form-input(
-              type="text"
-              placeholder="Type to search"
-              v-model="keyword"
-              style="right:0"
-            ).mb-3
-        b-col(cols="12")
-          b-button(v-b-modal.addForm  style="height:48px").bg-success.w-100.mb-3.d-block.d-lg-none 新增商品
-        b-col(cols="12" ).d-block.d-lg-none
-          b-dropdown(text="選擇類別" block menu-class="w-100" variant="info").mb-3
-            b-dropdown-item-button(v-for="item in this.$store.state.categories" @click="tagCategory(item)") {{item.text}}
+      div.d-flex.align-items-center.justify-content-center
+        h1(class="my-3 mb-2") 商品管理
       b-row
         b-col(cols="1").p-0
-          b-button(v-b-modal.addForm  style="height:48px").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
-          b-list-group(v-for="(category, index) in this.$store.state.categories" :key="index").p-1.d-none.d-lg-block
-            b-list-group-item.p-0.text-center.d-block
-              b-button(@click="tagCategory(category)" style="font-size:14px").w-100.bg-info {{category.text}}
-        b-col(cols="12" lg="11")
+          b-button(v-b-modal.addForm  style="height:48px").bg-success.w-100 新增商品
+        b-col(cols="11")
           .products.p-4.pb-5
-            h3(v-if="itemsForList.length === 0").text-white.text-center 目前沒有商品
-            b-row(v-else)
+            b-row
               b-col(cols="12" sm="6" md="6" lg="3"  v-for="item in itemsForList" :key="item.id" )
                 b-card(
                 ).mt-4.shadow.border
                   b-container
                     b-card-title(:title="item.name" class="d-inline-block text-truncate")
                   div(style="height:20vh;overflow:hidden")
-                    b-card-img(:src="item.src[0]")
+                    b-card-img(:src="item.src")
                   b-card-text.my-1 商品狀態:
                     span(v-if="item.onShop").text-success 販售中
                     span(v-else).text-danger 已下架
@@ -41,7 +24,6 @@
                   div(style="width:100%;display:flex;flex-direction:column;height:100px")
                     b-button(@click="checkEdit(item)" v-b-modal.editForm).bg-success.mt-2 詳細內容 / 編輯
                     b-button(@click="delProducts(item)").bg-danger.mt-2.mr-0 刪除
-          p(class="footer").text-center.pt-2.mb-0 第 {{currentPage}} 頁，共 {{productlists.length}} 筆結果
           b-pagination(
             v-model="currentPage"
             :total-rows="productlists.length"
@@ -58,7 +40,7 @@
                     b-col(cols="6").p-0
                       p 商品編號: {{editForm.productNumber}}
                     b-col(cols="6").p-0.d-flex.align-items-center
-                      b-form-group(label="是否上架 : " id="input-group-11").m-0.p-0
+                      b-form-group(label="是否上架 : " id="input-group-1").m-0.p-0
                       b-button(style="border-style:none;" @click="checkOnshop()").bg-transparent.border-none.ml-2
                         font-awesome-icon(v-if="editForm.onShop" :icon=['fas', 'check'] ).text-success
                         font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
@@ -72,75 +54,62 @@
                   b-form-input(v-model="editForm.name")
               b-container
                 b-row
-                  b-col(cols="12")
-                    b-form-group(label="商品圖片 :" id="input-group-2")
-                      b-row
-                        b-col(cols="6" v-for="image in editForm.src").d-flex.p-3
-                          div(style="max-height:50vh;overflow:hidden" ).w-100.d-flex.align-items-center.border.justify-content-center.rounded
-                            img(:src="image").w-75
-                  b-col(cols="12")
-                    b-form-group(label="商品價格 :" id="input-group-3")
+                  b-col(cols="8")
+                    b-form-group(label="商品圖片 :" id="input-group-1")
+                      div(style="max-height:50vh;overflow:hidden").w-100
+                        img(:src="editForm.src"  ).w-100
+                  b-col(cols="4")
+                    b-form-group(label="商品價格 :" id="input-group-1")
                       b-form-input(type="number"
                            v-model.number="editForm.price")
-                    b-form-group(label="是否特價 :" id="input-group-4")
+                    b-form-group(label="是否特價 :" id="input-group-3")
                       b-button(style="border-style:none;" @click="checkSale()").bg-transparent.border-none.d-inline
                         font-awesome-icon(v-if="editForm.onsale" :icon=['fas', 'check'] ).text-success
                         font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
-                    b-form-group(label="特價價格 :" id="input-group-5" v-if="editForm.onsale")
+                    b-form-group(label="特價價格 :" id="input-group-3" v-if="editForm.onsale")
                       b-form-input(type="number" v-model.number="editForm.countPrice")
 
               b-col(cols="12")
-                 b-form-group(label="商品敘述 : " id="input-group-8" )
+                 b-form-group(label="商品敘述 : " id="input-group-1" )
                   b-form-input(v-model="editForm.description")
               b-container
                 b-row
                   b-col(cols="6")
-                    b-form-group(label="商品類別 : " id="input-group-6")
+                    b-form-group(label="商品類別 : " id="input-group-1")
                       b-form-select(id="input-1" :options="categories" v-model="editForm.category")
                         template(v-slot:first)
                           b-form-select-option(:value="null" disabled) 請選擇類別
                   b-col(cols="6")
-                    b-form-group(label="商品數量 :" id="input-group-7")
+                    b-form-group(label="商品數量 :" id="input-group-1")
                             b-form-input(type="number"
                                 v-model.number="editForm.amount")
           //- 增加商品
-          b-modal(id="addForm" title="增加商品 : " size="lg" @ok="onSubmit()" okTitle='確定' cancelTitle="取消" okVariant= 'success' )
+          b-modal(id="addForm" title="增加商品 : " size="md" @ok="onSubmit()" okTitle='確定' cancelTitle="取消" okVariant= 'success' )
             b-form()
-              b-container
-                b-form-group(label="商品名稱 :").w-100.mt-3
-                  b-form-input(v-model="newForm.name")
+              b-form-group(label="商品名稱 :").w-100.mt-3
+                b-form-input(v-model="newForm.name")
               b-container
                 b-row
-                  b-col(cols="12")
-                    b-form-group(label="商品圖片 :" id="input-group-12")
-                      b-container(fluid)
-                        b-row
-                          b-col(cols="6").text-center.p-2
-                            img-inputer(size="normal" v-model="image" )
-                          b-col(cols="6").text-center
-                            img-inputer(size="normal" v-model="image2" )
-                          b-col(cols="6").text-center
-                            img-inputer(size="normal" v-model="image3" )
-                          b-col(cols="6").text-center
-                            img-inputer(size="normal" v-model="image4" )
-                  b-col(cols="6")
-                    b-form-group(label="商品價格" id="input-group-13")
+                  b-col(cols="8")
+                    b-form-group(label="商品圖片" id="input-group-1")
+                      img-inputer(size="normal" v-model="image" )
+                  b-col(cols="4")
+                    b-form-group(label="商品價格" id="input-group-1")
                       b-form-input(type="number"
                            v-model.number="newForm.price")
-                  b-col(cols="6")
-                    b-form-group(label="商品數量" id="input-group-14")
+                    b-form-group(label="商品數量" id="input-group-1")
                       b-form-input(type="number"
                           v-model.number="newForm.amount")
               b-col(cols="12")
-                 b-form-group(label="商品敘述" id="input-group-15" )
+                 b-form-group(label="商品敘述" id="input-group-1" )
                   b-form-input(v-model="newForm.description")
               b-col(cols="12")
-                 b-form-group(label="商品類別" id="input-group-16"  )
+                 b-form-group(label="商品類別" id="input-group-1"  )
                   b-form-select(id="input-1" :options="categories" v-model="newForm.category" )
                     template(v-slot:first)
                       b-form-select-option(:value="null" disabled) 請選擇類別
               b-col(cols="12")
-                b-form-group(label="是否上架 : " id="input-group-17").d-inline
+                b-form-group(label="是否上架 : " id="input-group-1").d-inline
                 b-form-radio(v-model="newForm.onShop" value="true" name="radio").w-25.d-inline.ml-3 是
                 b-form-radio(v-model="newForm.onShop" value="false" name="radio").w-25.d-inline.ml-3 否
 
@@ -154,8 +123,8 @@ export default {
   name: 'AdminProducts',
   data () {
     return {
-      keyword: '',
-      tag: '',
+      test: '',
+      productlists: this.$store.state.productlists,
       newForm: {
         countPrice: null,
         onsale: null,
@@ -199,50 +168,33 @@ export default {
       isEdit: false,
       images: [],
       image: null,
-      image2: null,
-      image3: null,
-      image4: null,
       perPage: 8,
-      currentPage: 1
+      currentPage: 1,
+      categories: [
+        { value: 'A', text: '日本景品' },
+        { value: 'B', text: '組裝模型' },
+        { value: 'C', text: 'PVC人偶' },
+        { value: 'D', text: 'GK' },
+        { value: 'E', text: '可動人偶' }
+      ]
     }
   },
   computed: {
-    finallists () {
-      var result = ''
-      if (this.keyword === '') {
-        result = this.productlists
-        return result
-      } else {
-        result = this.productlists.filter(product => {
-          return product.name.search(this.keyword) !== -1
-        })
-      }
-      return result
-    },
-    productlists () {
-      var result = ''
-      if (this.tag === '') {
-        result = this.$store.state.productlists
-        return result
-      } else {
-        result = this.$store.state.productlists.filter(product => {
-          return product.category === this.tag
-        })
-      }
-      return result
-    },
+    // productlists () {
+    //   return this.$store.state.productlists
+    // },
     itemsForList () {
-      return this.finallists.slice(
+      return this.productlists.slice(
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       )
     }
   },
   methods: {
-    tagCategory (data) {
-      this.tag = data.value
+    selectType () {
     },
     checkOnshop () {
+      console.log(this.editForm.onShop)
       this.editForm.onShop = !this.editForm.onShop
     },
     checkSale () {
@@ -250,6 +202,7 @@ export default {
     },
     editProducts () {
       const _id = this.editForm._id
+      console.log(this.editForm.onShop)
       this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + _id, {
         description: this.editForm.description,
         name: this.editForm.name,
@@ -262,6 +215,7 @@ export default {
       })
         .then(res => {
           if (res.data.success) {
+            console.log(res)
             this.$store.commit('editProducts', {
               _id,
               description: this.editForm.description,
@@ -293,9 +247,6 @@ export default {
         var final = this.newForm
         const fd = new FormData()
         fd.append('image', this.image)
-        fd.append('image', this.image2)
-        fd.append('image', this.image3)
-        fd.append('image', this.image4)
         fd.append('name', final.name)
         fd.append('category', final.category)
         fd.append('description', final.description)
@@ -309,15 +260,11 @@ export default {
         fd.append('display', true)
         this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
           .then(res => {
-            console.log(res)
+            console.log(res.data)
             if (res.data.success) {
               this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
                 this.images = response.data.result.map(image => {
-                  var result = []
-                  for (let i = 0; i < image.images.length; i++) {
-                    result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
-                    image.src = result
-                  }
+                  image.src = process.env.VUE_APP_API + '/products/' + image.images[0].file
                   return image
                 })
                 this.newForm.name = ''
@@ -335,6 +282,7 @@ export default {
       }
     },
     checkEdit (data) {
+      console.log(data)
       this.isEdit = true
       var edited = this.editForm
       edited.name = data.name
@@ -351,6 +299,7 @@ export default {
       edited._id = data._id
     },
     delProducts (data) {
+      console.log(data._id)
       var deldata = data
       this.checkDel = ''
       this.$bvModal.msgBoxConfirm('確定要刪除嗎', {
@@ -382,11 +331,7 @@ export default {
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
       this.images = response.data.result.map(image => {
-        var result = []
-        for (let i = 0; i < image.images.length; i++) {
-          result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
-          image.src = result
-        }
+        image.src = process.env.VUE_APP_API + '/products/' + image.images[0].file
         return image
       })
       var data = this.images
