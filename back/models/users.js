@@ -4,8 +4,55 @@ import beautifyUnique from 'mongoose-beautiful-unique-validation'
 
 const Schema = mongoose.Schema
 
+const orderProductSchema = new Schema({
+  p_id: {
+    type: mongoose.ObjectId,
+    ref: 'products'
+  },
+  amount: {
+    type: Number,
+    minlength: [1, '購買數量最小為1']
+  },
+  note: {
+    type: String
+  }
+})
+
+const orderSchema = new Schema({
+  address: {
+    type: String,
+    required: [true, '缺少寄送地址']
+  },
+  howtoSend: {
+    type: String,
+    required: [true, '缺少寄送方式']
+  },
+  howTopay: {
+    type: String,
+    required: [true, '缺少付款方式']
+  },
+  isSend: {
+    type: Boolean,
+    require: [true, '缺少訂單狀態']
+  },
+  orderNumber: {
+    type: String,
+    required: [true, '缺少訂單編號']
+  },
+  date: {
+    type: Date,
+    required: [true, '缺少購買日期']
+  },
+  products: {
+    type: [orderProductSchema]
+  }
+})
+
 const userSchema = new Schema(
   {
+    orders: {
+      type: [orderSchema]
+    },
     name: {
       type: String,
       unique: '稱謂重複',

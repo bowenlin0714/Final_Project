@@ -17,11 +17,17 @@
             v-for="(banner,index) in this.$store.state.bannerlists"
             :img-src="banner.src"
           )
+      carousel-3d
+        slide(:index="0") 66
+        slide(:index="1") 555
+        slide(:index="2") 555
+        slide(:index="3") 555
+        slide(:index="4") 555
 
 </template>
 
 <script>
-
+import { Carousel3d, Slide } from 'vue-carousel-3d'
 export default {
   name: 'Home',
   data () {
@@ -29,6 +35,10 @@ export default {
       slide: 0,
       sliding: null
     }
+  },
+  components: {
+    Carousel3d,
+    Slide
   },
   methods: {
     onSlideStart (slide) {

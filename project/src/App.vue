@@ -20,7 +20,7 @@
       a(href="#")
        font-awesome-icon(:icon="['fas','chevron-circle-up']")
     router-view(style="margin-top: 56px" )
-    Footer(v-if="$route.path!=='/admin'")
+    Footer
 
 </template>
 

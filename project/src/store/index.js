@@ -6,6 +6,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    categories: [
+      { value: '', text: '全部商品' },
+      { value: 'A', text: '日本景品' },
+      { value: 'B', text: '組裝模型' },
+      { value: 'C', text: 'PVC人偶' },
+      { value: 'D', text: 'GK' },
+      { value: 'E', text: '可動人偶' },
+      { value: 'F', text: '扭蛋 / 盒玩' },
+      { value: 'G', text: '設計師公仔' },
+      { value: 'H', text: '其他' }
+
+    ],
     user: {
       name: '',
       account: '',
@@ -43,6 +55,7 @@ export default new Vuex.Store({
       state.bannerlists = (data)
     },
     productlists (state, data) {
+      console.log(data)
       state.productlists = []
       state.productlists = (data)
     },

@@ -68,7 +68,44 @@ const routes = [
     component: () => import(/* webpackChunkName: "admin" */ '../views/Admin/AdminHome.vue'),
     meta: {
       title: 'BUYFIG / 管理者後台'
-    }
+    },
+    children: [
+      {
+        path: 'adminproducts',
+        component: () => import(/* webpackChunkName: "adminproducts" */ '../views/Admin/AdminProducts.vue'),
+        meta: {
+          title: ' 管理者後台 / 商品管理'
+        }
+      },
+      {
+        path: 'adminmembers',
+        component: () => import(/* webpackChunkName: "adminmembers" */ '../views/Admin/AdminMembers.vue'),
+        meta: {
+          title: ' 管理者後台 / 會員資料管理'
+        }
+      },
+      {
+        path: 'adminorders',
+        component: () => import(/* webpackChunkName: "adminorders" */ '../views/Admin/AdminOrders.vue'),
+        meta: {
+          title: ' 管理者後台 / 訂單管理'
+        }
+      },
+      {
+        path: 'adminopinions',
+        component: () => import(/* webpackChunkName: "adminopinions" */ '../views/Admin/AdminOpinions.vue'),
+        meta: {
+          title: ' 管理者後台 / 意見表管理'
+        }
+      },
+      {
+        path: 'adminbanners',
+        component: () => import(/* webpackChunkName: "adminbanners" */ '../views/Admin/AdminBanners.vue'),
+        meta: {
+          title: ' 管理者後台 / 輪播圖管理'
+        }
+      }
+    ]
   }
 ]
 

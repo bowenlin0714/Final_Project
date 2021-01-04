@@ -6,6 +6,6 @@
       border  1px solid white
       height auto
       background black
-      border-radius: 1%
+      border-radius: 10px
     .card-body
       padding 5%

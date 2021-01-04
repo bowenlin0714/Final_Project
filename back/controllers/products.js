@@ -68,7 +68,7 @@ export const createProductinfo = async (req, res) => {
     return
   }
 
-  upload.single('image')(req, res, async error => {
+  upload.array('image', 4)(req, res, async error => {
     if (error instanceof multer.MulterError) {
       let message = ''
       if (error.code === 'LIMIT_FORMAT') {
@@ -82,15 +82,22 @@ export const createProductinfo = async (req, res) => {
       res.status(500).send({ success: false, message: '伺服器錯誤' })
     } else {
       try {
-        let file = ''
+        const images = req.files.map(file => {
+          const f = process.env.DEV === 'true' ? file.filename : path.basename(file.path)
+          return {
+            file: f,
+            display: true
+          }
+        })
+
         // let preview = ''
-        if (process.env.DEV === 'true') {
-          file = req.file.filename
-          // preview = 'pre' + req.file.filename
-        } else {
-          file = path.basename(req.file.path)
-          // preview = path.basename(req.file.path)
-        }
+        // if (process.env.DEV === 'true') {
+        //   file = req.file.filename
+        //   // preview = 'pre' + req.file.filename
+        // } else {
+        //   file = path.basename(req.file.path)
+        //   // preview = path.basename(req.file.path)
+        // }
         const result = await products.create({
           // preview,
           user: req.session.user._id,
@@ -105,15 +112,11 @@ export const createProductinfo = async (req, res) => {
           onsale: false,
           countPrice: req.body.countPrice,
           date: req.body.date,
-          images: [
-            {
-              file,
-              display: true
-            }
-          ]
+          images
         })
         res.status(200).send({ success: true, message: '', result })
       } catch (error) {
+        console.log(error)
         if (error.name === 'ValidationError') {
           const key = Object.keys(error.errors)[0]
           const message = error.errors[key].message
