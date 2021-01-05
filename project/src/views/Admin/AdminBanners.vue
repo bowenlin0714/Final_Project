@@ -4,13 +4,32 @@
       h1(class="my-3 mb-2") 輪播圖管理
       b-col(cols="12")
         b-button(v-b-modal.addBanner).bg-success.mb-3 新增
-        b-modal(id="addBanner" title="新增輪播圖" size="sm" hide-footer).d-flex.flex-column
-          label 檔案敘述 :
-          b-form-input(type="input" placeholder="請輸入" v-model="description" required class="form-control ")
-          .invalid-feedback 請輸入檔案敘述
-          label.py-2 上傳圖片 :
-          img-inputer(v-model="image" theme="light" size="middle" )
-          b-button(@click="onSubmit()").bg-success.mt-3 新增
+        b-modal(
+          id="addBanner"
+          title="新增輪播圖"
+          size="sm"
+          @ok="handleOk"
+          okTitle="確定"
+          cancelTitle="取消"
+          @show="resetModal"
+          @hidden="resetModal").d-flex.flex-column
+          b-form(@submit.stop.prevent="onSubmit")
+            b-form-group(
+              label="檔案敘述 :"
+              label-for="input1"
+              id="input1").mb-0
+              b-form-input(
+                id="input1"
+                name="input1"
+                v-model="description"
+                placeholder="請輸入"
+                :state="validateState('input1')"
+                v-validate="{ required: true }"
+                data-vv-as="檔案敘述"
+                ).mb-2 請輸入檔案敘述
+              b-form-invalid-feedback().mb-3 {{ veeErrors.first('input1') }}
+            b-form-group(label="上傳圖片 :" label-for="input2" id="input2").mb-0
+              img-inputer(v-model="image" theme="light" size="middle" )
         b-table(
             small
             id="brtable"
@@ -35,8 +54,8 @@
           id="change"
           title="編輯"
           size="sm"
-          :ok-title="oktitle"
-          :cancel-title="canceltitle"
+          okTitle="確定"
+          cancelTitle="取消"
           ok-variant="success"
           @ok="editBanners(selected , selectedIndex)"
           ).d-flex.flex-column
@@ -56,19 +75,11 @@ export default {
   name: 'AdminBanners',
   data () {
     return {
-      oktitle: '確定',
-      canceltitle: '取消',
       selected: '',
       selectedIndex: '',
-      image: null,
       description: '',
+      image: null,
       images: [],
-      validations: {
-        name: {
-          // required,
-          // minLength: minLength(3)
-        }
-      },
       fields: [
         {
           key: 'description',
@@ -101,6 +112,19 @@ export default {
     }
   },
   methods: {
+    handleOk (bvModalEvt) {
+      bvModalEvt.preventDefault()
+      this.onSubmit()
+    },
+    validateState (ref) {
+      if (
+        this.veeFields[ref] &&
+        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
+      ) {
+        return !this.veeErrors.has(ref)
+      }
+      return null
+    },
     checkisShow (data) {
       this.axios.patch(process.env.VUE_APP_API + '/banners/edit/' + data.item._id, { isShow: !data.item.isShow })
         .then(res => {
@@ -120,42 +144,52 @@ export default {
       this.selected = data
       this.selectedIndex = index
     },
-    onSubmit () {
-      if (!this.image.type.includes('image')) {
-        alert('檔案格式不符')
-      } else {
-        console.log(this.image)
-        const fd = new FormData()
-        fd.append('image', this.image)
-        fd.append('description', this.description)
-        this.axios.post(process.env.VUE_APP_API + '/banners/create', fd)
-          .then(res => {
-            if (res.data.success) {
+    async onSubmit () {
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return
+        }
+        if (!this.image.type.includes('image')) {
+          alert('檔案格式不符')
+        } else {
+          console.log(this.image)
+          const fd = new FormData()
+          fd.append('image', this.image)
+          fd.append('description', this.description)
+          this.axios.post(process.env.VUE_APP_API + '/banners/create', fd)
+            .then(res => {
+              if (res.data.success) {
               // 將新增的圖片塞進相簿陣列
-              console.log(res)
-              res.data.result.src = process.env.VUE_APP_API + '/banners/file/' + res.data.result.file
-              res.data.result.title = res.data.result.description
-              res.data.result.isEdit = false
-              this.images.push(res.data.result)
-              // 送出後清空表單
-              this.image = null
-              this.description = ''
-              this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
-                this.images = response.data.result.map(image => {
-                  image.src = process.env.VUE_APP_API + '/banners/' + image.file
-                  return image
+                console.log(res)
+                res.data.result.src = process.env.VUE_APP_API + '/banners/file/' + res.data.result.file
+                res.data.result.title = res.data.result.description
+                res.data.result.isEdit = false
+                this.images.push(res.data.result)
+                // 送出後清空表單
+                this.$bvModal.hide('addBanner')
+                this.image = null
+                this.description = ''
+                this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
+                  this.images = response.data.result.map(image => {
+                    image.src = process.env.VUE_APP_API + '/banners/' + image.file
+                    return image
+                  })
+                  var data = this.images
+                  this.$store.commit('bannerlists', data)
                 })
-                var data = this.images
-                this.$store.commit('bannerlists', data)
-              })
-            } else {
-              alert('錯誤')
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      }
+              } else {
+                alert('錯誤')
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
+      })
+    },
+    resetModal () {
+      this.description = ''
+      this.image = null
     },
     editBanners (data, index) {
       this.axios.patch(process.env.VUE_APP_API + '/banners/edit/' + data._id, { description: this.description })

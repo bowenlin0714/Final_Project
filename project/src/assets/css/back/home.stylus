@@ -25,11 +25,16 @@
 
 
 
-@media (max-width:767px) {
+@media (max-width:767px) 
+
   .bgleft {
     transform: translateX(-100%)
   }
-}
+@media (max-width:992px) 
+  .modal-footer
+  .btn
+    width:100% !important
+
 .block
   height auto
   position: fixed

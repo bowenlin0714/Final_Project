@@ -27,7 +27,8 @@ export default new Vuex.Store({
     memberlists: null,
     formlists: null,
     bannerlists: null,
-    productlists: null
+    productlists: null,
+    productdetail: null
   },
   mutations: {
     login (state, data) {
@@ -58,6 +59,10 @@ export default new Vuex.Store({
       console.log(data)
       state.productlists = []
       state.productlists = (data)
+    },
+    showdetail (state, data) {
+      state.productdetail = []
+      state.productdetail = (data)
     },
     delmember (state, id) {
       const idx = state.memberlists.findIndex(user => {

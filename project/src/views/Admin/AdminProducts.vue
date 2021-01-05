@@ -15,11 +15,11 @@
           b-button(v-b-modal.addForm  style="height:48px").bg-success.w-100.mb-3.d-block.d-lg-none 新增商品
         b-col(cols="12" ).d-block.d-lg-none
           b-dropdown(text="選擇類別" block menu-class="w-100" variant="info").mb-3
-            b-dropdown-item-button(v-for="item in this.$store.state.categories" @click="tagCategory(item)") {{item.text}}
+            b-dropdown-item-button(v-for="item in categories" @click="tagCategory(item)") {{item.text}}
       b-row
         b-col(cols="1").p-0
           b-button(v-b-modal.addForm  style="height:48px").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
-          b-list-group(v-for="(category, index) in this.$store.state.categories" :key="index").p-1.d-none.d-lg-block
+          b-list-group(v-for="(category, index) in categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block
               b-button(@click="tagCategory(category)" style="font-size:14px").w-100.bg-info {{category.text}}
         b-col(cols="12" lg="11")
@@ -50,13 +50,22 @@
             align="center"
           ).pt-3
           //- 編輯商品
-          b-modal(id="editForm" title="商品內容 / 編輯商品" size="lg" @ok="editProducts()" okTitle='確定' cancelTitle="取消" okVariant= 'success' )
+          b-modal(
+            header-bg-variant="info"
+            header-text-variant="white"
+            id="editForm"
+            title="商品內容 / 編輯商品"
+            size="lg"
+            @ok="handleOk2"
+            okTitle='確定'
+            cancelTitle="取消"
+            okVariant= 'success' )
             b-form()
               b-col(cols="12")
                 b-container
                   b-row
                     b-col(cols="6").p-0
-                      p 商品編號: {{editForm.productNumber}}
+                      p 商品編號:  {{editForm.productNumber}}
                     b-col(cols="6").p-0.d-flex.align-items-center
                       b-form-group(label="是否上架 : " id="input-group-11").m-0.p-0
                       b-button(style="border-style:none;" @click="checkOnshop()").bg-transparent.border-none.ml-2
@@ -68,14 +77,14 @@
                       p(v-model="editForm.date") 上架日期: {{editForm.date}}
                     b-col(cols="6").p-0
                       p(v-model="editForm.sold") 已售數量: {{editForm.sold}}
-                b-form-group(label="商品名稱").w-100
+                b-form-group(label="商品名稱 :").w-100
                   b-form-input(v-model="editForm.name")
               b-container
                 b-row
                   b-col(cols="12")
                     b-form-group(label="商品圖片 :" id="input-group-2")
                       b-row
-                        b-col(cols="6" v-for="image in editForm.src").d-flex.p-3
+                        b-col( cols="12" lg="6" v-for="image in editForm.src").d-flex.p-3
                           div(style="max-height:50vh;overflow:hidden" ).w-100.d-flex.align-items-center.border.justify-content-center.rounded
                             img(:src="image").w-75
                   b-col(cols="12")
@@ -86,12 +95,23 @@
                       b-button(style="border-style:none;" @click="checkSale()").bg-transparent.border-none.d-inline
                         font-awesome-icon(v-if="editForm.onsale" :icon=['fas', 'check'] ).text-success
                         font-awesome-icon(v-else :icon=['fas', 'times'] ).text-danger
-                    b-form-group(label="特價價格 :" id="input-group-5" v-if="editForm.onsale")
-                      b-form-input(type="number" v-model.number="editForm.countPrice")
-
+                    b-form-group(
+                      label="特價價格 :"
+                      id="editspecial"
+                      label-for="editspecial"
+                      v-if="editForm.onsale")
+                      b-form-input(
+                        type="number"
+                        v-model.number="editForm.countPrice"
+                        id="editspecial"
+                        name="editspecial"
+                        :state="validateState('editspecial')"
+                        v-validate="{ required: true, min:0, numeric: true }"
+                        data-vv-as="特價價格")
+                      b-form-invalid-feedback().mb-3 {{ veeErrors.first('editspecial') }}
               b-col(cols="12")
                  b-form-group(label="商品敘述 : " id="input-group-8" )
-                  b-form-input(v-model="editForm.description")
+                  b-form-textarea( v-model="editForm.description" max-rows="15")
               b-container
                 b-row
                   b-col(cols="6")
@@ -104,45 +124,119 @@
                             b-form-input(type="number"
                                 v-model.number="editForm.amount")
           //- 增加商品
-          b-modal(id="addForm" title="增加商品 : " size="lg" @ok="onSubmit()" okTitle='確定' cancelTitle="取消" okVariant= 'success' )
-            b-form()
+          b-modal(
+            header-bg-variant="info"
+            header-text-variant="white"
+            id="addForm"
+            title="增加商品 : "
+            size="lg"
+            @ok="handleOk"
+            okTitle='確定'
+            cancelTitle="取消"
+            okVariant= 'success'
+            @show="resetModal"
+            @hidden="resetModal")
+            b-form(@submit.stop.prevent="onSubmit")
               b-container
-                b-form-group(label="商品名稱 :").w-100.mt-3
-                  b-form-input(v-model="newForm.name")
+                b-form-group(
+                  label="商品名稱 :"
+                  label-for="newname"
+                  id="newname").w-100.mt-3
+                  b-form-input(
+                    id="newname"
+                    name="newname"
+                    v-model="newForm.name"
+                    :state="validateState('newname')"
+                    v-validate="{ required: true, min:2 }"
+                    data-vv-as="商品名稱")
+                  b-form-invalid-feedback().mb-3 {{ veeErrors.first('newname') }}
               b-container
                 b-row
                   b-col(cols="12")
-                    b-form-group(label="商品圖片 :" id="input-group-12")
+                    b-form-group(
+                      label="商品圖片 :"
+                      id="input-group-12")
                       b-container(fluid)
                         b-row
-                          b-col(cols="6").text-center.p-2
+                          b-col(lg="6" cols="12").text-center.pb-2.pt-2
                             img-inputer(size="normal" v-model="image" )
-                          b-col(cols="6").text-center
+                          b-col(lg="6" cols="12").text-center.pb-2.pt-2
                             img-inputer(size="normal" v-model="image2" )
-                          b-col(cols="6").text-center
+                          b-col(lg="6" cols="12").text-center.pb-2.pt-2
                             img-inputer(size="normal" v-model="image3" )
-                          b-col(cols="6").text-center
+                          b-col(lg="6" cols="12").text-center.pb-2.pt-2
                             img-inputer(size="normal" v-model="image4" )
                   b-col(cols="6")
-                    b-form-group(label="商品價格" id="input-group-13")
-                      b-form-input(type="number"
-                           v-model.number="newForm.price")
+                    b-form-group(
+                      label="商品價格"
+                      label-for="newprice"
+                      id="newprice")
+                      b-form-input(
+                        type="number"
+                        v-model.number="newForm.price"
+                        id="newprice"
+                        name="newprice"
+                        :state="validateState('newprice')"
+                        v-validate="{ required: true, min:1, numeric: true }"
+                        data-vv-as="商品價格")
+                      b-form-invalid-feedback().mb-3 {{ veeErrors.first('newprice') }}
                   b-col(cols="6")
-                    b-form-group(label="商品數量" id="input-group-14")
-                      b-form-input(type="number"
-                          v-model.number="newForm.amount")
+                    b-form-group(
+                      label="商品數量"
+                      id="newamount"
+                      label-for="newamount")
+                      b-form-input(
+                        type="number"
+                        v-model.number="newForm.amount"
+                        id="newamount"
+                        name="newamount"
+                        :state="validateState('newamount')"
+                        v-validate="{ required: true, min:0, numeric: true, max: 999999 }"
+                        data-vv-as="商品數量")
+                      b-form-invalid-feedback().mb-3 {{ veeErrors.first('newamount') }}
               b-col(cols="12")
-                 b-form-group(label="商品敘述" id="input-group-15" )
-                  b-form-input(v-model="newForm.description")
+                 b-form-group(
+                   label="商品敘述"
+                   id="newdescription"
+                   label-for="newdescription")
+                  b-form-input(
+                    v-model="newForm.description"
+                    id="newdescription"
+                    name="newdescription"
+                    :state="validateState('newdescription')"
+                    v-validate="{ required: true }"
+                    data-vv-as="商品敘述")
+                  b-form-invalid-feedback().mb-3 {{ veeErrors.first('newdescription') }}
               b-col(cols="12")
-                 b-form-group(label="商品類別" id="input-group-16"  )
-                  b-form-select(id="input-1" :options="categories" v-model="newForm.category" )
+                 b-form-group(
+                   label="商品類別"
+                   id="newcategory"
+                   label-for="newcategory")
+                  b-form-select(
+                    id="newcategory"
+                    :options="categories"
+                    v-model="newForm.category"
+                    name="newcategory"
+                    :state="validateState('newcategory')"
+                    v-validate="{ required: true }"
+                    data-vv-as="商品分類")
+                  b-form-invalid-feedback().mb-3 {{ veeErrors.first('newcategory') }}
                     template(v-slot:first)
                       b-form-select-option(:value="null" disabled) 請選擇類別
               b-col(cols="12")
-                b-form-group(label="是否上架 : " id="input-group-17").d-inline
-                b-form-radio(v-model="newForm.onShop" value="true" name="radio").w-25.d-inline.ml-3 是
-                b-form-radio(v-model="newForm.onShop" value="false" name="radio").w-25.d-inline.ml-3 否
+                b-form-group(
+                  label="是否上架 :"
+                  id="newonshop"
+                  label-for="newonshop").d-inline
+                  b-form-radio-group(
+                    id="newonshop"
+                    v-model="newForm.onShop"
+                    name="newonshop"
+                    :options="newRadios"
+                    :state="validateState('newonshop')"
+                     v-validate="{ required: true }"
+                     data-vv-as="上架選項")
+                  b-form-invalid-feedback(:state="validateState('newonshop')").mb-3 上架選項不可為空
 
 </template>
 <style lang="stylus">
@@ -154,6 +248,10 @@ export default {
   name: 'AdminProducts',
   data () {
     return {
+      newRadios: [
+        { text: '是', value: true },
+        { text: '否', value: false }
+      ],
       keyword: '',
       tag: '',
       newForm: {
@@ -207,6 +305,9 @@ export default {
     }
   },
   computed: {
+    categories () {
+      return this.$store.state.categories
+    },
     finallists () {
       var result = ''
       if (this.keyword === '') {
@@ -239,6 +340,23 @@ export default {
     }
   },
   methods: {
+    handleOk (bvModalEvt) {
+      bvModalEvt.preventDefault()
+      this.onSubmit()
+    },
+    handleOk2 (bvModalEvt) {
+      bvModalEvt.preventDefault()
+      this.editProducts()
+    },
+    validateState (ref) {
+      if (
+        this.veeFields[ref] &&
+        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
+      ) {
+        return !this.veeErrors.has(ref)
+      }
+      return null
+    },
     tagCategory (data) {
       this.tag = data.value
     },
@@ -248,91 +366,104 @@ export default {
     checkSale () {
       this.editForm.onsale = !this.editForm.onsale
     },
-    editProducts () {
-      const _id = this.editForm._id
-      this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + _id, {
-        description: this.editForm.description,
-        name: this.editForm.name,
-        price: this.editForm.price,
-        amount: this.editForm.amount,
-        category: this.editForm.category,
-        onsale: this.editForm.onsale,
-        countPrice: this.editForm.countPrice,
-        onShop: this.editForm.onShop
-      })
-        .then(res => {
-          if (res.data.success) {
-            this.$store.commit('editProducts', {
-              _id,
-              description: this.editForm.description,
-              name: this.editForm.name,
-              price: this.editForm.price,
-              amount: this.editForm.amount,
-              category: this.editForm.category,
-              onsale: this.editForm.onsale,
-              countPrice: this.editForm.countPrice,
-              onShop: this.editForm.onShop
-            })
-          } else {
-            alert('發生錯誤')
-          }
+    async editProducts () {
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return
+        }
+        const _id = this.editForm._id
+        this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + _id, {
+          description: this.editForm.description,
+          name: this.editForm.name,
+          price: this.editForm.price,
+          amount: this.editForm.amount,
+          category: this.editForm.category,
+          onsale: this.editForm.onsale,
+          countPrice: this.editForm.countPrice,
+          onShop: this.editForm.onShop
         })
-        .catch(err => {
-          alert(err.response.data.message)
-        })
-    },
-    onSubmit () {
-      if (!this.image.type.includes('image')) {
-        alert('檔案格式不符')
-      } else {
-        const now = new Date()
-        const year = now.getFullYear()
-        const month = now.getMonth() + 1
-        const day = now.getDate()
-        this.newForm.date = year + '/' + month + '/' + day
-        var final = this.newForm
-        const fd = new FormData()
-        fd.append('image', this.image)
-        fd.append('image', this.image2)
-        fd.append('image', this.image3)
-        fd.append('image', this.image4)
-        fd.append('name', final.name)
-        fd.append('category', final.category)
-        fd.append('description', final.description)
-        fd.append('onShop', final.onShop)
-        fd.append('amount', final.amount)
-        fd.append('price', final.price)
-        fd.append('sold', final.sold)
-        fd.append('onsale', false)
-        fd.append('countPrice', 0)
-        fd.append('date', final.date)
-        fd.append('display', true)
-        this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
           .then(res => {
-            console.log(res)
             if (res.data.success) {
-              this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
-                this.images = response.data.result.map(image => {
-                  var result = []
-                  for (let i = 0; i < image.images.length; i++) {
-                    result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
-                    image.src = result
-                  }
-                  return image
-                })
+              this.$bvModal.hide('editForm')
+              this.$store.commit('editProducts', {
+                _id,
+                description: this.editForm.description,
+                name: this.editForm.name,
+                price: this.editForm.price,
+                amount: this.editForm.amount,
+                category: this.editForm.category,
+                onsale: this.editForm.onsale,
+                countPrice: this.editForm.countPrice,
+                onShop: this.editForm.onShop
+              })
+            } else {
+              alert('發生錯誤')
+            }
+          })
+          .catch(err => {
+            alert(err.response.data.message)
+          })
+      })
+    },
+    async onSubmit () {
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return
+        }
+        if (!this.image.type.includes('image')) {
+          alert('檔案格式不符')
+        } else {
+          const now = new Date()
+          const year = now.getFullYear()
+          const month = now.getMonth() + 1
+          const day = now.getDate()
+          this.newForm.date = year + '/' + month + '/' + day
+          var final = this.newForm
+          const fd = new FormData()
+          fd.append('image', this.image)
+          fd.append('image', this.image2)
+          fd.append('image', this.image3)
+          fd.append('image', this.image4)
+          fd.append('name', final.name)
+          fd.append('category', final.category)
+          fd.append('description', final.description)
+          fd.append('onShop', final.onShop)
+          fd.append('amount', final.amount)
+          fd.append('price', final.price)
+          fd.append('sold', final.sold)
+          fd.append('onsale', false)
+          fd.append('countPrice', 0)
+          fd.append('date', final.date)
+          fd.append('display', true)
+          this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
+            .then(res => {
+              console.log(res)
+              if (res.data.success) {
                 this.newForm.name = ''
                 this.newForm.description = ''
                 this.newForm.amount = 1
                 this.newForm.price = 1
                 this.newForm.category = null
-                var data = this.images
-                this.$store.commit('productlists', data)
-              })
-            }
-          }).catch(err => {
-            console.log(err)
-          })
-      }
+                this.$bvModal.hide('addForm')
+
+                this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
+                  this.images = response.data.result.map(image => {
+                    var result = []
+                    for (let i = 0; i < image.images.length; i++) {
+                      result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
+                      image.src = result
+                    }
+                    return image
+                  })
+                  var data = this.images
+                  this.$store.commit('productlists', data)
+                })
+              }
+            }).catch(err => {
+              console.log(err)
+            })
+        }
+      })
     },
     checkEdit (data) {
       this.isEdit = true
@@ -377,6 +508,13 @@ export default {
             })
         }
       })
+    },
+    resetModal () {
+      this.newForm.name = ''
+      this.newForm.description = ''
+      this.newForm.amount = 1
+      this.newForm.price = 1
+      this.newForm.category = null
     }
   },
   mounted () {

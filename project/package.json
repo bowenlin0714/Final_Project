@@ -12,11 +12,10 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^2.0.2",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.0",
     "core-js": "^3.6.5",
     "jarallax": "^1.12.5",
-    "jquery": "^3.5.1",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.1.0",
     "register-service-worker": "^1.7.1",
@@ -61,7 +60,6 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-bootstrap-vue": "~0.7.0",
-    "vue-template-compiler": "^2.6.11",
-    "jquery": "^1.12.4"
+    "vue-template-compiler": "^2.6.11"
   }
 }

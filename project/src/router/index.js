@@ -39,6 +39,14 @@ const routes = [
     }
   },
   {
+    path: '/productsdetail',
+    name: 'ProductsDetail',
+    component: () => import(/* webpackChunkName: "productsdetail" */ '../views/ProductsDetail.vue'),
+    meta: {
+      title: 'BUYFIG / 商品列表'
+    }
+  },
+  {
     path: '/contact',
     name: 'Contact',
     component: () => import(/* webpackChunkName: "contact" */ '../views/Contact.vue'),

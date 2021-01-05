@@ -3,6 +3,7 @@ carbon = #A9A9A9
 sky = #CAE8F2
 watermelon = #FF3B3F
 smoke = #EFEFEF
+deepblue = #444B53
 
 toCenter() {
   position: absolute

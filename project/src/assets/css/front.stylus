@@ -4,3 +4,5 @@
 @import "front/about.stylus";
 @import "front/login.stylus";
 @import "front/banners.stylus";
+@import "front/products.stylus";
+@import "front/productsdetail.stylus";
