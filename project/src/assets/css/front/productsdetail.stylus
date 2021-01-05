@@ -10,6 +10,12 @@ pre
     justify-content: center
     align-items: center
     img 
-      height: 100%
-  li
-    cursor pointer    
+      max-height: 100%
+      max-width: 100%
+  .col-10    
+    li
+      cursor pointer    
+      background-color:rgb(0,0,0)
+      display: flex
+      justify-content: center
+      align-items: center

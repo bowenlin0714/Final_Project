@@ -89,17 +89,7 @@ export const createProductinfo = async (req, res) => {
             display: true
           }
         })
-
-        // let preview = ''
-        // if (process.env.DEV === 'true') {
-        //   file = req.file.filename
-        //   // preview = 'pre' + req.file.filename
-        // } else {
-        //   file = path.basename(req.file.path)
-        //   // preview = path.basename(req.file.path)
-        // }
         const result = await products.create({
-          // preview,
           user: req.session.user._id,
           name: req.body.name,
           category: req.body.category,
@@ -112,7 +102,12 @@ export const createProductinfo = async (req, res) => {
           onsale: false,
           countPrice: req.body.countPrice,
           date: req.body.date,
-          images
+          images,
+          comments: {
+            accounts: req.body.account,
+            comments: req.body.comments,
+            stars: req.body.stars
+          }
         })
         res.status(200).send({ success: true, message: '', result })
       } catch (error) {

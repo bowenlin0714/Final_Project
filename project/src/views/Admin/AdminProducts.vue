@@ -199,8 +199,9 @@
                    label="商品敘述"
                    id="newdescription"
                    label-for="newdescription")
-                  b-form-input(
+                  b-form-textarea(
                     v-model="newForm.description"
+                    max-rows="15"
                     id="newdescription"
                     name="newdescription"
                     :state="validateState('newdescription')"

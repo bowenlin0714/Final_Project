@@ -13,7 +13,7 @@
                   placeholder="Type to search"
                   v-model="keyword"
                   style="right:0"
-                ).w-75.ml-3
+                ).w-75.ml-2
       b-col(cols="2")
         b-list-group(v-for="(category, index) in this.$store.state.categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block
@@ -25,7 +25,7 @@
               b-card(class="productCard").mb-3.shadow.border
                 div(style="height:30vh;overflow:hidden;line-height:30vh").border
                   b-card-img(:src="item.src[0]")
-                b-card-text.mt-2 {{item.name}}
+                b-card-text(style="").mt-2 {{item.name}}
                 b-card-text NT: {{item.price}}
       b-pagination(
             v-model="currentPage"

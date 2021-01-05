@@ -2,6 +2,20 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
+const commentSchema = new Schema(
+  {
+    accounts: {
+      type: String
+    },
+    comments: {
+      type: String
+    },
+    stars: {
+      type: Number,
+      maxlength: [5, '最多5顆星']
+    }
+  }
+)
 const productImageSchema = new Schema(
   {
     file: {
@@ -66,13 +80,12 @@ const productSchema = new Schema({
     required: [true, '缺少上架日期']
 
   },
-  // preview: {
-  //   type: String,
-  //   required: [true, '缺少預覽圖名稱']
-  // },
   images: {
     required: [true, '缺少商品圖片'],
     type: [productImageSchema]
+  },
+  comments: {
+    type: [commentSchema]
   }
 })
 
