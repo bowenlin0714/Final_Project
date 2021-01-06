@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app(style="height:100%" ).d-flex.flex-column.justify-content-between
+  #app(style="height:100%;overflow-x:hidden" ).d-flex.flex-column.justify-content-between
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
         b-navbar-brand(to='/') BUYFIG
@@ -21,7 +21,6 @@
        font-awesome-icon(:icon="['fas','chevron-circle-up']")
     router-view(style="margin-top: 56px" )
     Footer
-
 </template>
 
 <script>

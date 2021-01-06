@@ -6,3 +6,5 @@
 @import "front/banners.stylus";
 @import "front/products.stylus";
 @import "front/productsdetail.stylus";
+@import "front/home.stylus";
+@import "front/hot.stylus";

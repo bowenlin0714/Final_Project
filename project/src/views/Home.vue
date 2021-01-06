@@ -17,17 +17,15 @@
             v-for="(banner,index) in this.$store.state.bannerlists"
             :img-src="banner.src"
           )
-      carousel-3d
-        slide(:index="0") 66
-        slide(:index="1") 555
-        slide(:index="2") 555
-        slide(:index="3") 555
-        slide(:index="4") 555
+      div.titlepic.mt-3
+        p 熱門商品
+      Hot
 
 </template>
 
 <script>
 import { Carousel3d, Slide } from 'vue-carousel-3d'
+import Hot from '@/components/Hot'
 export default {
   name: 'Home',
   data () {
@@ -38,7 +36,10 @@ export default {
   },
   components: {
     Carousel3d,
-    Slide
+    Slide,
+    Hot
+  },
+  computed: {
   },
   methods: {
     onSlideStart (slide) {
@@ -53,13 +54,13 @@ export default {
       const result = res.data.result.filter((banner) => {
         return banner.isShow === true
       })
-      console.log(result)
       this.images = result.map(image => {
         image.src = process.env.VUE_APP_API + '/banners/' + image.file
         return image
       })
       var data = this.images
       this.$store.commit('bannerlists', data)
+      console.log(this.$store.state.productlists.sold)
     })
   }
 

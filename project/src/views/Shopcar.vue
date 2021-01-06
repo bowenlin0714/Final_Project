@@ -1,8 +1,6 @@
 <template>
 <div class="home">
-  <p v-for="item in 20" :key="item">aaaaaaaaaaaaaaaaaaaa</p>
-  <div class="bgTest" id="bgTest" :style="{'background-position-y':positionY1+'px'}"></div>
-  <p v-for="item in 20" :key="item+20">aaaaaaaaaaaaaaaaaaaa</p>
+
 </div>
 </template>
 

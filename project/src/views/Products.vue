@@ -5,8 +5,8 @@
         b-breadcrumb(:items="breads")
       b-col(cols="12")
         b-row
-          b-col(cols="3" ).ml-auto.mb-3
-            div(class="searchbar").d-flex.align-items-center
+          b-col(cols="12" lg="3" ).ml-auto.mb-3
+            div(class="searchbar").d-flex.align-items-center.justify-content-center.mb-2
               font-awesome-icon( :icon=['fas', 'search'] ).h4.mt-2
               b-form-input(
                   type="text"
@@ -14,20 +14,29 @@
                   v-model="keyword"
                   style="right:0"
                 ).w-75.ml-2
+          b-col(cols="10").d-block.d-lg-none.mx-auto
+            b-dropdown(text="選擇類別" block menu-class="w-100" variant="info").mb-4
+              b-dropdown-item-button(
+                v-for="item in categories"
+                @click="tagCategory(item)") {{item.text}}
+
       b-col(cols="2")
         b-list-group(v-for="(category, index) in this.$store.state.categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block
               b-button(@click="tagCategory(category)" style="font-size:14px").w-100.shadow-sm {{category.text}}
-      b-col(cols="10")
-        b-row
-          b-col(cols="4" v-for="item in finalLists")
+      b-col(cols="12" lg="10")
+        b-row(style="min-height:50vh")
+          h3(v-if="finalLists.length===0").m-auto 目前沒有商品
+          b-col(cols="10" lg="4" v-for="item in finalLists")
             a(href="#/productsdetail", title="title" style="text-decoration:none" @click="showdetail(item)")
-              b-card(class="productCard").mb-3.shadow.border
-                div(style="height:30vh;overflow:hidden;line-height:30vh").border
-                  b-card-img(:src="item.src[0]")
-                b-card-text(style="").mt-2 {{item.name}}
-                b-card-text NT: {{item.price}}
-      b-pagination(
+              b-card(class="productCard").mb-3.shadow.border.pb-0
+                div(style="max-height:30vh;overflow:hidden;line-height:30vh").border
+                  b-card-img(:src="item.src[0]" style="max-height:100%")
+                b-card-text.mt-2 {{item.name}}
+                b-card-text.d-flex.align-items-center
+                 p NT: {{item.price}}
+                 font-awesome-icon( :icon=['fas', 'shopping-cart'] ).h4.ml-auto.d-block
+        b-pagination(
             v-model="currentPage"
             :total-rows="filterLists.length"
             :per-page="perPage"
@@ -64,12 +73,14 @@ export default {
       return this.$store.state.categories
     },
     filterLists () {
-      var result = ''
+      var products = this.$store.state.productlists.filter(product => product.onShop === true)
+      console.log(products)
+      var result = null
       if (this.tag === '') {
-        result = this.$store.state.productlists
+        result = products
         return result
       } else {
-        result = this.$store.state.productlists.filter(product => {
+        result = products.filter(product => {
           return product.category === this.tag
         })
       }

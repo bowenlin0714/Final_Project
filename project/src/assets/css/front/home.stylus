@@ -1,0 +1,20 @@
+
+#home
+  .titlepic
+    height 200px
+    width 100%
+    background-image: url('~@/assets/titlepic.png') 
+    background-position: center
+    background-size: 98% 100%
+    background-repeat:  no-repeat
+    position relative
+    flexcenter()
+    font-weight: bold
+    color: deepblue 
+    text-shadow: 2px 2px 3px smoke
+    p
+      font-size: inherit 
+  .carousel-inner img {
+    margin: auto;
+  }
+      

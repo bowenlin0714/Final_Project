@@ -30,8 +30,8 @@
                 b-card(
                 ).mt-4.shadow.border
                   b-container
-                    b-card-title(:title="item.name" class="d-inline-block text-truncate")
-                  div(style="height:20vh;overflow:hidden")
+                    b-card-title( class=" text-truncate").h6 {{item.name}}
+                  div(style="height:20vh;overflow:hidden").border
                     b-card-img(:src="item.src[0]")
                   b-card-text.my-1 商品狀態:
                     span(v-if="item.onShop").text-success 販售中

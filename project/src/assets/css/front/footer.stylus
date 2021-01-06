@@ -2,6 +2,7 @@
   bottom:0
 
 .footer
+  overflow-x:hidden
   background:  #444B53
   height auto
   .text-md-left
