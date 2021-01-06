@@ -1,7 +1,18 @@
 html,body 
   height 100%
+  margin-top: 1.8rem
   background-color: smoke  
-  // overflow-x:  hidden
+  @media  (max-width:768px)
+    font-size: 75%
+    .mainNavitem
+      a
+        font-size: 1.5rem
+        display: block 
+    // td[data-label='會員地址']  
+    // td[data-label='刪除']  
+    // td[data-label='編輯']  
+    //   &::before
+    //     display: none
 .breadcrumb 
   background-color: transparent !important;
   a
@@ -9,7 +20,7 @@ html,body
 @media (max-width: 576px)
   .carousel-item
     img 
-      height: 250px 
+      height: 16rem
 @media (min-width: 576px) and (max-width: 768px)
   .carousel-item
     img 
@@ -38,7 +49,7 @@ html,body
   z-index: 3
   display: flex;
   flex-direction: column;
-  font-size: 40px;
+  font-size: 3rem;
   position: fixed;
   right: 10%;
   top: 85%;
@@ -52,10 +63,10 @@ html,body
 
 .shopicon
   color: white
-  font-size: 25px
+  font-size: 1.5rem
 .orange
-  width:20px;
-  height:20px;
+  width:1.2rem;
+  height:1.2rem;
   background:orange;
   border-radius:50%;
   position:absolute

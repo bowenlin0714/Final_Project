@@ -20,12 +20,27 @@
       div.titlepic.mt-3
         p 熱門商品
       Hot
+      u-animate-container
+        u-animate(
+          name="fadeIn"
+          delay="0s"
+          duration="3s"
+          :iteration="100"
+          :offset="0"
+          animateClass="animated"
+          :begin="true"
+        )
+          div(style="width:200px;height:200px;background:red") csssssssssssssssssssssssssssssssssssssssss
+      div.titlepic.mt-3
+        p 最新商品
+      New
 
 </template>
 
 <script>
 import { Carousel3d, Slide } from 'vue-carousel-3d'
 import Hot from '@/components/Hot'
+import New from '@/components/New'
 export default {
   name: 'Home',
   data () {
@@ -37,7 +52,8 @@ export default {
   components: {
     Carousel3d,
     Slide,
-    Hot
+    Hot,
+    New
   },
   computed: {
   },

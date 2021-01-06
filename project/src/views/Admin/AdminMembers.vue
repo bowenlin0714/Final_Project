@@ -29,7 +29,7 @@
             :sort-by.sync="sortBy"
             :per-page="perPage"
             striped=true
-            )
+            ).text-lg-center
             template(#cell(address)='row')
               b-button(variant="info" @click.stop="row.toggleDetails") 會員地址
             template(v-slot:row-details="row")

@@ -1,7 +1,7 @@
 
 #home
   .titlepic
-    height 200px
+    height 13rem
     width 100%
     background-image: url('~@/assets/titlepic.png') 
     background-position: center
@@ -9,11 +9,13 @@
     background-repeat:  no-repeat
     position relative
     flexcenter()
-    font-weight: bold
+    font-weight: bolder
     color: deepblue 
     text-shadow: 2px 2px 3px smoke
+    @media  (max-width:768px)
+      height 10rem
     p
-      font-size: inherit 
+      font-size: 4rem
   .carousel-inner img {
     margin: auto;
   }

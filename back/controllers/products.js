@@ -6,12 +6,12 @@ import fs from 'fs'
 import dotenv from 'dotenv'
 
 import products from '../models/products.js'
-import { log } from 'console'
+// import { log } from 'console'
 
 let storage
 
 dotenv.config()
-let number = 1
+let number = 10
 
 // 本機開發，檔案存電腦
 // 雲端環境，檔案存 FTP

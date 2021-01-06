@@ -38,12 +38,10 @@
 .block
   height auto
   position: fixed
-  left -130px
-  top: 50%
-  border-radius: 0 10% 10% 0
-  transform: translate(0,-50%)
-  border: 1px solid white
-  background: white
+  right -8.2rem
+  top: 60%
+  border-radius: 10% 0 0 10%
+  background: grey
   transition: 0.3s
   a   
     color: black
@@ -53,17 +51,17 @@
   content: ''
   font-size: 10px
   color: black
-  width: 60px
-  height 80px
+  width: 3rem
+  height 5rem
   position: absolute  
-  right -30%
+  left -30%
   top: 50%
   border-radius: 20%
   transform: translate(0,-50%)
-  background: white
+  background: grey
   transition: 0.8s
 .block:hover
   cursor pointer
-  left 0
+  right 0
 
 

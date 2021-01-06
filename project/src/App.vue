@@ -1,9 +1,9 @@
 <template lang="pug">
-  #app(style="height:100%;overflow-x:hidden" ).d-flex.flex-column.justify-content-between
+  #app(style="overflow-x:hidden" ).d-flex.flex-column.justify-content-between
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
         b-navbar-brand(to='/') BUYFIG
-        a(href="#/shopcar", title="title").class.ml-auto.d-flex.position-relative
+        a(href="#/shopcar", title="title").class.ml-auto.d-flex.position-relative.mr-3
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange
         b-navbar-toggle(target='nav-collapse')
@@ -19,7 +19,7 @@
     #socialLink(v-if="$route.path!=='/admin'")
       a(href="#")
        font-awesome-icon(:icon="['fas','chevron-circle-up']")
-    router-view(style="margin-top: 56px" )
+    router-view
     Footer
 </template>
 

@@ -1,11 +1,24 @@
-<template>
-<div class="home">
-
-</div>
+<template lang="pug">
+  <div class="home">
+    b-container
+      div(style="width:100%;height:100vh")
+      div(style="width:100%;height:100vh")
+      div(style="width:100%;height:100vh")
+      div(style="width:100%;height:100vh")
+      div(style="width:100%;height:100vh")
+      div(class="m_con wow  fadeInLeft") ssssssaaa
+      div(style="width:100%;height:100vh")
+      div(style="width:100%;height:100vh")
+      div(style="width:100%;height:100vh")
+  </div>
 </template>
 
 <script>
+import { WOW } from 'wowjs'
 export default {
+  components: {
+
+  },
   name: 'Home',
   data () {
     return {
@@ -16,9 +29,13 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('scroll', this.handleScroll)
-    const bgTest = document.getElementById('bgTest')
-    this.Y1 = bgTest.offsetTop * this.ratio
+    this.$nextTick(() => {
+      // 在dom渲染完后,再执行动画
+      const wow = new WOW({
+        live: false
+      })
+      wow.init()
+    })
   },
   methods: {
 
@@ -29,8 +46,7 @@ export default {
         document.body.scrollTop
       this.positionY1 = this.Y1 - scrollTop * this.ratio // 原始高度-滚动距离*视差系数
     }
-  },
-  components: {}
+  }
 }
 </script>
 <style lang="stylus">

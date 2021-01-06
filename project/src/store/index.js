@@ -56,9 +56,8 @@ export default new Vuex.Store({
       state.bannerlists = (data)
     },
     productlists (state, data) {
-      console.log(data)
       state.productlists = []
-      state.productlists = (data)
+      state.productlists = data.filter(product => product.onShop === true)
     },
     showdetail (state, data) {
       state.productdetail = []

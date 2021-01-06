@@ -23,9 +23,10 @@
       b-col(cols="2")
         b-list-group(v-for="(category, index) in this.$store.state.categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block
-              b-button(@click="tagCategory(category)" style="font-size:14px").w-100.shadow-sm {{category.text}}
+              div(v-ripple class="button is-primary")
+                b-button(@click="tagCategory(category)" style="font-size:14px").w-100.shadow-sm {{category.text}}
       b-col(cols="12" lg="10")
-        b-row(style="min-height:50vh")
+        b-row(style="min-height:50vh").d-flex.justify-content-center.justify-content-lg-start
           h3(v-if="finalLists.length===0").m-auto 目前沒有商品
           b-col(cols="10" lg="4" v-for="item in finalLists")
             a(href="#/productsdetail", title="title" style="text-decoration:none" @click="showdetail(item)")
@@ -73,14 +74,12 @@ export default {
       return this.$store.state.categories
     },
     filterLists () {
-      var products = this.$store.state.productlists.filter(product => product.onShop === true)
-      console.log(products)
       var result = null
       if (this.tag === '') {
-        result = products
+        result = this.$store.state.productlists
         return result
       } else {
-        result = products.filter(product => {
+        result = this.$store.state.productlists.filter(product => {
           return product.category === this.tag
         })
       }

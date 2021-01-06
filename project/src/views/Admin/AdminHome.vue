@@ -1,5 +1,5 @@
 <template lang="pug">
-  #adminhome(style="margin-top:56px;" class="" ).h-100
+  #adminhome.h-100
     b-container(fluid class="").h-100
       b-row().h-100
         b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block " ).min-vh-100
@@ -31,11 +31,12 @@
           router-view
       div(class="block d-lg-none")
         b-nav(vertical class="")
-            b-nav-item(@click="showProducts") 商品管理
-            b-nav-item(@click="showMembers") 會員資料管理
-            b-nav-item(@click="showOrders") 訂單管理`
-            b-nav-item(@click="showOpinions") 意見表管理
-            b-nav-item(@click="showBanners") 輪播圖管理
+            b-nav-item(to="/admin/adminproducts") 商品管理
+            b-nav-item(to="/admin/adminmembers") 會員資料管理
+            b-nav-item(to="/admin/adminorders") 訂單管理`
+            b-nav-item(to="/admin/adminopinions") 意見表管理
+            b-nav-item(to="/admin/adminbanners") 輪播圖管理
+
 </template>
 
 <style lang="stylus" scoped>
@@ -50,49 +51,11 @@ export default {
   name: 'AdminHome',
   data () {
     return {
-      products: true,
-      members: false,
-      opinions: false,
-      banners: false,
-      orders: false
+
     }
   },
   methods: {
-    showProducts () {
-      this.products = true
-      this.members = false
-      this.opinions = false
-      this.banners = false
-      this.orders = false
-    },
-    showMembers () {
-      this.products = false
-      this.members = true
-      this.opinions = false
-      this.banners = false
-      this.orders = false
-    },
-    showOpinions () {
-      this.products = false
-      this.members = false
-      this.opinions = true
-      this.banners = false
-      this.orders = false
-    },
-    showBanners () {
-      this.products = false
-      this.members = false
-      this.opinions = false
-      this.banners = true
-      this.orders = false
-    },
-    showOrders () {
-      this.products = false
-      this.members = false
-      this.opinions = false
-      this.banners = false
-      this.orders = true
-    }
+
   }
 }
 </script>

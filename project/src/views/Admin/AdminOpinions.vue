@@ -34,7 +34,7 @@
             striped=true
             row-contextmenu
             v-b-modal.modal-1
-            )
+            ).text-lg-center
             template(#cell(opinion)='row')
               b-button(variant="info" @click.stop="row.toggleDetails" ) 完整訊息
             template(v-slot:row-details="row")
