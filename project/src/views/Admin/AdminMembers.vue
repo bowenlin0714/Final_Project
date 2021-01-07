@@ -106,10 +106,6 @@ export default {
   },
   computed: {
     memberlists () {
-      // var result = null
-      // result = this.$store.state.memberlists.filter((item) => {
-      //   return item.isAdmin === false
-      // })
       if (this.selected === '顯示正常會員') {
         return this.$store.state.memberlists.filter(item => item.isBan === false)
       } else if (this.selected === '顯示已封鎖會員') {
@@ -150,8 +146,6 @@ export default {
     },
     delmember (data, index) {
       var deldata = data
-      var delIndex = index
-      console.log(deldata, delIndex)
       this.checkDel = ''
       this.$bvModal.msgBoxConfirm('確定要刪除嗎', {
         title: data.item.date,

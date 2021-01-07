@@ -17,7 +17,7 @@
           b-col(cols="10").d-block.d-lg-none.mx-auto
             b-dropdown(text="選擇類別" block menu-class="w-100" variant="info").mb-4
               b-dropdown-item-button(
-                v-for="item in categories"
+                v-for="item in this.$store.state.categories"
                 @click="tagCategory(item)") {{item.text}}
 
       b-col(cols="2")
@@ -26,7 +26,7 @@
               div(v-ripple class="button is-primary")
                 b-button(@click="tagCategory(category)" style="font-size:14px").w-100.shadow-sm {{category.text}}
       b-col(cols="12" lg="10")
-        b-row(style="min-height:50vh").d-flex.justify-content-center.justify-content-lg-start
+        b-row(style="min-height:60vh").d-flex.justify-content-center.justify-content-lg-start
           h3(v-if="finalLists.length===0").m-auto 目前沒有商品
           b-col(cols="10" lg="4" v-for="item in finalLists")
             a(href="#/productsdetail", title="title" style="text-decoration:none" @click="showdetail(item)")
@@ -34,8 +34,10 @@
                 div(style="max-height:30vh;overflow:hidden;line-height:30vh").border
                   b-card-img(:src="item.src[0]" style="max-height:100%")
                 b-card-text.mt-2 {{item.name}}
-                b-card-text.d-flex.align-items-center
-                 p NT: {{item.price}}
+                b-card-text(style="vertical-align: middle").d-flex.align-items-center
+                 span.text-danger.mr-3(v-if="item.onsale").h5 特價: NT: {{item.countPrice}}
+                 s(v-if="item.onsale") NT: {{item.price}}
+                 span(v-else) NT: {{item.price}}
                  font-awesome-icon( :icon=['fas', 'shopping-cart'] ).h4.ml-auto.d-block
         b-pagination(
             v-model="currentPage"
@@ -53,7 +55,6 @@ export default {
   data () {
     return {
       keyword: '',
-      tag: '',
       currentPage: 1,
       perPage: 9,
       breads: [
@@ -70,19 +71,18 @@ export default {
     }
   },
   computed: {
-    categories () {
-      return this.$store.state.categories
-    },
+
     filterLists () {
       var result = null
-      if (this.tag === '') {
-        result = this.$store.state.productlists
+      if (this.$store.state.tag === '') {
+        result = this.$store.state.onShoplists
         return result
       } else {
-        result = this.$store.state.productlists.filter(product => {
-          return product.category === this.tag
+        result = this.$store.state.onShoplists.filter(product => {
+          return product.category === this.$store.state.tag
         })
       }
+      console.log(result)
       return result
     },
     searchLists () {
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     tagCategory (data) {
-      this.tag = data.value
+      this.$store.state.tag = data.value
     },
     showdetail (data) {
       this.$store.commit('showdetail', data)
@@ -124,7 +124,7 @@ export default {
         return image
       })
       var data = this.images
-      this.$store.commit('productlists', data)
+      this.$store.commit('onShoplists', data)
     })
   }
 }

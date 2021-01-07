@@ -1,3 +1,5 @@
-#addBanner___BV_modal_body_
-  display: flex
-  flex-direction: column
+#adminbanners
+  #addBanner___BV_modal_body_
+    display: flex
+    flex-direction: column
+   

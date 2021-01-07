@@ -6,6 +6,7 @@ import fs from 'fs'
 import dotenv from 'dotenv'
 
 import products from '../models/products.js'
+import { log } from 'console'
 // import { log } from 'console'
 
 let storage
@@ -21,7 +22,7 @@ if (process.env.DEV === 'true') {
       callback(null, 'images/products/')
     },
     filename (req, file, callback) {
-      callback(null, Date.now() + path.extname(file.originalname))
+      callback(null, file.originalname + Date.now() + path.extname(file.originalname))
     }
   })
 } else {
@@ -36,7 +37,7 @@ if (process.env.DEV === 'true') {
     // 上傳的路徑含檔名
     // 路徑為 FTP 的絕對路徑
     destination (req, file, options, callback) {
-      callback(null, '/' + Date.now() + path.extname(file.originalname))
+      callback(null, file.originalname + Date.now() + path.extname(file.originalname))
     }
   })
 }
@@ -104,7 +105,7 @@ export const createProductinfo = async (req, res) => {
           date: req.body.date,
           images,
           comments: {
-            accounts: req.body.account,
+            accounts: req.params.account,
             comments: req.body.comments,
             stars: req.body.stars
           }
@@ -141,7 +142,6 @@ export const producttxt = async (req, res) => {
 export const productpic = async (req, res) => {
   // 開發環境回傳本機圖片
   if (process.env.DEV === 'true') {
-    console.log(req.params.file)
     const path = process.cwd() + '/images/products/' + req.params.file
     const exists = fs.existsSync(path)
     if (exists) {
@@ -175,7 +175,8 @@ export const edit = async (req, res) => {
   }
   try {
     let result = await products.findById(req.params.id)
-    console.log(result)
+    console.log(req.params)
+
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else if (req.session.user.isAdmin !== true) {
@@ -216,7 +217,6 @@ export const del = async (req, res) => {
 
       // 刪除本機圖片檔
       if (process.env.DEV === 'true') {
-        console.log(result)
         fs.unlink('images/products/' + result.images[0].file, () => {})
       }
     }
@@ -226,24 +226,6 @@ export const del = async (req, res) => {
     } else {
       res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
-  }
-}
-
-export const user = async (req, res) => {
-  if (req.session.user === undefined) {
-    res.status(401).send({ success: false, message: '未登入' })
-    return
-  }
-  if (req.session.user._id !== req.params.user) {
-    res.status(403).send({ success: false, message: '沒有權限' })
-    return
-  }
-
-  try {
-    const result = await products.find({ user: req.params.user })
-    res.status(200).send({ success: true, message: '', result })
-  } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }
 

@@ -6,7 +6,6 @@
     .dropdown-toggle 
       background-color: watermelon
       border: none
-      
   .searchbar
     color: watermelon
     input 

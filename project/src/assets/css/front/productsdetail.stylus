@@ -2,6 +2,15 @@ pre
   white-space: pre-wrap;
   word-wrap: break-word;
 #productsdetail
+  // .tab-pane 
+  //   &:nth-child(1)
+  //     p
+  //       background: sky
+  .list-group-item
+    button
+      background-color: deepblue
+  .shopbtn
+      background-color: watermelon
   .bigimg
     height: 50vh
     overflow hidden
@@ -12,7 +21,7 @@ pre
     img 
       max-height: 100%
       max-width: 100%
-  .col-10    
+  .col-10       
     .d-flex
       li
         cursor pointer    
@@ -26,3 +35,7 @@ pre
     .nav-link.active      
       background-color: sky
       color: black    
+  .form
+    background-color: carbon    
+    .btn
+      background-color: watermelon

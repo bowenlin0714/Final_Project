@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app(style="overflow-x:hidden" ).d-flex.flex-column.justify-content-between
+  #app(style="overflow-x:hidden;min-height:100vh" ).d-flex.flex-column.justify-content-between
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
         b-navbar-brand(to='/') BUYFIG

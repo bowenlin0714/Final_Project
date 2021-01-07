@@ -18,21 +18,30 @@
             :img-src="banner.src"
           )
       div.titlepic.mt-3
-        p 熱門商品
+        u-animate-container
+          u-animate(
+            name="fadeInLeft"
+            delay="0s"
+            duration="2s"
+            :iteration="1"
+            :offset="300"
+            animateClass="animated"
+            :begin="false"
+          )
+            p 熱門商品
       Hot
-      u-animate-container
-        u-animate(
-          name="fadeIn"
-          delay="0s"
-          duration="3s"
-          :iteration="100"
-          :offset="0"
-          animateClass="animated"
-          :begin="true"
-        )
-          div(style="width:200px;height:200px;background:red") csssssssssssssssssssssssssssssssssssssssss
       div.titlepic.mt-3
-        p 最新商品
+         u-animate-container
+          u-animate(
+            name="fadeInRight"
+            delay="0s"
+            duration="2s"
+            :iteration="1"
+            :offset="300"
+            animateClass="animated"
+            :begin="false"
+          )
+            p 最新商品
       New
 
 </template>
