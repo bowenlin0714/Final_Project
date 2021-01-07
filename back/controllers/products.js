@@ -104,7 +104,7 @@ export const createProductinfo = async (req, res) => {
           countPrice: req.body.countPrice,
           date: req.body.date,
           images,
-          comments: {
+          comment: {
             accounts: req.params.account,
             comments: req.body.comments,
             stars: req.body.stars

@@ -11,11 +11,25 @@ const orderProductSchema = new Schema({
   },
   amount: {
     type: Number,
+    required: [true, '缺少購買數量'],
     minlength: [1, '購買數量最小為1']
   },
   note: {
     type: String
   }
+})
+
+const shopcarSchema = new Schema({
+
+  total: {
+    type: Number,
+    required: [true, '缺少商品總價'],
+    minlength: [0, '商品總價最小為0']
+  },
+  carProducts: {
+    type: [orderProductSchema]
+  }
+
 })
 
 const orderSchema = new Schema({
@@ -46,12 +60,16 @@ const orderSchema = new Schema({
   products: {
     type: [orderProductSchema]
   }
+
 })
 
 const userSchema = new Schema(
   {
     orders: {
       type: [orderSchema]
+    },
+    usercart: {
+      type: [shopcarSchema]
     },
     name: {
       type: String,

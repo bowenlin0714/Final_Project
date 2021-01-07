@@ -31,8 +31,9 @@ export default new Vuex.Store({
     productdetail: null,
     onShoplists: null,
     commentlists: null,
+    cartproducts: [],
     tag: '',
-    comments: ''
+    comment: ''
   },
   mutations: {
     login (state, data) {
@@ -63,6 +64,10 @@ export default new Vuex.Store({
       state.onShoplists = []
       state.onShoplists = data.filter(product => product.onShop === true)
     },
+    addcartProduct (state, data) {
+      state.cartproducts.push(data)
+      console.log(state.cartproducts)
+    },
     productlists (state, data) {
       state.productlists = []
       state.productlists = (data)
@@ -84,7 +89,7 @@ export default new Vuex.Store({
       state.formlists.splice(idx, 1)
     },
     delcomment (state, index) {
-      state.productdetail.comments.splice(index, 1)
+      state.productdetail.comment.splice(index, 1)
     },
     delProducts (state, id) {
       const idx = state.productlists.findIndex(product => {
@@ -114,8 +119,8 @@ export default new Vuex.Store({
       newProducts.description = data.description
     },
     sendcomments (state, data) {
-      state.productlists.comments = data.comments
-      console.log(data.comments)
+      state.productlists.comment = data.comment
+      console.log(data.comment)
     },
     checkRes (state, id) {
       const idx = state.formlists.findIndex(form => {

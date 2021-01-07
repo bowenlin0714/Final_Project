@@ -436,6 +436,7 @@ export default {
           fd.append('countPrice', 0)
           fd.append('date', final.date)
           fd.append('display', true)
+          fd.append('comment', null)
           this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
             .then(res => {
               console.log(res)

@@ -4,6 +4,9 @@
       b-row
         b-col(cols="12")
           b-breadcrumb(:items="breads")
+          ul
+            li(v-for="cart in cartproducts")
+                p {{cart}}
 </template>
 
 <script>
@@ -26,8 +29,10 @@ export default {
       ]
     }
   },
-
-  mounted () {
+  computed: {
+    cartproducts () {
+      return this.$store.state.cartproducts
+    }
   },
   methods: {
 

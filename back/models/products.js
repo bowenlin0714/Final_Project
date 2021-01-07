@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 const commentSchema = new Schema(
   {
     accounts: {
-      type: String
+      type: String,
+      required: [true, '缺少帳戶名稱']
     },
     comments: {
       type: String
@@ -84,7 +85,7 @@ const productSchema = new Schema({
     required: [true, '缺少商品圖片'],
     type: [productImageSchema]
   },
-  comments: {
+  comment: {
     type: [commentSchema]
   }
 })

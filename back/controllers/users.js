@@ -151,12 +151,12 @@ export const del = async (req, res) => {
 
 // 編輯會員資料
 export const edit = async (req, res) => {
-  if (req.session.user === undefined) {
-    res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.isAdmin !== true) {
-    res.status(403).send({ success: false, message: '沒有權限' })
-    return
-  }
+  // if (req.session.user === undefined) {
+  //   res.status(401).send({ success: false, message: '未登入' })
+  // } else if (req.session.user.isAdmin !== true) {
+  //   res.status(403).send({ success: false, message: '沒有權限' })
+  //   return
+  // }
   if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
     res.status(400).send({ success: false, message: '資料格式不符' })
     return
@@ -167,12 +167,13 @@ export const edit = async (req, res) => {
     console.log(req.params.id)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
-    } else if (req.session.user.isAdmin !== true) {
-      res.status(403).send({ success: false, message: '沒有權限' })
     } else {
       result = await users.findByIdAndUpdate(req.params.id, req.body, { new: true })
       res.status(200).send({ success: true, message: '', result })
     }
+    // } else if (req.session.user.isAdmin !== true) {
+    //   res.status(403).send({ success: false, message: '沒有權限' })
+    // }
   } catch (error) {
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]

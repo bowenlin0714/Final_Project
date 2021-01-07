@@ -28,7 +28,8 @@
             animateClass="animated"
             :begin="false"
           )
-            p 熱門商品
+            span Hot!!
+            p.d-inline 熱門商品
       Hot
       div.titlepic.mt-3
          u-animate-container
@@ -41,7 +42,8 @@
             animateClass="animated"
             :begin="false"
           )
-            p 最新商品
+            span New!!
+            p.d-inline 最新商品
       New
 
 </template>
