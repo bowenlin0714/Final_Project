@@ -104,11 +104,7 @@ export const createProductinfo = async (req, res) => {
           countPrice: req.body.countPrice,
           date: req.body.date,
           images,
-          comment: {
-            accounts: req.params.account,
-            comments: req.body.comments,
-            stars: req.body.stars
-          }
+          comment: []
         })
         res.status(200).send({ success: true, message: '', result })
       } catch (error) {
@@ -139,6 +135,7 @@ export const producttxt = async (req, res) => {
     res.status(500).send({ success: false, message: '發生錯誤' })
   }
 }
+
 export const productpic = async (req, res) => {
   // 開發環境回傳本機圖片
   if (process.env.DEV === 'true') {
@@ -175,7 +172,6 @@ export const edit = async (req, res) => {
   }
   try {
     let result = await products.findById(req.params.id)
-    console.log(req.params)
 
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })

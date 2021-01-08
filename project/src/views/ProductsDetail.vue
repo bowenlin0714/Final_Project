@@ -6,6 +6,7 @@
           b-breadcrumb
             b-breadcrumb-item(to="/") 首頁
             b-breadcrumb-item(to="/products") 商品列表
+            b-breadcrumb-item(to="/products" @click="tagCategory(category)") {{breadtag[0].text}}
             b-breadcrumb-item(active) {{productdetail.name}}
         b-col(cols="2").ml-4.mr-4
           b-list-group(v-for="(category, index) in this.$store.state.categories" :key="index").p-1.d-none.d-lg-block
@@ -39,7 +40,7 @@
                         max="100"
                         v-model="cartProducts.amount"
                       ).w-50.mt-4
-                      b-button(class="shopbtn" to='/shopcar' @click="addcartProduct(productdetail)").w-100.py-2.mt-4 加入購物車
+                      b-button(class="shopbtn" href='#/shopcar' @click="addcartProduct(productdetail)").w-100.py-2.mt-4 加入購物車
                   p 付款與運送: 店到店 + 80 自取免運
               b-col(cols="12")
                 b-tabs(style="min-height:40vh").mb-3
@@ -49,14 +50,14 @@
                       img(v-for="image in productdetail.src" :src="image" style="max-width:100%").my-2
                   b-tab(title="商品評論")
                     b-container
-                      p(style="background: #CAE8F2" v-if="productdetail.comment.length < 1" ).py-2.my-3.text-center 商品目前沒有評論
+                      p(style="background: #CAE8F2" v-if="productdetail.comments.length < 1" ).py-2.my-3.text-center 商品目前沒有評論
                       b-row
                         b-col(cols="12")
                           ul
-                            li(v-for="(comment, index) of productdetail.comment" style="list-style:none")
+                            li(v-for="(comment, index) of productdetail.comments" style="list-style:none")
                               star-rating(:read-only="true" :rating="comment.stars" :star-size="20" :show-rating="false")
                               p.mt-2.ml-2 {{comment.accounts}} : {{comment.comment}}
-                              b-button(@click="delComments(productdetail, index)").mb-2.bg-danger 刪除
+                              b-button(@click="delComments(productdetail, index)" v-if="user.isAdmin === true").mb-2.bg-danger 刪除
                           hr
                           h3.mb-3 留下評論 :
                         b-col(cols="12" class="form").pt-2.rounded
@@ -86,6 +87,7 @@ export default {
   name: 'productsdetail',
   data () {
     return {
+
       id: '',
       account: '',
       comment: '',
@@ -94,7 +96,8 @@ export default {
       rating: null,
       cartProducts: {
         amount: null
-      }
+      },
+      cartLists: []
     }
   },
   components: {
@@ -104,6 +107,11 @@ export default {
     Hot
   },
   computed: {
+    breadtag () {
+      return this.$store.state.categories.filter(cate => {
+        return cate.value === this.productdetail.category
+      })
+    },
     productdetail () {
       return this.$store.state.productdetail
     },
@@ -113,15 +121,24 @@ export default {
   },
   methods: {
     addcartProduct (data) {
+      var user = this.$store.state.user
+      user.shopcar.push({ amount: this.cartProducts.amount, note: '', p_id: data })
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
+        shopcar: user.shopcar
+      }).then(res => {
+        if (res.data.success) {
+          this.$store.commit('addcartProduct', user.shopcar)
+        } else {
+          alert('發生錯誤')
+        }
+      })
       // this.$store.commit('addcartProduct', data)
-      this.$store.commit('addcartProduct', { data, amount: this.cartProducts.amount })
+      // this.$store.commit('addcartProduct', { data, amount: this.cartProducts.amount })
     },
     delComments (data, index) {
-      var comment = data.comment
-      var result = comment.splice(index, 1)
-      console.log(result)
+      var comments = data.comments
       this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + data._id, {
-        comment: comment
+        comments: comments
       })
       // .then(res => {
       //   if (res.data.success) {
@@ -142,15 +159,17 @@ export default {
       this.bigURL = image
     },
     sendcomments (data) {
+      console.log(this.user)
+
       this.id = data._id
-      var comment = {
+      var comments = {
         accounts: this.$store.state.user.account,
         comment: this.comment,
         stars: this.rating
       }
-      data.comment.push(comment)
+      data.comments.push(comments)
       this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
-        comment: data.comment
+        comments: data.comments
       }).then(res => {
         if (res.data.success) {
           this.$store.commit('sendcomments', data)

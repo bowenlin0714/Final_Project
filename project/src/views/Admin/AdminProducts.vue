@@ -420,6 +420,7 @@ export default {
           const day = now.getDate()
           this.newForm.date = year + '/' + month + '/' + day
           var final = this.newForm
+          console.log(final.name)
           const fd = new FormData()
           fd.append('image', this.image)
           fd.append('image', this.image2)
@@ -436,7 +437,7 @@ export default {
           fd.append('countPrice', 0)
           fd.append('date', final.date)
           fd.append('display', true)
-          fd.append('comment', null)
+          // fd.append('comment', null)
           this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
             .then(res => {
               console.log(res)

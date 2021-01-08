@@ -1,5 +1,6 @@
 import md5 from 'md5'
 import users from '../models/users.js'
+import util from 'util'
 
 // 註冊
 export const create = async (req, res) => {
@@ -26,7 +27,8 @@ export const create = async (req, res) => {
         phone: req.body.phone,
         address: req.body.address,
         isAdmin: req.body.isAdmin,
-        isBan: req.body.isBan
+        isBan: req.body.isBan,
+        usercart: []
       })
       res.status(200).send({ success: true, message: '' })
     }
@@ -93,13 +95,14 @@ export const heartbeat = async (req, res) => {
   }
   res.status(200).send(isLogin)
 }
+
 export const finduser = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
     return
   }
   try {
-    const result = await users.find()
+    const result = await users.findById(req.params.id).populate('shopcar.p_id')
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     console.log(error)
@@ -107,19 +110,40 @@ export const finduser = async (req, res) => {
     res.status(500).send({ success: false, message: '發生錯誤' })
   }
 }
+
 // 會員名單
 export const accounts = async (req, res) => {
-  if (req.session.user === undefined) {
-    res.status(401).send({ success: false, message: '未登入' })
-    return
-  }
-  if (req.session.user.isAdmin !== true) {
-    res.status(403).send({ success: false, message: '沒有權限' })
-    return
-  }
+  // if (req.session.user === undefined) {
+  //   res.status(401).send({ success: false, message: '未登入' })
+  //   return
+  // }
+  // if (req.session.user.isAdmin !== true) {
+  //   res.status(403).send({ success: false, message: '沒有權限' })
+  //   return
+  // }
 
   try {
-    const result = await users.find()
+    const result = await users.find().populate('shopcar.p_id')
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    console.log(error)
+
+    res.status(500).send({ success: false, message: '發生錯誤' })
+  }
+}
+// 找特定會員
+export const onemember = async (req, res) => {
+  // if (req.session.user === undefined) {
+  //   res.status(401).send({ success: false, message: '未登入' })
+  //   return
+  // }
+  // if (req.session.user.isAdmin !== true) {
+  //   res.status(403).send({ success: false, message: '沒有權限' })
+  //   return
+  // }
+
+  try {
+    const result = await users.find().populate('shopcar.p_id')
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     console.log(error)
@@ -163,12 +187,14 @@ export const edit = async (req, res) => {
   }
 
   try {
-    let result = await users.findById(req.params.id)
-    console.log(req.params.id)
+    let result = await users.findById(req.params.id).populate('shopcar.p_id')
+    console.log(result)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else {
-      result = await users.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      result = await users.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('shopcar.p_id')
+      console.log(util.inspect(result, { showHidden: true, depth: null }))
+
       res.status(200).send({ success: true, message: '', result })
     }
     // } else if (req.session.user.isAdmin !== true) {

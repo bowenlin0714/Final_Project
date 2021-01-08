@@ -5,10 +5,9 @@ const Schema = mongoose.Schema
 const commentSchema = new Schema(
   {
     accounts: {
-      type: String,
-      required: [true, '缺少帳戶名稱']
+      type: String
     },
-    comments: {
+    comment: {
       type: String
     },
     stars: {
@@ -85,7 +84,7 @@ const productSchema = new Schema({
     required: [true, '缺少商品圖片'],
     type: [productImageSchema]
   },
-  comment: {
+  comments: {
     type: [commentSchema]
   }
 })

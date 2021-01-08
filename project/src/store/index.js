@@ -22,6 +22,7 @@ export default new Vuex.Store({
       name: '',
       account: '',
       id: '',
+      shopcar: [],
       isAdmin: false
     },
     memberlists: null,
@@ -31,9 +32,10 @@ export default new Vuex.Store({
     productdetail: null,
     onShoplists: null,
     commentlists: null,
+    cartlists: null,
     cartproducts: [],
     tag: '',
-    comment: ''
+    comments: ''
   },
   mutations: {
     login (state, data) {
@@ -41,12 +43,14 @@ export default new Vuex.Store({
       state.user.id = data._id
       state.user.account = data.account
       state.user.isAdmin = data.isAdmin
+      state.user.shopcar = data.shopcar
     },
     logout (state) {
       state.user.name = ''
       state.user.id = ''
       state.user.account = ''
       state.user.isAdmin = false
+      state.user.shopcar = []
     },
     memberlists (state, data) {
       state.memberlists = []
@@ -64,9 +68,16 @@ export default new Vuex.Store({
       state.onShoplists = []
       state.onShoplists = data.filter(product => product.onShop === true)
     },
+    cartproducts (state, data) {
+      state.user.shopcar = data
+      console.log(state.user.shopcar)
+    },
     addcartProduct (state, data) {
-      state.cartproducts.push(data)
-      console.log(state.cartproducts)
+      state.user.shopcart = data
+    },
+    cartlists (state, data) {
+      state.cartlists = []
+      state.cartlists = (data)
     },
     productlists (state, data) {
       state.productlists = []
@@ -89,7 +100,7 @@ export default new Vuex.Store({
       state.formlists.splice(idx, 1)
     },
     delcomment (state, index) {
-      state.productdetail.comment.splice(index, 1)
+      state.productdetail.comments.splice(index, 1)
     },
     delProducts (state, id) {
       const idx = state.productlists.findIndex(product => {
@@ -119,8 +130,7 @@ export default new Vuex.Store({
       newProducts.description = data.description
     },
     sendcomments (state, data) {
-      state.productlists.comment = data.comment
-      console.log(data.comment)
+      state.productlists.comments = data.comments
     },
     checkRes (state, id) {
       const idx = state.formlists.findIndex(form => {

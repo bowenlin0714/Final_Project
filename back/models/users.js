@@ -19,18 +19,18 @@ const orderProductSchema = new Schema({
   }
 })
 
-const shopcarSchema = new Schema({
+// const shopcarSchema = new Schema({
 
-  total: {
-    type: Number,
-    required: [true, '缺少商品總價'],
-    minlength: [0, '商品總價最小為0']
-  },
-  carProducts: {
-    type: [orderProductSchema]
-  }
+//   total: {
+//     type: Number,
+//     required: [true, '缺少商品總價'],
+//     minlength: [0, '商品總價最小為0']
+//   },
+//   carProducts: {
+//     type: [orderProductSchema]
+//   }
 
-})
+// })
 
 const orderSchema = new Schema({
   address: {
@@ -68,9 +68,7 @@ const userSchema = new Schema(
     orders: {
       type: [orderSchema]
     },
-    usercart: {
-      type: [shopcarSchema]
-    },
+
     name: {
       type: String,
       unique: '稱謂重複',
@@ -111,6 +109,9 @@ const userSchema = new Schema(
     },
     isBan: {
       type: Boolean
+    },
+    shopcar: {
+      type: [orderProductSchema]
     }
   },
   {
