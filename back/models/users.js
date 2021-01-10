@@ -13,19 +13,11 @@ const orderProductSchema = new Schema({
     type: Number,
     required: [true, '缺少購買數量'],
     minlength: [1, '購買數量最小為1']
-  },
-  note: {
-    type: String
   }
 })
 
 // const shopcarSchema = new Schema({
 
-//   total: {
-//     type: Number,
-//     required: [true, '缺少商品總價'],
-//     minlength: [0, '商品總價最小為0']
-//   },
 //   carProducts: {
 //     type: [orderProductSchema]
 //   }
@@ -33,29 +25,52 @@ const orderProductSchema = new Schema({
 // })
 
 const orderSchema = new Schema({
-  address: {
+  name: {
     type: String,
-    required: [true, '缺少寄送地址']
+    required: [true, '缺少收件人姓名']
   },
-  howtoSend: {
+  phone: {
+    type: String,
+    required: [true, '缺少收件人電話']
+  },
+  date: {
+    type: String,
+    required: [true, '缺少購買日期']
+  },
+  where: {
+    type: String,
+    required: [true, '缺少收貨地址']
+  },
+  method: {
     type: String,
     required: [true, '缺少寄送方式']
   },
-  howTopay: {
+  howtopay: {
     type: String,
     required: [true, '缺少付款方式']
   },
-  isSend: {
+  shipment: {
     type: Boolean,
-    require: [true, '缺少訂單狀態']
+    require: [true, '缺少出貨狀態']
   },
-  orderNumber: {
-    type: String,
-    required: [true, '缺少訂單編號']
+  // orderNumber: {
+  //   type: String,
+  //   required: [true, '缺少訂單編號']
+  // },
+  ispaid: {
+    type: Boolean,
+    require: [true, '缺少金流狀態']
   },
-  date: {
-    type: Date,
-    required: [true, '缺少購買日期']
+  note: {
+    type: String
+  },
+  shipping: {
+    type: Number,
+    required: [true, '缺少運費']
+  },
+  total: {
+    type: Number,
+    required: [true, '缺少總價']
   },
   products: {
     type: [orderProductSchema]
@@ -65,9 +80,6 @@ const orderSchema = new Schema({
 
 const userSchema = new Schema(
   {
-    orders: {
-      type: [orderSchema]
-    },
 
     name: {
       type: String,
@@ -112,6 +124,9 @@ const userSchema = new Schema(
     },
     shopcar: {
       type: [orderProductSchema]
+    },
+    orders: {
+      type: [orderSchema]
     }
   },
   {

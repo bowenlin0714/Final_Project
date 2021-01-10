@@ -8,3 +8,4 @@
 @import "front/productsdetail.stylus";
 @import "front/home.stylus";
 @import "front/hot.stylus";
+@import "front/shopcar.stylus";

@@ -22,7 +22,10 @@ export default new Vuex.Store({
       name: '',
       account: '',
       id: '',
+      phone: '',
+      address: '',
       shopcar: [],
+      orders: [],
       isAdmin: false
     },
     memberlists: null,
@@ -40,17 +43,23 @@ export default new Vuex.Store({
   mutations: {
     login (state, data) {
       state.user.name = data.name
-      state.user.id = data._id
       state.user.account = data.account
-      state.user.isAdmin = data.isAdmin
+      state.user.id = data._id
+      state.user.phone = data.phone
+      state.user.address = data.address
       state.user.shopcar = data.shopcar
+      state.user.isAdmin = data.isAdmin
+      state.user.orders = data.orders
     },
     logout (state) {
       state.user.name = ''
-      state.user.id = ''
       state.user.account = ''
-      state.user.isAdmin = false
+      state.user.id = ''
+      state.user.phone = ''
+      state.user.address = ''
       state.user.shopcar = []
+      state.user.isAdmin = false
+      state.user.orders = []
     },
     memberlists (state, data) {
       state.memberlists = []
@@ -70,9 +79,9 @@ export default new Vuex.Store({
     },
     cartproducts (state, data) {
       state.user.shopcar = data
-      console.log(state.user.shopcar)
     },
     addcartProduct (state, data) {
+      console.log(data)
       state.user.shopcart = data
     },
     cartlists (state, data) {

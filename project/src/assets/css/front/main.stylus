@@ -67,7 +67,7 @@ html,body
 .orange
   width:1.2rem;
   height:1.2rem;
-  background:orange;
+  background:#FF8C00;
   border-radius:50%;
   position:absolute
   right:-30%

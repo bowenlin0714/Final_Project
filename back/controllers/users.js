@@ -28,6 +28,7 @@ export const create = async (req, res) => {
         address: req.body.address,
         isAdmin: req.body.isAdmin,
         isBan: req.body.isBan,
+
         usercart: []
       })
       res.status(200).send({ success: true, message: '' })

@@ -9,11 +9,15 @@
             b-container
               b-row
                 b-col(cols="6" md="3").text-center.text-md-left
-                  p
+                  p.mb-1
                     font-awesome-icon(:icon="['fas','info-circle']")
                     | 關於我們
                   p.p-0.my-0
                     a(href="#/about" title="關於我們") 關於我們
+                  p(style="font-size:1rem").p-0.my-2.text-white  營業時間 : 9:00am ~  8:00pm
+                  p(style="font-size:1rem").p-0.my-2.text-white  客服時間 : 9:00am ~  10:00pm
+                  p(style="font-size:1rem").p-0.my-2.text-white  電話 : 0975888888 (02)2395-2222
+                  p(style="font-size:1rem").p-0.my-2.text-white  地址 : 243新北市泰山區貴子里致遠新村55之1號
                 b-col(cols="6" md="3").text-center.text-md-left
                   p.mb-1
                     font-awesome-icon(:icon="['fas','hand-point-right']")
@@ -47,13 +51,11 @@
                       a(href="https://www.instagram.com/" target="_blank")
                         font-awesome-icon(:icon="['fab','instagram']").text-white.h3
                 br
-                b-col(cols="12").text-center.text-white.mt-5.px5
-                  p.mx-4 營業時間: 上午 9:00am ~ 晚上 8:pm 客服時間:上午 9:00am ~ 晚上 10:pm 電話: 0975798595 (02)1234-5678 地址: 243新北市泰山區貴子里致遠新村55之1號
 
-            b-container(fluid)
+            b-container(fluid).mt-3
               b-row
                 b-col(cols="12" class="copyright").text-center
-                  span.text-white Copyright&copy;2020 Bowen-Lin All Right Deserved
+                  span.text-white Copyright&copy;2020 所有圖片皆來自於網路
 </template>
 <style lang="stylus" >
 

@@ -58,7 +58,7 @@ export default {
           if (res.data.success) {
             alert('註冊成功')
             if (!this.$store.state.user.isAdmin) {
-              this.$router.push('/')
+              this.$router.push('/login')
             }
           } else {
             alert('註冊失敗')

@@ -104,7 +104,7 @@ export const createProductinfo = async (req, res) => {
           countPrice: req.body.countPrice,
           date: req.body.date,
           images,
-          comment: []
+          comments: []
         })
         res.status(200).send({ success: true, message: '', result })
       } catch (error) {
@@ -162,10 +162,11 @@ export const productpic = async (req, res) => {
 export const edit = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
-  } else if (req.session.user.isAdmin !== true) {
-    res.status(403).send({ success: false, message: '沒有權限' })
-    return
   }
+  // else if (req.session.user.isAdmin !== true) {
+  //   res.status(403).send({ success: false, message: '沒有權限' })
+  //   return
+  // }
   if (!req.headers['content-type']) {
     res.status(400).send({ success: false, message: '資料格式不符' })
     return
@@ -175,12 +176,13 @@ export const edit = async (req, res) => {
 
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
-    } else if (req.session.user.isAdmin !== true) {
-      res.status(403).send({ success: false, message: '沒有權限' })
     } else {
       result = await products.findByIdAndUpdate(req.params.id, req.body, { new: true })
       res.status(200).send({ success: true, message: '', result })
     }
+    // else if (req.session.user.isAdmin !== true) {
+    //   res.status(403).send({ success: false, message: '沒有權限' })
+    // }
   } catch (error) {
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]

@@ -1,0 +1,55 @@
+ #shopcar
+  .custom-control-input:checked~.custom-control-label::before
+    background-color: watermelon 
+    border: watermelon
+  .step
+    width:3rem
+    height:3rem
+    border-radius:50%
+    position relative
+    background-color:carbon
+    p
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%)
+      position: absolute
+    &:first-child
+      background-color: watermelon
+      color: white
+  .step.step2
+    &:first-child
+      background-color: carbon
+      color: black
+    &:nth-child(3)
+      background-color: watermelon
+      color: white
+  .step.step3    
+    &:first-child
+        background-color: carbon
+        color: black
+    &:last-child
+      background-color: watermelon
+      color: white
+      
+  thead
+    text-align:center
+   tbody
+    tr
+      [aria-colindex="1"]
+        width: 8%
+      [aria-colindex="2"]
+          display: flex
+          justify-content: center
+          align-items:center
+          width: 6rem
+          height:6rem
+          // padding: 0.5rem
+          // background-color: white
+          margin:auto
+      [aria-colindex="3"]    
+          width: 40%
+          text-align: left !important
+      td
+        vertical-align:middle !important
+  .next 
+    background-color: watermelon      

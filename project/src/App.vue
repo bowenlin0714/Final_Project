@@ -6,6 +6,7 @@
         a(href="#/shopcar", title="title").class.ml-auto.d-flex.position-relative.mr-3
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange
+              p(style="top:50%;left:50%;transform:translate(-50%,-50%)").position-absolute.text-white {{this.$store.state.user.shopcar.length}}
         b-navbar-toggle(target='nav-collapse')
         b-collapse#nav-collapse(is-nav style="width:100px !important")
           b-navbar-nav(class = "mainnav").ml-auto

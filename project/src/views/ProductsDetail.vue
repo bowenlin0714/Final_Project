@@ -31,16 +31,18 @@
                   s(v-if="productdetail.onsale").d-block NT :{{productdetail.price}}
                   p.h3.text-danger(v-if="productdetail.onsale") NT: {{productdetail.countPrice}}
                   p.h4(v-else) NT: {{productdetail.price}}
-                  label(for="amount" ).d-block.mt-3 購買數量 :
-                    div.d-flex.align-items-center.flex-column.w-100
-                      b-form-spinbutton(
-                        size="lg"
-                        id="amount"
-                        min="1"
-                        max="100"
-                        v-model="cartProducts.amount"
-                      ).w-50.mt-4
-                      b-button(class="shopbtn" href='#/shopcar' @click="addcartProduct(productdetail)").w-100.py-2.mt-4 加入購物車
+                  p 商品數量: {{productdetail.amount}}
+                  div.d-flex.align-items-center
+                    p(for="amount" ).d-block.mt-3 購買數量 :
+                    b-form-spinbutton(
+                      size="lg"
+                      id="amount"
+                      min="1"
+                      :max="productdetail.amount"
+                      v-model="cartProducts.amount"
+                    ).w-50.ml-3
+                  b-button(class="disabled" v-if="productdetail.amount === 0" ).w-100.py-2.mt-4 目前缺貨中
+                  b-button(class="shopbtn" href='#/shopcar' @click="addcartProduct(productdetail)" v-else).w-100.py-2.mt-4 加入購物車
                   p 付款與運送: 店到店 + 80 自取免運
               b-col(cols="12")
                 b-tabs(style="min-height:40vh").mb-3
@@ -95,7 +97,7 @@ export default {
       bigURL: '',
       rating: null,
       cartProducts: {
-        amount: null
+        amount: 1
       },
       cartLists: []
     }
@@ -107,6 +109,9 @@ export default {
     Hot
   },
   computed: {
+    user () {
+      return this.$store.state.user
+    },
     breadtag () {
       return this.$store.state.categories.filter(cate => {
         return cate.value === this.productdetail.category
@@ -122,18 +127,30 @@ export default {
   methods: {
     addcartProduct (data) {
       var user = this.$store.state.user
-      user.shopcar.push({ amount: this.cartProducts.amount, note: '', p_id: data })
+      let rel = true
+      user.shopcar.map(item => {
+        if (item.p_id._id === data._id && item.p_id.amount > this.cartProducts.amount) {
+          item.amount += this.cartProducts.amount
+          rel = false
+        } else {
+          rel = false
+        }
+      })
+
+      if (rel) {
+        user.shopcar.push({ amount: this.cartProducts.amount, p_id: data })
+      }
+
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
         shopcar: user.shopcar
       }).then(res => {
         if (res.data.success) {
-          this.$store.commit('addcartProduct', user.shopcar)
+          console.log(res)
+          this.$store.commit('addcartProduct', res.data.result.shopcar)
         } else {
           alert('發生錯誤')
         }
       })
-      // this.$store.commit('addcartProduct', data)
-      // this.$store.commit('addcartProduct', { data, amount: this.cartProducts.amount })
     },
     delComments (data, index) {
       var comments = data.comments
@@ -159,8 +176,6 @@ export default {
       this.bigURL = image
     },
     sendcomments (data) {
-      console.log(this.user)
-
       this.id = data._id
       var comments = {
         accounts: this.$store.state.user.account,
@@ -168,6 +183,7 @@ export default {
         stars: this.rating
       }
       data.comments.push(comments)
+      console.log(data.comments)
       this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
         comments: data.comments
       }).then(res => {
