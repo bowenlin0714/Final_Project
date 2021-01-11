@@ -83,7 +83,7 @@ const userSchema = new Schema(
 
     name: {
       type: String,
-      unique: '稱謂重複',
+      minlength: [1, '帳號必須一個字以上'],
       required: '稱謂必填'
     },
     account: {
@@ -95,6 +95,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      minlength: [4, '帳號必須四個字以上'],
       required: [true, '請輸入密碼']
     },
     email: {
@@ -114,6 +115,7 @@ const userSchema = new Schema(
     },
     address: {
       type: String,
+      minlength: [1, '地址必須一個字以上'],
       required: [true, '請輸入地址']
     },
     isAdmin: {

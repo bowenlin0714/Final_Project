@@ -42,7 +42,7 @@
                       v-model="cartProducts.amount"
                     ).w-50.ml-3
                   b-button(class="disabled" v-if="productdetail.amount === 0" ).w-100.py-2.mt-4 目前缺貨中
-                  b-button(class="shopbtn" href='#/shopcar' @click="addcartProduct(productdetail)" v-else).w-100.py-2.mt-4 加入購物車
+                  b-button(class="shopbtn" @click="addcartProduct(productdetail)" v-else).w-100.py-2.mt-4 加入購物車
                   p 付款與運送: 店到店 + 80 自取免運
               b-col(cols="12")
                 b-tabs(style="min-height:40vh").mb-3
@@ -126,31 +126,32 @@ export default {
   },
   methods: {
     addcartProduct (data) {
-      var user = this.$store.state.user
-      let rel = true
-      user.shopcar.map(item => {
-        if (item.p_id._id === data._id && item.p_id.amount > this.cartProducts.amount) {
-          item.amount += this.cartProducts.amount
-          rel = false
-        } else {
-          rel = false
+      if (this.user.name === '') {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/shopcar')
+        var user = this.$store.state.user
+        let rel = true
+        user.shopcar.map(item => {
+          if (item.p_id._id === data._id && item.p_id.amount >= this.cartProducts.amount) {
+            item.amount += this.cartProducts.amount
+            rel = false
+          }
+        })
+        if (rel) {
+          user.shopcar.push({ amount: this.cartProducts.amount, p_id: data })
         }
-      })
-
-      if (rel) {
-        user.shopcar.push({ amount: this.cartProducts.amount, p_id: data })
+        this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
+          shopcar: user.shopcar
+        }).then(res => {
+          if (res.data.success) {
+            console.log(res)
+            this.$store.commit('addcartProduct', res.data.result.shopcar)
+          } else {
+            alert('發生錯誤')
+          }
+        })
       }
-
-      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
-        shopcar: user.shopcar
-      }).then(res => {
-        if (res.data.success) {
-          console.log(res)
-          this.$store.commit('addcartProduct', res.data.result.shopcar)
-        } else {
-          alert('發生錯誤')
-        }
-      })
     },
     delComments (data, index) {
       var comments = data.comments

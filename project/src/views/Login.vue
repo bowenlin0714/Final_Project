@@ -9,38 +9,39 @@
               b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.p-5
                 div.text-center
                   font-awesome-icon(:icon="['fas','user-astronaut']").text-black
-                b-form(@submit="onSubmit")
+                b-form(@submit.stop.prevent="onSubmit")
                   b-form-group(
-                    id="input-group-1"
                     label="帳號 :"
-                    label-for="input-1"
-                    description=""
+                    label-for="account"
                   )
                     b-form-input(
-                      id="input-1"
+                      name="account"
                       v-model="account"
-                      type="email"
-                      required
                       placeholder="請輸入帳號"
-                    )
+                      :state="validateState('account')"
+                      v-validate="{ required: true }"
+                      data-vv-as="帳號")
+                     b-form-invalid-feedback() {{ veeErrors.first('account') }}
                   b-form-group(
-                    id="input-group-2"
                     label="密碼 :"
-                    label-for="input-1"
-                    description=""
+                    label-for="password"
                   )
                     b-form-input(
-                      id="input-2"
-                      v-model="password"
                       type="password"
-                      required
-                      placeholder="請輸入密碼"
+                      name="password"
+                      v-model="password"
+                      placeholder="password"
+                      :state="validateState('password')"
+                      v-validate="{ required: true, min:4 }"
+                      data-vv-as="密碼"
                     )
+                     b-form-invalid-feedback().mb-3 {{ veeErrors.first('password') }}
                   b-row
+                    b-col(cols="12")
+                      button(@click.stop.prevent="onSubmit").w-100.py-2.shadow-sm 登入
                     b-col(cols="6")
-                      span 還沒有帳號嗎?點我註冊
-                    b-col(cols="6")
-                      button(@click="onSubmit").rounded.w-100.mr-0 登入
+                      p.mt-4.mb-0 還沒有帳號嗎?點我
+                        a(href="#/reg") 註冊
               b-col(cols="12" lg="5" class="logright").border.mr-auto.rounded-right
                 div.text-white
                   h1 Welcome
@@ -68,12 +69,21 @@ export default {
     }
   },
   methods: {
+    validateState (ref) {
+      if (
+        this.veeFields[ref] &&
+        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
+      ) {
+        return !this.veeErrors.has(ref)
+      }
+      return null
+    },
     onSubmit () {
       this.axios.post(process.env.VUE_APP_API + '/users/login', this.$data)
         .then(res => {
           if (res.data.success) {
-            this.$store.commit('login', res.data.result)
             alert('登入成功')
+            this.$store.commit('login', res.data.result)
             if (res.data.result.isAdmin) {
               this.$router.push('/admin')
             } else {
@@ -87,6 +97,7 @@ export default {
           console.log(err)
         })
     }
+
   }
 }
 

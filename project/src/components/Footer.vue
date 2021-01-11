@@ -1,7 +1,7 @@
 <template lang="pug">
   #footer()
     b-container(fluid
-    v-if="$route.path =='/' || $route.path =='/products' || $route.path =='/about' || $route.path =='/reg' || $route.path =='/login'|| $route.path =='/contact' || $route.path =='/shopcar'|| $route.path =='/productsdetail'"
+    v-if="$route.path =='/' || $route.path =='/products' || $route.path =='/about' || $route.path =='/reg' || $route.path =='/login'|| $route.path =='/contact' || $route.path =='/shopcar'|| $route.path =='/productsdetail' || $route.path =='/membercenter'"
     class="footContainer").shadow.px-0
       b-row
         b-col(cols="12").p-0

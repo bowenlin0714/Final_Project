@@ -20,6 +20,7 @@
             id="formstable"
             class="mx-auto  text-center"
             :items='cartproducts'
+            style=""
             :fields='fields'
           ).bg-white.rounded.mt-3.p-5
             template(#cell(img)='data' )
@@ -283,6 +284,7 @@ export default {
         return image
       })
       var data = this.images
+      console.log(data)
       this.$store.commit('cartproducts', data)
     })
   }

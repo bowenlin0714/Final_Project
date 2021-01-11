@@ -21,6 +21,7 @@ export default new Vuex.Store({
     user: {
       name: '',
       account: '',
+      email: '',
       id: '',
       phone: '',
       address: '',
@@ -37,6 +38,7 @@ export default new Vuex.Store({
     commentlists: null,
     cartlists: null,
     cartproducts: [],
+    hotproducts: [],
     tag: '',
     comments: ''
   },
@@ -50,6 +52,7 @@ export default new Vuex.Store({
       state.user.shopcar = data.shopcar
       state.user.isAdmin = data.isAdmin
       state.user.orders = data.orders
+      state.user.email = data.email
     },
     logout (state) {
       state.user.name = ''
@@ -60,6 +63,7 @@ export default new Vuex.Store({
       state.user.shopcar = []
       state.user.isAdmin = false
       state.user.orders = []
+      state.user.email = ''
     },
     memberlists (state, data) {
       state.memberlists = []
@@ -73,11 +77,19 @@ export default new Vuex.Store({
       state.bannerlists = []
       state.bannerlists = (data)
     },
+    hotproducts () {
+      const array = []
+      for (var i = 0; i < this.state.onShoplists.length; i++) {
+        array.push(this.state.onShoplists[i])
+      }
+      this.state.hotproducts = array.sort(() => Math.random() - 0.5)
+    },
     onShoplists (state, data) {
       state.onShoplists = []
       state.onShoplists = data.filter(product => product.onShop === true)
     },
     cartproducts (state, data) {
+      console.log(data)
       state.user.shopcar = data
     },
     addcartProduct (state, data) {

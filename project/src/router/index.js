@@ -3,6 +3,12 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Store from '../store/index.js'
 
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -68,6 +74,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "reg" */ '../views/Reg.vue'),
     meta: {
       title: 'BUYFIG / 註冊'
+    }
+  },
+  {
+    path: '/membercenter',
+    name: 'MemberCenter',
+    component: () => import(/* webpackChunkName: "membercenter" */ '../views/MemberCenter.vue'),
+    meta: {
+      title: 'BUYFIG / 會員中心'
     }
   },
   {

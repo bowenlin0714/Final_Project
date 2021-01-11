@@ -443,6 +443,10 @@ export default {
               console.log(res)
               if (res.data.success) {
                 this.newForm.name = ''
+                this.image = null
+                this.image2 = null
+                this.image3 = null
+                this.image4 = null
                 this.newForm.description = ''
                 this.newForm.amount = 1
                 this.newForm.price = 1

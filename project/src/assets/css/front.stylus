@@ -3,6 +3,7 @@
 @import "front/footer.stylus";
 @import "front/about.stylus";
 @import "front/login.stylus";
+@import "front/reg.stylus";
 @import "front/banners.stylus";
 @import "front/products.stylus";
 @import "front/productsdetail.stylus";
