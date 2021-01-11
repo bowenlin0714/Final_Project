@@ -23,7 +23,16 @@ const orderProductSchema = new Schema({
 //   }
 
 // })
-
+const messageSchema = new Schema({
+  date: {
+    type: String,
+    required: [true, '缺少日期']
+  },
+  detail: {
+    type: String,
+    required: [true, '缺少信息內容']
+  }
+})
 const orderSchema = new Schema({
   name: {
     type: String,
@@ -112,6 +121,15 @@ const userSchema = new Schema(
     phone: {
       type: String,
       required: [true, '請輸入手機號碼']
+    },
+    fav: {
+      type: Array
+    },
+    toAdmin: {
+      type: [messageSchema]
+    },
+    toMember: {
+      type: [messageSchema]
     },
     address: {
       type: String,

@@ -37,6 +37,7 @@ export default new Vuex.Store({
     onShoplists: null,
     commentlists: null,
     cartlists: null,
+    orderlists: null,
     cartproducts: [],
     hotproducts: [],
     tag: '',
@@ -87,6 +88,10 @@ export default new Vuex.Store({
     onShoplists (state, data) {
       state.onShoplists = []
       state.onShoplists = data.filter(product => product.onShop === true)
+    },
+    orderlists (state, data) {
+      state.orderlists = []
+      state.orderlists = data
     },
     cartproducts (state, data) {
       console.log(data)

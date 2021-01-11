@@ -32,6 +32,7 @@
                           id="amount"
                           min="1"
                           :max="data.item.p_id.amount"
+                          @change="changeamount(data)"
                         )
             template(#cell(total)='data')
               p.p-0.m-0 {{data.item.amount * data.item.p_id.price}}
@@ -216,6 +217,13 @@ export default {
     }
   },
   methods: {
+    changeamount (data) {
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
+        shopcar: this.cartproducts
+      }).then(res => {
+        console.log(res)
+      })
+    },
     checkedit () {
       this.isedit = !this.isedit
     },

@@ -30,7 +30,7 @@
                       type="password"
                       name="password"
                       v-model="password"
-                      placeholder="password"
+                      placeholder="請輸入密碼"
                       :state="validateState('password')"
                       v-validate="{ required: true, min:4 }"
                       data-vv-as="密碼"

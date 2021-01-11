@@ -26,12 +26,15 @@
                     img(:src="image" @click="changeimg(image)").w-100.h-auto
               b-col(cols="12" lg="5")
                 div(style="min-height:50vh").d-flex.flex-column.justify-content-lg-between
-                  p 商品編號 : {{productdetail.productNumber}}
+                  div.d-flex.justify-content-lg-between
+                    p 商品編號 : {{productdetail.productNumber}}
+                    button
+                     font-awesome-icon( :icon=['far', 'heart'] )
                   p {{productdetail.name}}
                   s(v-if="productdetail.onsale").d-block NT :{{productdetail.price}}
                   p.h3.text-danger(v-if="productdetail.onsale") NT: {{productdetail.countPrice}}
                   p.h4(v-else) NT: {{productdetail.price}}
-                  p 商品數量: {{productdetail.amount}}
+                  p 商品數量: {{productdetail.amount }}
                   div.d-flex.align-items-center
                     p(for="amount" ).d-block.mt-3 購買數量 :
                     b-form-spinbutton(
@@ -129,22 +132,30 @@ export default {
       if (this.user.name === '') {
         this.$router.push('/login')
       } else {
-        this.$router.push('/shopcar')
         var user = this.$store.state.user
         let rel = true
         user.shopcar.map(item => {
-          if (item.p_id._id === data._id && item.p_id.amount >= this.cartProducts.amount) {
+          if (item.p_id._id === data._id &&
+          item.p_id.amount >= this.cartProducts.amount &&
+          this.cartProducts.amount + item.amount < item.p_id.amount) {
             item.amount += this.cartProducts.amount
+            // this.productdetail.amount -= this.cartProducts.amount
+            rel = false
+          } else if (item.p_id._id === data._id && this.cartProducts.amount + item.amount > item.p_id.amount) {
+            item.amount = item.p_id.amount
+            alert('超過商品數量')
             rel = false
           }
         })
         if (rel) {
           user.shopcar.push({ amount: this.cartProducts.amount, p_id: data })
+          // this.productdetail.amount -= this.cartProducts.amount
         }
         this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
           shopcar: user.shopcar
         }).then(res => {
           if (res.data.success) {
+            this.$router.push('/shopcar')
             console.log(res)
             this.$store.commit('addcartProduct', res.data.result.shopcar)
           } else {

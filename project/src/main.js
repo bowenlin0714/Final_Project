@@ -22,10 +22,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCircle, faTimes, faCheck, faChevronCircleUp, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faMoneyBill, faTruck, faStickyNote } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookSquare, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import Ripple from 'vue-ripple-directive'
 
 library.add(
-  faMoneyBill, faCircle, faTimes, faCheck, faFacebookSquare, faChevronCircleUp, faInstagram, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faTruck, faStickyNote
+  faMoneyBill, faCircle, faTimes, faCheck, faFacebookSquare, faChevronCircleUp, faInstagram, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faTruck, faStickyNote, faHeart
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

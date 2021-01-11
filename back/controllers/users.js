@@ -213,3 +213,35 @@ export const edit = async (req, res) => {
     }
   }
 }
+
+export const editorders = async (req, res) => {
+  if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
+    res.status(400).send({ success: false, message: '資料格式不符' })
+    return
+  }
+  try {
+    let result = await users.findById(req.params.id).populate('shopcar.p_id')
+    console.log(result)
+    if (result === null) {
+      res.status(404).send({ success: false, message: '找不到資料' })
+    } else {
+      result = await users.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('shopcar.p_id')
+      console.log(util.inspect(result, { showHidden: true, depth: null }))
+
+      res.status(200).send({ success: true, message: '', result })
+    }
+    // } else if (req.session.user.isAdmin !== true) {
+    //   res.status(403).send({ success: false, message: '沒有權限' })
+    // }
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      res.status(400).send({ success: false, message })
+    } else if (error.name === 'CastError') {
+      res.status(400).send({ success: false, message: 'ID 格式錯誤' })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
+}
