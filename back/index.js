@@ -10,6 +10,7 @@ import routerUser from './routes/users.js'
 import routerProduct from './routes/products.js'
 import routerForm from './routes/forms.js'
 import bannersForm from './routes/banners.js'
+import news from './routes/news.js'
 // import routerProduct from './routes/productss.js'
 
 dotenv.config()
@@ -71,6 +72,8 @@ app.use('/users', routerUser)
 app.use('/products', routerProduct)
 app.use('/forms', routerForm)
 app.use('/banners', bannersForm)
+
+app.use('/news', news)
 
 // bodyparser cors 之類的套件`發生錯誤時的處理
 // app.use((err, req, res, next) => {})

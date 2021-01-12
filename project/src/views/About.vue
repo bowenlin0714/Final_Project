@@ -33,18 +33,18 @@
                       div 在這個萬物掌聲響起的時代，甚麼東西都在漲價，就是薪水沒有漲，就連公仔也不意外，為了實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神實踐人人有公仔買的精神
                 b-col(cols="12" lg="6")
                     div
+    CartAnimation
 
 </template>
 
 <script>
-
-</script>
-<script>
 import Parallax from 'vue-parallaxy'
+import CartAnimation from '@/components/CartAnimation'
+
 export default {
 
   name: 'About',
-  components: { Parallax },
+  components: { Parallax, CartAnimation },
   data () {
     return {
       positionY1: 0, // 背景Y轴偏移量
@@ -76,7 +76,7 @@ export default {
         document.body.scrollTop
       this.positionY1 = this.Y1 - scrollTop * this.ratio // 原始高度-滚动距离*视差系数
     }
-  },
+  }
 }
 </script>
 

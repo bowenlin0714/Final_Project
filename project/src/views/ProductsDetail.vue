@@ -45,7 +45,9 @@
                       v-model="cartProducts.amount"
                     ).w-50.ml-3
                   b-button(class="disabled" v-if="productdetail.amount === 0" ).w-100.py-2.mt-4 目前缺貨中
-                  b-button(class="shopbtn" @click="addcartProduct(productdetail)" v-else).w-100.py-2.mt-4 加入購物車
+                  b-button(class="shopbtn" @click="addcartProduct(productdetail )" v-else ).w-100.py-2.mt-4 加入購物車
+                    CartAnimation(style="position:absolute;top:25%;left:-150%").d-none.d-lg-block
+                    Cartsmall(style="position:absolute;top:7%;left:0%").d-block.d-lg-none
                   p 付款與運送: 店到店 + 80 自取免運
               b-col(cols="12")
                 b-tabs(style="min-height:40vh").mb-3
@@ -79,6 +81,7 @@
           hr
           h1.text-center.my-4 相關商品
           Hot
+
 </template>
 
 <style lang="stylus">
@@ -88,6 +91,9 @@
 import StarRating from 'vue-star-rating'
 import { Carousel3d, Slide } from 'vue-carousel-3d'
 import Hot from '@/components/Hot'
+import CartAnimation from '@/components/CartAnimation'
+import Cartsmall from '@/components/Cartsmall'
+
 export default {
   name: 'productsdetail',
   data () {
@@ -109,7 +115,9 @@ export default {
     Slide,
     StarRating,
     Carousel3d,
-    Hot
+    Hot,
+    CartAnimation,
+    Cartsmall
   },
   computed: {
     user () {
@@ -129,7 +137,14 @@ export default {
   },
   methods: {
     addcartProduct (data) {
+      this.$store.state.addShow = true
+      // 添加类名的方法没有动画结束的时机,这里我直接写了一个定时器,时机和动画时间一致,在图片移动到购物车位置时隐藏
+      setTimeout(() => {
+        this.$store.state.addShow = false
+      }, 800)
+
       if (this.user.name === '') {
+        alert('請先登入')
         this.$router.push('/login')
       } else {
         var user = this.$store.state.user
@@ -155,7 +170,7 @@ export default {
           shopcar: user.shopcar
         }).then(res => {
           if (res.data.success) {
-            this.$router.push('/shopcar')
+            // this.$router.push('/shopcar')
             console.log(res)
             this.$store.commit('addcartProduct', res.data.result.shopcar)
           } else {

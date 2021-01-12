@@ -60,14 +60,14 @@ const routes = [
       title: 'BUYFIG / 聯絡我們'
     }
   },
-  {
-    path: '/news',
-    name: 'Contact',
-    component: () => import(/* webpackChunkName: "news" */ '../views/News.vue'),
-    meta: {
-      title: 'BUYFIG / 公仔新知'
-    }
-  },
+  // {
+  //   path: '/news',
+  //   name: 'Contact',
+  //   component: () => import(/* webpackChunkName: "news" */ '../views/News.vue'),
+  //   meta: {
+  //     title: 'BUYFIG / 公仔新知'
+  //   }
+  // },
   {
     path: '/login',
     name: 'Login',

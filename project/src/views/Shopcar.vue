@@ -73,7 +73,7 @@
                   div(v-if=" order.howtosend.shipping === 100 || order.howtosend.shipping === 120").ml-4
 
                   b-form-input(v-if=" order.howtosend.shipping === 20 || order.howtosend.shipping === 30 || order.howtosend.shipping === 80 || order.howtosend.shipping === 70" placeholder="門市 " v-model="order.howtosend.where")
-                  b-form-input(v-if=" order.howtosend.shipping === 120 || order.howtosend.shipping === 100 " placeholder="地址" v-model="order.howtosend.where")
+                  b-form-input(v-if=" order.howtosend.shipping === 120 || order.howtosend.shipping === 100 " placeholder="地址" v-model="order.howtosend.where" )
 
                 font-awesome-icon( :icon=['fas', 'money-bill'] ).h5.m-0
                 h5.d-inline.ml-2 付款方式 :

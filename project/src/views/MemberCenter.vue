@@ -12,6 +12,7 @@
             p ● e-mail: {{user.email}}
             p ● 地址: {{user.address}}
             b-button(class="editbtn").my-2 編輯
+            div ● 追蹤中商品:
             div ● 我的訂單:
               p.my-3 未完成 :
               b-table(
@@ -27,7 +28,7 @@
                   b-button 訂單詳細
                 template(#cell(orderAmount)='data')
                   p {{data.item.products.length}}
-              p(v-if="unfinishOrder.length === 0") 目前沒有內容
+              p(v-if="unfinishOrder.length === 0").text-center 目前沒有內容
               p 已完成 :
               b-table(
                 :items="completeOrder"

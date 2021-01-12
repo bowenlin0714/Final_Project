@@ -41,7 +41,8 @@ export default new Vuex.Store({
     cartproducts: [],
     hotproducts: [],
     tag: '',
-    comments: ''
+    comments: '',
+    addShow: false
   },
   mutations: {
     login (state, data) {
