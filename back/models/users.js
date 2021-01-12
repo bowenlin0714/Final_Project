@@ -33,6 +33,7 @@ const messageSchema = new Schema({
     required: [true, '缺少信息內容']
   }
 })
+
 const orderSchema = new Schema({
   name: {
     type: String,
@@ -59,7 +60,7 @@ const orderSchema = new Schema({
     required: [true, '缺少付款方式']
   },
   shipment: {
-    type: Boolean,
+    type: String,
     require: [true, '缺少出貨狀態']
   },
   // orderNumber: {
@@ -67,8 +68,8 @@ const orderSchema = new Schema({
   //   required: [true, '缺少訂單編號']
   // },
   ispaid: {
-    type: Boolean,
-    require: [true, '缺少金流狀態']
+    type: String,
+    require: [true, '缺少付款狀態']
   },
   note: {
     type: String
@@ -94,6 +95,9 @@ const userSchema = new Schema(
       type: String,
       minlength: [1, '帳號必須一個字以上'],
       required: '稱謂必填'
+    },
+    lastbuydate: {
+      type: String
     },
     account: {
       type: String,

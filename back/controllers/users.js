@@ -28,7 +28,7 @@ export const create = async (req, res) => {
         address: req.body.address,
         isAdmin: req.body.isAdmin,
         isBan: req.body.isBan,
-
+        lastbuydate: '',
         usercart: []
       })
       res.status(200).send({ success: true, message: '' })
@@ -97,13 +97,14 @@ export const heartbeat = async (req, res) => {
   res.status(200).send(isLogin)
 }
 
+// 找特定會員
 export const finduser = async (req, res) => {
   if (req.session.user === undefined) {
     res.status(401).send({ success: false, message: '未登入' })
     return
   }
   try {
-    const result = await users.findById(req.params.id).populate('shopcar.p_id')
+    const result = await users.findById(req.params.id).populate(['orders.products.p_id', 'shopcar.p_id'])
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     console.log(error)
@@ -124,27 +125,9 @@ export const accounts = async (req, res) => {
   // }
 
   try {
-    const result = await users.find().populate('shopcar.p_id')
-    res.status(200).send({ success: true, message: '', result })
-  } catch (error) {
-    console.log(error)
+    const result = await users.find().populate('orders.products.p_id')
+    console.log(util.inspect(result, { showHidden: true, depth: null }))
 
-    res.status(500).send({ success: false, message: '發生錯誤' })
-  }
-}
-// 找特定會員
-export const onemember = async (req, res) => {
-  // if (req.session.user === undefined) {
-  //   res.status(401).send({ success: false, message: '未登入' })
-  //   return
-  // }
-  // if (req.session.user.isAdmin !== true) {
-  //   res.status(403).send({ success: false, message: '沒有權限' })
-  //   return
-  // }
-
-  try {
-    const result = await users.find().populate('shopcar.p_id')
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     console.log(error)
@@ -189,12 +172,10 @@ export const edit = async (req, res) => {
 
   try {
     let result = await users.findById(req.params.id).populate('shopcar.p_id')
-    console.log(result)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else {
       result = await users.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('shopcar.p_id')
-      console.log(util.inspect(result, { showHidden: true, depth: null }))
 
       res.status(200).send({ success: true, message: '', result })
     }
@@ -221,12 +202,10 @@ export const editorders = async (req, res) => {
   }
   try {
     let result = await users.findById(req.params.id).populate('shopcar.p_id')
-    console.log(result)
     if (result === null) {
       res.status(404).send({ success: false, message: '找不到資料' })
     } else {
       result = await users.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('shopcar.p_id')
-      console.log(util.inspect(result, { showHidden: true, depth: null }))
 
       res.status(200).send({ success: true, message: '', result })
     }

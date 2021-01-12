@@ -12,12 +12,12 @@
           b-navbar-nav(class = "mainnav").ml-auto
             b-nav-item(class="mainNavitem" to="/products") 商品列表
             b-nav-item(class="mainNavitem" to="/contact") 聯絡我們
+            //- b-nav-item(class="mainNavitem" to="/news") 公仔新知
             b-nav-item(class="mainNavitem" to="/about") 關於我們
             b-nav-item(disabled) |
-            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter") 會員中心
-            //- b-nav-item(class="mainNavitem" v-if="user.id.length === 0" to="/login") 登入
+            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''") {{user.account}}
+            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else) 會員中心
             b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin") 管理者頁面
-            //- b-nav-item(class="mainNavitem" v-if="user.id.length === 0 || user.isAdmin" to="/reg") 註冊
             b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout") 登出
     #socialLink(v-if="$route.path!=='/admin'")
       a(href="#")
@@ -101,6 +101,7 @@ export default {
     setInterval(() => {
       this.heartbeat()
     }, 5000)
+    console.log(this.user)
   }
 }
 </script>

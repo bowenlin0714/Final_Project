@@ -270,17 +270,32 @@ export default {
         where: where,
         method: method,
         howtopay: howtopay,
-        shipment: false,
-        ispaid: false,
+        shipment: '未出貨',
+        ispaid: '未付款',
         note: note,
         shipping: shipping,
         total: total,
         products: user.shopcar
+
       })
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
+        lastbuydate: date,
         orders: user.orders
       }).then(res => {
         console.log(res)
+        for (let i = 0; i < user.shopcar.length; i++) {
+          this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + user.shopcar[i].p_id._id, {
+            amount: user.shopcar[i].p_id.amount -= user.shopcar[i].amount,
+            sold: user.shopcar[i].p_id.sold += user.shopcar[i].amount
+          }).then(res => {
+            console.log(res)
+            this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
+              shopcar: []
+            }).then(res => {
+              user.shpocar = []
+            })
+          })
+        }
       })
     }
   },

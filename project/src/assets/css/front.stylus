@@ -10,3 +10,5 @@
 @import "front/home.stylus";
 @import "front/hot.stylus";
 @import "front/shopcar.stylus";
+@import "front/membercenter.stylus";
+@import "front/contact.stylus";

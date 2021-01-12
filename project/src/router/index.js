@@ -61,6 +61,14 @@ const routes = [
     }
   },
   {
+    path: '/news',
+    name: 'Contact',
+    component: () => import(/* webpackChunkName: "news" */ '../views/News.vue'),
+    meta: {
+      title: 'BUYFIG / 公仔新知'
+    }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),

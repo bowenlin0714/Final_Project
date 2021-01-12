@@ -72,7 +72,7 @@
                             :state="validateState('phone')"
                             v-validate="{ required: true, phone }"
                             data-vv-as="手機")
-                            b-form-invalid-feedback().mb-3 {{ veeErrors.first('phone') }}
+                          b-form-invalid-feedback().mb-3 {{ veeErrors.first('phone') }}
                     b-form-group(
                       label="地址 :"
                       label-for="address")
@@ -86,7 +86,6 @@
                       b-form-invalid-feedback().mb-3 {{ veeErrors.first('address') }}
                     input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
                     br
-                    //- b-button(@click="onSubmit") 重置
                     b-button(@click="onSubmit" style="border-radius:20px").py-2.w-100.shadow 註冊
                     p.mt-4.mb-0 已經有帳號了嗎?點我
                       a(href="#/login") 登入
@@ -168,7 +167,7 @@ export default {
   created () {
     Validator.extend('phone', {
       messages: {
-        en: field => field + '手機格式不符'
+        zhTW: field => field + '手機格式不符'
       },
       validate: value => {
         return value.length === 10 && /^09[0-9]{8}$/.test(value)

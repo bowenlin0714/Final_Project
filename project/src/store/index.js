@@ -89,6 +89,9 @@ export default new Vuex.Store({
       state.onShoplists = []
       state.onShoplists = data.filter(product => product.onShop === true)
     },
+    centerOrders (state, data) {
+      state.user.orders = data
+    },
     orderlists (state, data) {
       state.orderlists = []
       state.orderlists = data

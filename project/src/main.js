@@ -13,6 +13,7 @@ import zhTW from 'vee-validate/dist/locale/zh_TW'
 import VueI18n from 'vue-i18n'
 import 'animate.css'
 import VueWow from 'vue-wow'
+import cheerio from 'cheerio'
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -40,6 +41,7 @@ Vue.use(Carousel3d)
 Vue.use(Vuelidate)
 Vue.use(VueI18n)
 Vue.use(VueWow)
+Vue.use(cheerio)
 Vue.directive('ripple', Ripple)
 
 const i18n = new VueI18n({
