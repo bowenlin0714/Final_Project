@@ -63,10 +63,9 @@ const orderSchema = new Schema({
     type: String,
     require: [true, '缺少出貨狀態']
   },
-  // orderNumber: {
-  //   type: String,
-  //   required: [true, '缺少訂單編號']
-  // },
+  payaccount: {
+    type: String
+  },
   ispaid: {
     type: String,
     require: [true, '缺少付款狀態']
@@ -126,6 +125,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, '請輸入手機號碼']
     },
+    payaccount: {
+      type: String
+    },
     fav: {
       type: Array
     },
@@ -134,11 +136,6 @@ const userSchema = new Schema(
     },
     toMember: {
       type: [messageSchema]
-    },
-    address: {
-      type: String,
-      minlength: [1, '地址必須一個字以上'],
-      required: [true, '請輸入地址']
     },
     isAdmin: {
       type: Boolean

@@ -243,6 +243,7 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
+      console.log(response.data.result)
       this.images = response.data.result.map(image => {
         image.src = process.env.VUE_APP_API + '/banners/' + image.file
         return image

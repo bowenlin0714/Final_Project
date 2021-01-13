@@ -28,8 +28,10 @@
                 div(style="min-height:50vh").d-flex.flex-column.justify-content-lg-between
                   div.d-flex.justify-content-lg-between
                     p 商品編號 : {{productdetail.productNumber}}
-                    button
-                     font-awesome-icon( :icon=['far', 'heart'] )
+                    button(class="favbut" )
+                     font-awesome-icon( :icon=['far', 'heart'] v-if="!checkfav" @click="addfav(productdetail)").m-0
+                     font-awesome-icon( :icon=['fas', 'heart'] v-else @click="delfav(productdetail)").text-danger.m-0
+
                   p {{productdetail.name}}
                   s(v-if="productdetail.onsale").d-block NT :{{productdetail.price}}
                   p.h3.text-danger(v-if="productdetail.onsale") NT: {{productdetail.countPrice}}
@@ -98,7 +100,7 @@ export default {
   name: 'productsdetail',
   data () {
     return {
-
+      // checkfav: false,
       id: '',
       account: '',
       comment: '',
@@ -131,14 +133,47 @@ export default {
     productdetail () {
       return this.$store.state.productdetail
     },
+    checkfav () {
+      let rel = false
+      this.user.fav.map(item => {
+        if (item._id === this.productdetail._id) {
+          rel = true
+        }
+      })
+      return rel
+    },
     splicedcomments () {
       return this.$store.state.comment
     }
   },
   methods: {
+    addfav (data) {
+      // this.checkfav = true
+      let rel = true
+      this.user.fav.map(item => {
+        if (item._id === this.productdetail._id) {
+          rel = false
+        }
+      })
+      if (rel) {
+        this.user.fav.push(this.productdetail)
+        this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
+          fav: this.user.fav
+        }).then(res => {
+          console.log(res)
+          console.log(res)
+          this.$store.commit('addfav', res.data.result.fav)
+        })
+      }
+    },
+    delfav (data) {
+      const idx = this.user.fav.findIndex(fav => {
+        return fav._id === data._id
+      })
+      this.user.fav.splice(idx, 1)
+    },
     addcartProduct (data) {
       this.$store.state.addShow = true
-      // 添加类名的方法没有动画结束的时机,这里我直接写了一个定时器,时机和动画时间一致,在图片移动到购物车位置时隐藏
       setTimeout(() => {
         this.$store.state.addShow = false
       }, 800)
@@ -156,7 +191,7 @@ export default {
             item.amount += this.cartProducts.amount
             // this.productdetail.amount -= this.cartProducts.amount
             rel = false
-          } else if (item.p_id._id === data._id && this.cartProducts.amount + item.amount > item.p_id.amount) {
+          } else if (item.p_id._id === data._id && this.cartProducts.amount + item.amount >= item.p_id.amount) {
             item.amount = item.p_id.amount
             alert('超過商品數量')
             rel = false

@@ -25,9 +25,9 @@ export const create = async (req, res) => {
         password: md5(req.body.password),
         email: req.body.email,
         phone: req.body.phone,
-        address: req.body.address,
         isAdmin: req.body.isAdmin,
         isBan: req.body.isBan,
+        payaccount: req.body.payaccount,
         lastbuydate: '',
         usercart: []
       })

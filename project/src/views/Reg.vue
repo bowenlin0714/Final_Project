@@ -24,7 +24,7 @@
                         data-vv-as="姓名")
                       b-form-invalid-feedback().mb-3 {{ veeErrors.first('name') }}
                     b-row
-                      b-col(cols="6")
+                      b-col(cols="12")
                         b-form-group(
                           label="帳號 :"
                           label-for="account")
@@ -35,7 +35,7 @@
                             v-validate="{ required: true, min:4 }"
                             data-vv-as="帳號")
                           b-form-invalid-feedback().mb-3 {{ veeErrors.first('account') }}
-                      b-col(cols="6")
+                      b-col(cols="12")
                         b-form-group(
                           label="密碼 :"
                           label-for="password")
@@ -74,16 +74,14 @@
                             data-vv-as="手機")
                           b-form-invalid-feedback().mb-3 {{ veeErrors.first('phone') }}
                     b-form-group(
-                      label="地址 :"
-                      label-for="address")
+                        label="匯款帳戶 : 選填"
+                        label-for="payaccount"
+                        )
                       b-form-input(
-                            name="address"
-                            v-model="address"
-                            placeholder="address"
-                            :state="validateState('address')"
-                            v-validate="{ required: true }"
-                            data-vv-as="地址")
-                      b-form-invalid-feedback().mb-3 {{ veeErrors.first('address') }}
+                        name="payaccount"
+                        v-model="payaccount"
+                        placeholder="Remittance account"
+                        )
                     input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
                     br
                     b-button(@click="onSubmit" style="border-radius:20px").py-2.w-100.shadow 註冊
@@ -113,9 +111,10 @@ export default {
       password: '',
       email: '',
       phone: '',
-      address: '',
       isAdmin: false,
-      isBan: false
+      isBan: false,
+      payaccount: ''
+
     }
   },
   methods: {

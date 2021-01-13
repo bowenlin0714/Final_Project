@@ -2,6 +2,15 @@ pre
   white-space: pre-wrap;
   word-wrap: break-word;
 #productsdetail
+  .favbut
+    border-radius:50%;
+    border: none
+    width:3rem;
+    height:3rem;
+    background:transparent
+    font-size: 1.5rem
+    color: grey 
+    outline:none;
   // .tab-pane 
   //   &:nth-child(1)
   //     p

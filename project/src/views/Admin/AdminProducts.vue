@@ -18,7 +18,7 @@
             b-dropdown-item-button(v-for="item in categories" @click="tagCategory(item)") {{item.text}}
       b-row
         b-col(cols="1").p-0
-          b-button(v-b-modal.addForm  style="height:48px").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
+          b-button(v-b-modal.addForm  style="height:3rem").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
           b-list-group(v-for="(category, index) in categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block
               b-button(@click="tagCategory(category)" style="font-size:14px").w-100.bg-info {{category.text}}

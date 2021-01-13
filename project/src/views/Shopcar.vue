@@ -34,8 +34,12 @@
                           :max="data.item.p_id.amount"
                           @change="changeamount(data)"
                         )
+            template(#cell(price)='data')
+              p(v-if="data.item.p_id.onsale").text-danger.p-0.m-0 {{ data.item.p_id.countPrice }}
+              p(v-else).p-0.m-0 {{ data.item.p_id.price }}
             template(#cell(total)='data')
-              p.p-0.m-0 {{data.item.amount * data.item.p_id.price}}
+              p(v-if="data.item.p_id.onsale").p-0.m-0 {{data.item.amount * data.item.p_id.countPrice}}
+              p(v-else).p-0.m-0 {{data.item.amount * data.item.p_id.price}}
             template(#cell(delete)='data')
               b-button(style="background:transparent" @click="delshopitem(data.index)")
                 font-awesome-icon( :icon=['fas', 'trash-alt'] ).text-danger.h3.m-0
@@ -80,6 +84,8 @@
                 b-form-group(v-if="order.howtosend.shipping === 0 || order.howtosend.shipping === 100 || order.howtosend.shipping === 120 || order.howtosend.shipping === 30 || order.howtosend.shipping === 20" ).ml-3.mt-3
                   b-form-radio(v-model="order.howtosend.howtopay" value="Line Pay" name="order2" ) Line Pay
                   b-form-radio(v-model="order.howtosend.howtopay" value="銀行轉帳" name="order2") 轉帳
+                    b-form-input(size="sm" v-if="order.howtosend.howtopay === '銀行轉帳' && user.payaccount === ''" v-model="order.payaccount").my-1
+                    p(v-if="order.howtosend.howtopay === '銀行轉帳' && user.payaccount !== ''").m-0.my-2 {{user.payaccount}}
                   b-form-radio(v-model="order.howtosend.howtopay" value="PChomePay" name="order2").mb-2 PChomePay
                 p(v-else).ml-3.mt-3  貨到付款無需選擇付款方式
               b-col(cols="6")
@@ -144,7 +150,8 @@ export default {
       order: {
         howtosend: { method: null, howtopay: null, shipping: 0, where: null },
         address: '',
-        note: ''
+        note: '',
+        payaccount: ''
       },
       howtosend: [
         { text: '7-11 取貨付款 80 元', value: { method: '7-11 ', howtopay: '取貨付款', shipping: 80 } },
@@ -185,12 +192,16 @@ export default {
           label: '商品名稱'
         },
         {
+          key: 'price',
+          label: '價格'
+        },
+        {
           key: 'amount',
           label: '數量'
         },
         {
           key: 'total',
-          label: '小記'
+          label: '小計'
         },
         {
           key: 'delete',
@@ -211,7 +222,11 @@ export default {
       var total = 0
       for (var i = 0; i < this.cartproducts.length; i++) {
         var item = this.cartproducts[i]
-        total += item.p_id.price * item.amount
+        if (item.p_id.onsale === false) {
+          total += item.p_id.price * item.amount
+        } else {
+          total += item.p_id.countPrice * item.amount
+        }
       }
       return total
     }
@@ -260,6 +275,12 @@ export default {
       const where = this.order.howtosend.where
       const method = this.order.howtosend.method
       const howtopay = this.order.howtosend.howtopay
+      var payaccount = ''
+      if (this.order.howtosend.howtopay === '銀行轉帳' && user.payaccount !== '') {
+        payaccount = this.user.payaccount
+      } else {
+        payaccount = this.order.payaccount
+      }
       const note = this.order.note
       const shipping = this.order.howtosend.shipping
       const total = this.total + this.order.howtosend.shipping
@@ -269,6 +290,7 @@ export default {
         date: date,
         where: where,
         method: method,
+        payaccount: payaccount,
         howtopay: howtopay,
         shipment: '未出貨',
         ispaid: '未付款',

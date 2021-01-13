@@ -24,9 +24,10 @@ export default new Vuex.Store({
       email: '',
       id: '',
       phone: '',
-      address: '',
       shopcar: [],
       orders: [],
+      fav: [],
+      payaccount: '',
       isAdmin: false
     },
     memberlists: null,
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     orderlists: null,
     cartproducts: [],
     hotproducts: [],
+    unfinishOrder: [],
     tag: '',
     comments: '',
     addShow: false
@@ -50,22 +52,25 @@ export default new Vuex.Store({
       state.user.account = data.account
       state.user.id = data._id
       state.user.phone = data.phone
-      state.user.address = data.address
       state.user.shopcar = data.shopcar
       state.user.isAdmin = data.isAdmin
       state.user.orders = data.orders
       state.user.email = data.email
+      state.user.payaccount = data.payaccount
+      state.user.fav = data.fav
+      // console.log(data)
     },
     logout (state) {
       state.user.name = ''
       state.user.account = ''
       state.user.id = ''
       state.user.phone = ''
-      state.user.address = ''
       state.user.shopcar = []
       state.user.isAdmin = false
       state.user.orders = []
       state.user.email = ''
+      state.user.payaccount = ''
+      state.user.fav = []
     },
     memberlists (state, data) {
       state.memberlists = []
@@ -96,10 +101,17 @@ export default new Vuex.Store({
     orderlists (state, data) {
       state.orderlists = []
       state.orderlists = data
+      console.log(data)
+    },
+    unfinishOrder (state, data) {
+      state.unfinishOrde = data
+      console.log(data)
     },
     cartproducts (state, data) {
-      console.log(data)
       state.user.shopcar = data
+    },
+    addfav (state, data) {
+      state.user.fav = data
     },
     addcartProduct (state, data) {
       console.log(data)

@@ -51,9 +51,18 @@
                 b-table(
                   :items="orderdetail.products"
                   :fields="detailProducts"
+
                 ).mt-3
+                  template(#cell(name)='data')
+                    p {{data.item.p_id.name}}
+                  template(#cell(price)='data')
+                    p(v-if="data.item.p_id.onsale").text-danger  {{ data.item.p_id.countPrice}}
+                    p(v-else)  {{ data.item.p_id.price}}
                   template(#cell(smalltotal)='data')
-                    p  {{data.item.amount * data.item.p_id.price}}
+                    p(v-if="data.item.p_id.onsale")  {{data.item.amount * data.item.p_id.countPrice}}
+                    p(v-else)  {{data.item.amount * data.item.p_id.price}}
+                  template(#cell(image)='data')
+                    img(:src="data.item.p_id.src" style="height:5rem")
                 hr
                 div.text-left
                   p 備註 : {{orderdetail.note}}
@@ -70,6 +79,7 @@ export default {
   name: 'AdminOrders',
   data () {
     return {
+      images: null,
       user: '',
       orderdetail: '',
       orderlength: '',
@@ -127,15 +137,19 @@ export default {
       ],
       detailProducts: [
         {
-          key: 'p_id.name',
+          key: 'name',
           label: '商品名稱'
+        },
+        {
+          key: 'image',
+          label: '商品圖片'
         },
         {
           key: 'amount',
           label: '購買數量'
         },
         {
-          key: 'p_id.price',
+          key: 'price',
           label: '價格'
         },
         {
@@ -163,30 +177,16 @@ export default {
       const result = data.filter(res => {
         return res.orders.length !== 0
       })
-      console.log(result)
-      // let array = null
-      // for (let i = 0; i < result.length; i++) {
-      //   console.log(result[i].orders.concat(result[i + 1].orders))
-      //   array = result[i].orders.concat(result[i + 1].orders)
-      // }
-      // console.log(array)
+      for (const one of result) {
+        for (const two of one.orders) {
+          this.images = two.products.map(product => {
+            product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file
+          })
+          console.log(result)
+        }
+      }
       this.$store.commit('orderlists', result)
     })
-
-    // this.axios.get(process.env.VUE_APP_API + '/users/').then((response) => {
-    //   var data = response.data.result
-    //   const result = data.filter(res => {
-    //     return res.orders.length !== 0
-    //   })
-    //   console.log(result)
-    //   // let array = null
-    //   // for (let i = 0; i < result.length; i++) {
-    //   //   console.log(result[i].orders.concat(result[i + 1].orders))
-    //   //   array = result[i].orders.concat(result[i + 1].orders)
-    //   // }
-    //   // console.log(array)
-    //   this.$store.commit('orderlists', result)
-    // })
   }
 }
 

@@ -1,3 +1,8 @@
 #membercenter
   .editbtn
       background-color: watermelon
+  .payinfo
+    width 90%
+    background-color: sky 
+    padding: 1rem  
+    border: 1px dashed black
