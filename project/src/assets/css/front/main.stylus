@@ -1,6 +1,8 @@
 html,body 
   height 100%
   margin-top: 1.8rem
+  p
+    margin:0
   background-color: smoke  
   @media  (max-width:768px)
     font-size: 75%

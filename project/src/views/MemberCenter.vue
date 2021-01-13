@@ -29,8 +29,12 @@
               :items="user.fav"
               :fields="favfields"
               )
+              template(#cell(name)='data')
+                p(style="") {{data.item.name}}
               template(#cell(cancel)='data')
-                b-button(size="sm") 取消追蹤
+                b-button(size="sm" @click="cancelfav(data.index)") 取消追蹤
+              template(#cell(image)='data')
+                img(:src="data.item.src[0]")
             p(v-if="user.fav.length === 0").text-center 目前沒有內容
             div
               h4  我的訂單 :
@@ -46,7 +50,7 @@
                       template(#cell(shipment)='data')
                         p.text-danger {{data.item.shipment}}
                       template(#cell(detail)='row')
-                        b-button(v-b-modal.unfinishDetail  @click="showUnfinishOrder(row.item)") 訂單詳細
+                        b-button(v-b-modal.unfinishDetail  @click="showUnfinishOrder(row.item)") 訂單明細
                       template(#cell(orderAmount)='data')
                         p {{data.item.products.length}}
                     p(v-if="unfinishOrder.length === 0").text-center 目前沒有內容
@@ -82,7 +86,7 @@
               p.m-0.mt-3.text-center.w-100 確認匯款資訊後會立刻為您確認，如選擇貨到付款可忽略此訊息~
 
             b-modal(id="unfinishDetail" title="訂單明細 : "
-              size="xl" hide-footer)
+              size="xl" hide-footer modal-class="tdClass")
               b-container
                 b-row
                   b-col(cols="12")
@@ -168,13 +172,15 @@ export default {
         },
         {
           key: 'detail',
-          label: '訂單詳細'
+          label: '訂單明細'
         }
       ],
       detailProducts: [
         {
           key: 'p_id.name',
-          label: '商品名稱'
+          label: '商品名稱',
+          tdClass: 'tdClass'
+
         },
         {
           key: 'image',
@@ -196,7 +202,12 @@ export default {
       favfields: [
         {
           key: 'name',
-          label: '商品名稱'
+          label: '商品名稱',
+          tdClass: 'tdClass'
+        },
+        {
+          key: 'image',
+          label: '商品圖片'
         },
         {
           key: 'price',
@@ -225,6 +236,10 @@ export default {
     }
   },
   methods: {
+    cancelfav (index) {
+      this.user.fav.splice(index, 1)
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, this.user)
+    },
     edit () {
       this.isEdit = true
     },
@@ -245,12 +260,13 @@ export default {
   mounted () {
     console.log(this.$store.state.user)
     this.axios.get(process.env.VUE_APP_API + '/users/' + this.user.id).then((res) => {
-      console.log(res.data.result.orders)
+      console.log(res.data.result)
       for (const one of res.data.result.orders) {
         one.products.map(product => {
           product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file
         })
       }
+
       this.$store.commit('login', res.data.result)
     })
   }

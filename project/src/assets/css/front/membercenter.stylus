@@ -1,4 +1,17 @@
 #membercenter
+  .tdClass
+    max-width: 12rem;
+    p
+      white-space: nowrap ;
+      overflow hidden
+      text-overflow: ellipsis ;
+  //   width:10rem !important;
+  //   margin:0 !important
+  //   overflow:hidden;
+  //   display:block;
+  //   text-overflow:ellipsis
+  //   height:8rem
+  //   text-align:center
   .editbtn
       background-color: watermelon
   .payinfo
