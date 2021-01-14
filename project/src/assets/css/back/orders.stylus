@@ -1,0 +1,4 @@
+#adminorders
+  .btn-secondary
+    background: transparent;
+    border:none

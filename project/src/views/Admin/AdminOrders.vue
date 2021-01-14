@@ -13,22 +13,23 @@
             template(#cell(detail)='row')
               b-button(variant="info"  @click="row.toggleDetails") 完整訊息
 
-            template(v-slot:row-details="row")
+            template(v-slot:row-details="row") {{row.index}}
               div.bg-white
                 b-table(
+                  stacked="md"
                   :items="row.item.orders"
                   :fields='orders').bg-white
                   template(#cell(detail)='row')
                     b-button(variant="info" v-b-modal.orderdetail @click="showOrderdetail(row.item)") 查看訂單明細
                   template(#cell(ispaid)='data')
-                    b-button(v-if="data.item.ispaid = '未付款'")
-                      p(@click="paid(data.item)").text-danger {{data.item.ispaid}}
-                    b-button(v-else)
-                      p(@click="notpaid(data.item)").text-success {{data.item.ispaid}}
+                    b-button(@click="handlepaid(row, data.index)" )
+                      p(v-if="data.item.ispaid").text-success 已付款 {{data.ispaid}}
+                      p(v-else).text-danger 未付款
                   template(#cell(shipment)='data')
-                    b-button
+                    b-button(v-if="data.item.shipment === '未出貨'" @click="handleship(row, data.index)" )
                       p.text-danger {{data.item.shipment}}
-                      p.text-success {{data.item.shipment}}
+                    b-button(v-else @click="notship(row, data.index)" )
+                      p.text-info {{data.item.shipment}}
                 hr
                 div.d-flex.flex-row-reverse
                   b-button( @click="row.toggleDetails").bg-danger.mb-2.mr-3 關閉
@@ -86,6 +87,7 @@ export default {
   name: 'AdminOrders',
   data () {
     return {
+      orderlists: [],
       images: null,
       user: '',
       orderdetail: '',
@@ -145,15 +147,15 @@ export default {
       detailProducts: [
         {
           key: 'name',
-          label: '商品名稱'
+          label: '名稱'
         },
         {
           key: 'image',
-          label: '商品圖片'
+          label: '圖片'
         },
         {
           key: 'amount',
-          label: '購買數量'
+          label: '數量'
         },
         {
           key: 'price',
@@ -167,17 +169,32 @@ export default {
     }
   },
   computed: {
-    orderlists () {
-      return this.$store.state.orderlists
-    }
 
   },
   methods: {
-    paid (data) {
-      data.ispaid = '已付款'
+    handlepaid (row, index2) {
+      const id = row.item._id
+      const index1 = row.index
+      this.orderlists[index1].orders[index2].ispaid = !this.orderlists[index1].orders[index2].ispaid
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + id, { orders: this.orderlists[index1].orders }).then(res => {
+        console.log(res)
+      })
     },
-    notpaid (data) {
-      data.ispaid = '未付款'
+    handleship (row, index2) {
+      const id = row.item._id
+      const index1 = row.index
+      this.orderlists[index1].orders[index2].shipment = '已出貨'
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + id, { orders: this.orderlists[index1].orders }).then(res => {
+        console.log(res)
+      })
+    },
+    notship (row, index2) {
+      const id = row.item._id
+      const index1 = row.index
+      this.orderlists[index1].orders[index2].shipment = '未出貨'
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + id, { orders: this.orderlists[index1].orders }).then(res => {
+        console.log(res)
+      })
     },
     showOrderdetail (data) {
       this.orderdetail = data
@@ -195,10 +212,9 @@ export default {
           this.images = two.products.map(product => {
             product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file
           })
-          console.log(result)
         }
       }
-      this.$store.commit('orderlists', result)
+      this.orderlists = result
     })
   }
 }

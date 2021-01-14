@@ -293,7 +293,7 @@ export default {
         payaccount: payaccount,
         howtopay: howtopay,
         shipment: '未出貨',
-        ispaid: '未付款',
+        ispaid: false,
         note: note,
         shipping: shipping,
         total: total,

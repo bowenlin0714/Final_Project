@@ -67,8 +67,7 @@ const orderSchema = new Schema({
     type: String
   },
   ispaid: {
-    type: String,
-    require: [true, '缺少付款狀態']
+    type: Boolean
   },
   note: {
     type: String

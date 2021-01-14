@@ -38,7 +38,6 @@ export default new Vuex.Store({
     onShoplists: null,
     commentlists: null,
     cartlists: null,
-    orderlists: null,
     cartproducts: [],
     hotproducts: [],
     unfinishOrder: [],
@@ -98,14 +97,13 @@ export default new Vuex.Store({
     centerOrders (state, data) {
       state.user.orders = data
     },
-    orderlists (state, data) {
-      state.orderlists = []
-      state.orderlists = data
-      console.log(data)
-    },
+    // orderlists (state, data) {
+    //   // console.log(data)
+    //   state.orderlists = []
+    //   state.orderlists = data
+    // },
     unfinishOrder (state, data) {
       state.unfinishOrde = data
-      console.log(data)
     },
     cartproducts (state, data) {
       state.user.shopcar = data
@@ -114,7 +112,6 @@ export default new Vuex.Store({
       state.user.fav = data
     },
     addcartProduct (state, data) {
-      console.log(data)
       state.user.shopcart = data
     },
     cartlists (state, data) {
