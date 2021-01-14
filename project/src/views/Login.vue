@@ -1,11 +1,11 @@
 <template lang="pug">
   #login
-    b-container().shadow
+    b-container(style="min-height:70vh").shadow
       b-row
         b-col(cols="12")
           b-breadcrumb(:items="breads")
           b-container()
-            b-row.pb-5
+            b-row
               b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.p-5
                 div.text-center
                   font-awesome-icon(:icon="['fas','user-astronaut']").text-black

@@ -4,15 +4,7 @@
     position: relative
     font-weight: bolder
     &::after
-      content: ''
-      position: absolute
-      width: 6rem
-      height: 0.1rem
-      background-color: deepblue
-      bottom -1rem
-      left: 50%
-      transform: translateX(-50%)
-      z-index: 3
+      drawline()
   p
     color: #808080
   .btn 

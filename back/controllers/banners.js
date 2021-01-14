@@ -7,6 +7,8 @@ import dotenv from 'dotenv'
 
 import banners from '../models/banners.js'
 import { log } from 'console'
+import cheerio from 'cheerio'
+import { text } from 'body-parser'
 
 let storage
 
@@ -90,12 +92,14 @@ export const create = async (req, res) => {
         } else {
           file = path.basename(req.file.path)
         }
+
         const result = await banners.create({
           isShow: true,
           isEdit: false,
           description: req.body.description,
           file
         })
+
         res.status(200).send({ success: true, message: '', result })
       } catch (error) {
         if (error.name === 'ValidationError') {
@@ -125,6 +129,7 @@ export const bannertxt = async (req, res) => {
 
   try {
     const result = await banners.find()
+
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     console.log(error)

@@ -21,9 +21,14 @@
                   template(#cell(detail)='row')
                     b-button(variant="info" v-b-modal.orderdetail @click="showOrderdetail(row.item)") 查看訂單明細
                   template(#cell(ispaid)='data')
-                    p.text-danger {{data.item.ispaid}}
+                    b-button(v-if="data.item.ispaid = '未付款'")
+                      p(@click="paid(data.item)").text-danger {{data.item.ispaid}}
+                    b-button(v-else)
+                      p(@click="notpaid(data.item)").text-success {{data.item.ispaid}}
                   template(#cell(shipment)='data')
-                    p.text-danger {{data.item.shipment}}
+                    b-button
+                      p.text-danger {{data.item.shipment}}
+                      p.text-success {{data.item.shipment}}
                 hr
                 div.d-flex.flex-row-reverse
                   b-button( @click="row.toggleDetails").bg-danger.mb-2.mr-3 關閉
@@ -53,6 +58,7 @@
                   :fields="detailProducts"
 
                 ).mt-3
+
                   template(#cell(name)='data')
                     p {{data.item.p_id.name}}
                   template(#cell(price)='data')
@@ -70,6 +76,7 @@
                   p.m-0 商品數量 : {{orderlength}}
                   p.m-0 小計 : {{orderdetail.total - orderdetail.shipping}}
                   p 運費 : {{orderdetail.shipping}}
+                  hr
                   h4 合計 : {{orderdetail.total}}
 </template>
 
@@ -124,7 +131,7 @@ export default {
         },
         {
           key: 'detail',
-          label: '訂單詳細'
+          label: '訂單明細'
         },
         {
           key: 'ispaid',
@@ -166,6 +173,12 @@ export default {
 
   },
   methods: {
+    paid (data) {
+      data.ispaid = '已付款'
+    },
+    notpaid (data) {
+      data.ispaid = '未付款'
+    },
     showOrderdetail (data) {
       this.orderdetail = data
       this.orderlength = data.products.length

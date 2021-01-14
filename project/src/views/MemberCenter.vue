@@ -28,13 +28,13 @@
             b-table(
               :items="user.fav"
               :fields="favfields"
-              )
+              ).text-center
               template(#cell(name)='data')
                 p(style="") {{data.item.name}}
               template(#cell(cancel)='data')
                 b-button(size="sm" @click="cancelfav(data.index)") 取消追蹤
               template(#cell(image)='data')
-                img(:src="data.item.src[0]")
+                img(:src="data.item.src[0]" style="max-height:5rem")
             p(v-if="user.fav.length === 0").text-center 目前沒有內容
             div
               h4  我的訂單 :
@@ -124,6 +124,7 @@
                       //- p.m-0 商品數量 : {{orderlength}}
                       p.m-0 小計 : {{unfinishDetail.total - unfinishDetail.shipping}}
                       p 運費 : {{unfinishDetail.shipping}}
+                      hr
                       h4 合計 : {{unfinishDetail.total}}
 
 </template>

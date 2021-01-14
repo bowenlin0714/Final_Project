@@ -12,3 +12,4 @@
 @import "front/shopcar.stylus";
 @import "front/membercenter.stylus";
 @import "front/contact.stylus";
+@import "front/news.stylus";

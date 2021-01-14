@@ -1,8 +1,13 @@
 html,body 
   height 100%
   margin-top: 1.8rem
+  td
+    vertical-align: middle !important;
   p
     margin:0
+  a
+    &:hover
+      cursor: pointer  
   background-color: smoke  
   @media  (max-width:768px)
     font-size: 75%

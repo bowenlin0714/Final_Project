@@ -1,28 +1,50 @@
-import Axios from 'axios'
 import news from '../models/news.js'
+import axios from 'axios'
+import cheerio from 'cheerio'
 
-export const addnews = async (req, res) => {
+export const create = async (req, res) => {
   try {
-    // if (!(/^09[0-9]{8}$/.test(req.body.phone))) {
-    //   res.status(400).send({ success: false, message: '手機格式不符' })
-    // } else if (
-    //   res.status(400).send({ success: false, message: '日期格式不符' })
-    // } else {
-    //   await forms.create({
-    //     name: req.body.name,
-    //     phone: req.body.phone,
-    //     email: req.body.email,
-    //     opinion: req.body.opinion,
-    //     isRes: req.body.isRes,
-    //     date: req.body.date
-    //   })
-    //   res.status(200).send({ success: true, message: '' })
-    // }
-    Axios.get('https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=6').then(res => {
-      console.log(res)
-      news.create(res)
+    // 插入新聞
+    const array = []
+    axios.get('https://www.toy-people.com/').then(res => {
+      const $ = cheerio.load(res.data)
+      const textdata = $('.text h2 .bold_face ')
+      const imgdata = $('.list > .image > a')
+      const timedata = $('.times ')
+      const inertext = $('.text > p ')
+
+      for (let i = 0; i < textdata.length; i++) {
+        const data = {
+          href: textdata.eq(i).attr('href'),
+          text: textdata.eq(i).text(),
+          img: imgdata.eq(i).css('background-image'),
+          times: timedata.eq(i).text(),
+          innertext: inertext.eq(i).text()
+        }
+        array.push(data)
+      }
+      console.log(array)
+      const result = news.create({
+        data: array
+      })
+      res.status(200).send({ success: true, message: '', result })
     })
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const edit = async (req, res) => {
+
+}
+export const getnews = async (req, res) => {
+  try {
+    const result = await news.find()
+
+    res.status(200).send({ success: true, message: '', result })
+
+    console.log(result)
+  } catch (err) {
+    console.log(err)
   }
 }

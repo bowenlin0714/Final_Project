@@ -1,6 +1,9 @@
+
 #membercenter
+    
   .tdClass
     max-width: 12rem;
+    text-align: left
     p
       white-space: nowrap ;
       overflow hidden

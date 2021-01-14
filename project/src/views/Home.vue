@@ -17,7 +17,7 @@
             v-for="(banner,index) in this.$store.state.bannerlists"
             :img-src="banner.src"
           )
-      div.titlepic.mt-3
+      div.titlepic.my-5
         u-animate-container
           u-animate(
             name="fadeInLeft"
@@ -31,10 +31,10 @@
             span Hot!!
             p.d-inline 熱門商品
       Hot
-      div.titlepic.mt-3
+      div.titlepic.my-5
          u-animate-container
           u-animate(
-            name="fadeInRight"
+            name="fadeInLeft"
             delay="0s"
             duration="2s"
             :iteration="1"
@@ -87,7 +87,6 @@ export default {
       })
       var data = this.images
       this.$store.commit('bannerlists', data)
-      console.log(this.$store.state.productlists.sold)
     })
   }
 

@@ -1,4 +1,10 @@
 #contact
+  .contactus
+    color: deepblue
+    &::after  
+      drawline()
+    
+  
   .btn 
     background-color: watermelon
     border-radius: 1.5rem

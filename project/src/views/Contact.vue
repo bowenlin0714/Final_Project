@@ -3,19 +3,20 @@
     b-container(style="min-height:70vh").shadow
       b-breadcrumb(:items="breads")
       b-row
-        b-col(cols="6").bg-white.rounded.mx-auto.mb-3.p-3
+        b-col(cols="6").bg-white.rounded.mx-auto.mb-3.p-5
           b-form
-            h3.text-center Contact Us
-            b-form-group(label="姓名" label-for="name")
+
+            h3.text-center.contactus.position-relative 聯絡我們
+            b-form-group(label="姓名 :" label-for="name")
               b-form-input(
                 name="name"
                 v-model="name"
                 placeholder="請輸入"
                 :state="validateState('name')"
                 v-validate="{ required: true }"
-                data-vv-as="姓名")
+                data-vv-as="姓名 :")
               b-form-invalid-feedback() {{ veeErrors.first('name') }}
-            b-form-group(label="e-mail" label-for="email")
+            b-form-group(label="e-mail :" label-for="email")
               b-form-input(
                 name="email"
                 v-model="email"
@@ -34,7 +35,7 @@
                 v-validate="{ required: true, phone }"
                 data-vv-as="手機")
               b-form-invalid-feedback().mb-3 {{ veeErrors.first('phone') }}
-            b-form-group(label="建議與回饋" label-for="opinion")
+            b-form-group(label="建議與回饋 :" label-for="opinion")
               b-form-textarea(
                 name="opinion"
                 v-model="opinion"
@@ -43,8 +44,7 @@
                 v-validate="{ required: true}"
                 data-vv-as="建議與回饋")
               b-form-invalid-feedback().mb-3 {{ veeErrors.first('opinion') }}
-            b-button(@click="onSubmit").w-25 重置
-            b-button(@click="onSubmit").w-25 送出
+            b-button(@click="onSubmit").w-100 送出
 </template>
 
 <script>

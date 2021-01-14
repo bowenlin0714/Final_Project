@@ -3,7 +3,7 @@
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" )
       b-container
         b-navbar-brand(to='/') BUYFIG
-        a(href="#/shopcar", title="title").class.ml-auto.d-flex.position-relative.mr-3
+        a( title="title" @click="toCart").class.ml-auto.d-flex.position-relative.mr-3
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange
               p(style="top:50%;left:50%;transform:translate(-50%,-50%)").position-absolute.text-white {{this.$store.state.user.shopcar.length}}
@@ -12,7 +12,7 @@
           b-navbar-nav(class = "mainnav").ml-auto
             b-nav-item(class="mainNavitem" to="/products") 商品列表
             b-nav-item(class="mainNavitem" to="/contact") 聯絡我們
-            //- b-nav-item(class="mainNavitem" to="/news") 公仔新知
+            b-nav-item(class="mainNavitem" to="/news") 公仔新知
             b-nav-item(class="mainNavitem" to="/about") 關於我們
             b-nav-item(disabled) |
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''") {{user.account}}
@@ -48,8 +48,15 @@ export default {
 
   },
   methods: {
+    toCart () {
+      if (this.user.name === '') {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/shopcar')
+      }
+    },
     tomembercenter () {
-      if (this.$store.state.user.name === '') {
+      if (this.user.name === '') {
         this.$router.push('/login')
       } else {
         this.$router.push('/membercenter')

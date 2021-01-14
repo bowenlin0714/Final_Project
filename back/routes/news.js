@@ -1,8 +1,10 @@
 import express from 'express'
-import { addnews } from '../controllers/news.js'
+import { create, edit, getnews } from '../controllers/news.js'
 
 const router = express.Router()
 
-router.get('/', addnews)
+router.post('/create', create)
+router.patch('/edit', edit)
+router.get('/', getnews)
 
 export default router
