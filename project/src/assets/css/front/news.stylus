@@ -1,9 +1,31 @@
 #news
-  h1
+  @keyframes line { 
+    0% { 
+        width: 0%; 
+    }
+
+    50% { 
+        width: 20%; 
+    }
+
+    
+  } 
+  h2
+    position relative
     color: watermelon 
     font-weight: bold
     // text-align: center
     padding-bottom: 1rem
+    &:after
+      content: ""; 
+      position: absolute; 
+      bottom: -0%; 
+      left: 50%; 
+      transform: translateX(-50%)
+      width: 20%; 
+      height: 0.2rem; 
+      background: watermelon; 
+      animation: line 1.5s linear 1; 
   li
     list-style:none;
     h3

@@ -1,6 +1,8 @@
 
 #membercenter
-    
+  .complete
+    [aria-colindex="7"]
+      display: none 
   .tdClass
     max-width: 12rem;
     text-align: left

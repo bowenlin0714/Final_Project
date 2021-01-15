@@ -17,7 +17,7 @@
             v-for="(banner,index) in this.$store.state.bannerlists"
             :img-src="banner.src"
           )
-      div.titlepic.my-5
+      div.titlepic.my-3
         u-animate-container
           u-animate(
             name="fadeInLeft"
@@ -31,7 +31,7 @@
             span Hot!!
             p.d-inline 熱門商品
       Hot
-      div.titlepic.my-5
+      div.titlepic.my-3
          u-animate-container
           u-animate(
             name="fadeInLeft"

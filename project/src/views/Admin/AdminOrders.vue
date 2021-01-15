@@ -31,8 +31,8 @@
                     b-button(v-else @click="notship(row, data.index)" )
                       p.text-info {{data.item.shipment}}
                 hr
-                div.d-flex.flex-row-reverse
-                  b-button( @click="row.toggleDetails").bg-danger.mb-2.mr-3 關閉
+                b-container.d-flex.flex-row-reverse
+                  b-button( @click="row.toggleDetails").bg-danger.mb-2 關閉
             template(#cell(amount)='data')
               p  {{data.item.orders.length}}
         b-modal(id="orderdetail" title="訂單明細 : "
@@ -41,14 +41,14 @@
             b-row
               b-col(cols="12")
                 b-row
-                  b-col(cols="6")
-                    p  購買日期 : {{orderdetail.date}}
-                      span.ml-3 訂單編號: {{orderdetail._id}}
-                  b-col(cols="6")
-                    p.text-right  收件人 : {{orderdetail.name}}
-                      span.ml-3 電話 : {{orderdetail.phone}}
-                p  運送地址 : {{orderdetail.where}}
-                p  付款方式 : {{orderdetail.howtopay}}
+                  b-col(cols="12")
+                    p.my-1  購買日期 : {{orderdetail.date}}
+                    p.my-1 訂單編號: {{orderdetail._id}}
+                  b-col(cols="12").text-left
+                    p.my-1  收件人 : {{orderdetail.name}}
+                    p.my-1 電話 : {{orderdetail.phone}}
+                p.my-1  運送地址 : {{orderdetail.where}}
+                p.my-1  付款方式 : {{orderdetail.howtopay}}
                   span.ml-3 付款狀態 :
                   span.text-danger {{orderdetail.ispaid}}
                 p 運送方式 : {{orderdetail.method}}
@@ -74,8 +74,8 @@
                 div.text-left
                   p 備註 : {{orderdetail.note}}
                 div.text-right
-                  p.m-0 商品數量 : {{orderlength}}
-                  p.m-0 小計 : {{orderdetail.total - orderdetail.shipping}}
+                  p.my-1 商品數量 : {{orderlength}}
+                  p.my-1 小計 : {{orderdetail.total - orderdetail.shipping}}
                   p 運費 : {{orderdetail.shipping}}
                   hr
                   h4 合計 : {{orderdetail.total}}

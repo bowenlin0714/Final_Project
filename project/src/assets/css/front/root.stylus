@@ -12,7 +12,7 @@ deepblue = #444B53
     }
 
     50% { 
-        width: 25%; 
+        width: 30%; 
     }
 
     
@@ -37,7 +37,7 @@ drawline() {
   bottom: -40%; 
   left: 50%; 
   transform: translateX(-50%)
-  width: 25%; 
+  width: 30%; 
   height: 0.2rem; 
   background: deepblue; 
   animation: line 1.5s linear 1; 

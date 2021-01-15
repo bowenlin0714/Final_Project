@@ -44,30 +44,38 @@
                     b-table(
                       :items="unfinishOrder"
                       :fields="fields"
-                    ).mt-3
-                      template(#cell(ispaid)='data')
-                        p.text-danger {{data.item.ispaid}}
-                      template(#cell(shipment)='data')
-                        p.text-danger {{data.item.shipment}}
+                    ).mt-3.text-center
+                      template(#cell(paid)='data')
+                        span(v-if="data.item.ispaid").text-success 已付款
+                        span(v-else).text-danger 未付款
+                      template(#cell(ship)='data')
+                        p(v-if="data.item.shipment === '未出貨'").text-danger 未出貨
+                        p(v-else).text-info 已出貨
                       template(#cell(detail)='row')
                         b-button(v-b-modal.unfinishDetail  @click="showUnfinishOrder(row.item)") 訂單明細
+                      template(#cell(check)='data')
+                        b-button(@click="checkreceive(data)" v-if="data.item.shipment === '已出貨'") 確認收貨
                       template(#cell(orderAmount)='data')
                         p {{data.item.products.length}}
                     p(v-if="unfinishOrder.length === 0").text-center 目前沒有內容
                   b-tab(title="已完成")
                     b-table(
+                      class="complete"
                       :items="completeOrder"
                       :fields="fields"
-                    ).mt-3
-                      template(#cell(ispaid)='data')
-                        p.text-danger {{data.item.ispaid}}
-                          b-button(size="sm") 已匯款
-                      template(#cell(shipment)='data')
-                        p.text-danger {{data.item.shipment}}
+                    ).mt-3.text-center
+                      template(#cell(paid)='data')
+                       span(v-if="data.item.ispaid").text-success 已付款
+                       span(v-else).text-danger 未付款
+                      template(#cell(ship)='data')
+                        p.text-success 已收貨
                       template(#cell(detail)='data')
                         b-button() 訂單明細
+                      template(#cell(check)='data')
+                        b-button(@click="checkreceive(data.item)") 確認收貨
                       template(#cell(orderAmount)='data')
                         p {{data.item.products.length}}
+
                     p(v-if="completeOrder.length === 0").text-center 目前沒有內容
 
             P 付款資訊 :
@@ -101,10 +109,12 @@
                     p  付款方式 : {{unfinishDetail.howtopay}}
                       span.ml-3 付款帳戶 : {{unfinishDetail.payaccount}}
                       span.ml-3 付款狀態 :
-                      span.text-danger {{unfinishDetail.ispaid}}
+                      span(v-if="unfinishDetail.shipment").text-success 已付款
+                      span(v-else).text-danger 未付款
                     p 運送方式 : {{unfinishDetail.method}}
                       span.ml-3  出貨狀態 :
-                      span.text-danger {{unfinishDetail.shipment}}
+                      span(v-if="unfinishDetail.shipment").text-info 已出貨
+                      span(v-else).text-danger 未出貨
                     b-table(
                       :items="unfinishDetail.products"
                       :fields="detailProducts"
@@ -164,16 +174,20 @@ export default {
           sortable: true
         },
         {
-          key: 'ispaid',
+          key: 'paid',
           label: '付款狀態'
         },
         {
-          key: 'shipment',
+          key: 'ship',
           label: '出貨狀態'
         },
         {
           key: 'detail',
           label: '訂單明細'
+        },
+        {
+          key: 'check',
+          label: '確認'
         }
       ],
       detailProducts: [
@@ -227,16 +241,20 @@ export default {
     },
     unfinishOrder () {
       return this.user.orders.filter(res => {
-        return res.shipment !== '完成'
+        return res.shipment !== '已收貨'
       })
     },
     completeOrder () {
       return this.user.orders.filter(res => {
-        return res.shipment === '完成'
+        return res.shipment === '已收貨'
       })
     }
   },
   methods: {
+    checkreceive (data) {
+      data.item.shipment = '已收貨'
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, this.user)
+    },
     cancelfav (index) {
       this.user.fav.splice(index, 1)
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, this.user)

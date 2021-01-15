@@ -4,13 +4,14 @@
     filter: drop-shadow(0 0.5rem 0.3rem carbon);
     height 8rem
     width 50%
+    transform: scale(0.8)
     padding-bottom: 1rem
     background-image: url('~@/assets/ribbon.svg') 
     background-position: center
     background-size: 100%
     background-repeat:  no-repeat
     position relative
-    left: -1%
+    left: -6%
     flexcenter()
     font-weight: bolder
     color: deepblue 
@@ -18,12 +19,12 @@
       width: 100%
       // height 10rem
     p
-      font-size: 3rem
+      font-size: 2rem
       color: white  
 
       // text-shadow: 2px 2px 3px smoke
     span 
-      font-size: 2.5rem
+      font-size: 2rem
       color: white  
       // text-shadow: 2px 2px 3px smoke
 

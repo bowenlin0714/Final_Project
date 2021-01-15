@@ -33,6 +33,7 @@
   h1
     font-size: 4rem
     font-weight: bold
+    
   .row
     .col-12
       padding-top: 25vh
@@ -183,12 +184,12 @@
     background-size: 150% 80%;
   .mask
     width:100vw;
-    height 220px
+    height 15rem
   .maskText
     h1
-      font-size: 60px !important
+      font-size: 4rem !important
     h3  
-      font-size: 30px !important
+      font-size: 2rem !important
 
 @media (min-width: 576px) and (max-width:768px)
   .fine
@@ -202,9 +203,9 @@
     height 200px
   .maskText
     h1
-      font-size: 70px !important
+      font-size: 4.5rem !important
     h3  
-      font-size: 33px !important
+      font-size: 2.5rem !important
   .aboutPage
     h1
       font-size: 400%    

@@ -30,7 +30,7 @@
                     p 商品編號 : {{productdetail.productNumber}}
                     button(class="favbut" )
                      font-awesome-icon( :icon=['far', 'heart'] v-if="!checkfav" @click="addfav(productdetail)").m-0
-                     font-awesome-icon( :icon=['fas', 'heart'] v-else @click="delfav(productdetail)").text-danger.m-0
+                     font-awesome-icon( :icon=['fas', 'heart'] v-else @click="cancelfav(productdetail)").text-danger.m-0
 
                   p {{productdetail.name}}
                   s(v-if="productdetail.onsale").d-block NT :{{productdetail.price}}
@@ -166,11 +166,16 @@ export default {
         })
       }
     },
-    delfav (data) {
+    cancelfav (data) {
       const idx = this.user.fav.findIndex(fav => {
         return fav._id === data._id
       })
       this.user.fav.splice(idx, 1)
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
+        fav: this.user.fav
+      }).then(res => {
+        console.log(res)
+      })
     },
     addcartProduct (data) {
       this.$store.state.addShow = true

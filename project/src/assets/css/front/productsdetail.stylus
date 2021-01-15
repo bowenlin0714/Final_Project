@@ -2,6 +2,10 @@ pre
   white-space: pre-wrap;
   word-wrap: break-word;
 #productsdetail
+  svg 
+    transition: 0.5s
+    &:active
+      transform: scale(0.7)
   .favbut
     border-radius:50%;
     border: none

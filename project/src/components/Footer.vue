@@ -44,7 +44,7 @@
                   p
                     font-awesome-icon(:icon="['fas','handshake']")
                     | 社群媒體
-                    p.p-0
+                    p.p-0.mt-2
                       a(href="https://www.facebook.com/" target="_blank")
                         font-awesome-icon(:icon="['fab','facebook-square']").text-white.h3
                     p.p-0.m-0

@@ -14,6 +14,8 @@ import VueI18n from 'vue-i18n'
 import 'animate.css'
 import VueWow from 'vue-wow'
 import cheerio from 'cheerio'
+import wheel from 'vue-fortune-wheel'
+import lottery from 'vue-lottery'
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -42,6 +44,9 @@ Vue.use(Vuelidate)
 Vue.use(VueI18n)
 Vue.use(VueWow)
 Vue.use(cheerio)
+Vue.use(wheel)
+Vue.use(lottery)
+
 Vue.directive('ripple', Ripple)
 
 const i18n = new VueI18n({

@@ -6,59 +6,64 @@
         b-col(cols="12" v-if="step1")
           b-container()
             b-row
-              b-col(cols="6").mx-auto.d-flex.justify-content-center.align-items-center
-                div(class="step" ).mx-5
+              b-col(cols="12").mx-auto.d-flex.justify-content-center.align-items-center
+                div(class="step" ).mr-5
                   p 1
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
                 div(class="step " ).mx-5
                   p 2
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step " ).mx-5
+                div(class="step " ).ml-5
                   p 3
           hr
-          b-table(
-            id="formstable"
-            class="mx-auto  text-center"
-            :items='cartproducts'
-            style=""
-            :fields='fields'
-          ).bg-white.rounded.mt-3.p-5
-            template(#cell(img)='data' )
-              img(:src="data.item.p_id.src" style="max-height:100%;max-width:100%")
-            template(#cell(amount)='data')
-              b-form-spinbutton(
-                          v-model="data.item.amount"
-                          size="sm"
-                          id="amount"
-                          min="1"
-                          :max="data.item.p_id.amount"
-                          @change="changeamount(data)"
-                        )
-            template(#cell(price)='data')
-              p(v-if="data.item.p_id.onsale").text-danger.p-0.m-0 {{ data.item.p_id.countPrice }}
-              p(v-else).p-0.m-0 {{ data.item.p_id.price }}
-            template(#cell(total)='data')
-              p(v-if="data.item.p_id.onsale").p-0.m-0 {{data.item.amount * data.item.p_id.countPrice}}
-              p(v-else).p-0.m-0 {{data.item.amount * data.item.p_id.price}}
-            template(#cell(delete)='data')
-              b-button(style="background:transparent" @click="delshopitem(data.index)")
-                font-awesome-icon( :icon=['fas', 'trash-alt'] ).text-danger.h3.m-0
+          div.bg-white.pb-3
+            b-table(
+              stacked="md"
+              id="formstable"
+              class="mx-auto  text-center"
+              :items='cartproducts'
+              style=""
+              :fields='fields'
+            ).rounded.mt-3.p-5
+              template(#cell(img)='data' )
+                img(:src="data.item.p_id.src" style="max-height:100%;max-width:100%")
+              template(#cell(amount)='data')
+                b-form-spinbutton(
+                  v-model="data.item.amount"
+                  size="sm"
+                  id="amount"
+                  min="1"
+                  :max="data.item.p_id.amount"
+                  @change="changeamount(data)"
+                )
+              template(#cell(price)='data')
+                p(v-if="data.item.p_id.onsale").text-danger.p-0.m-0 {{ data.item.p_id.countPrice }}
+                p(v-else).p-0.m-0 {{ data.item.p_id.price }}
+              template(#cell(total)='data')
+                p(v-if="data.item.p_id.onsale").p-0.m-0 {{data.item.amount * data.item.p_id.countPrice}}
+                p(v-else).p-0.m-0 {{data.item.amount * data.item.p_id.price}}
+              template(#cell(delete)='data')
+                b-button(style="background:transparent" @click="delshopitem(data.index)")
+                  font-awesome-icon( :icon=['fas', 'trash-alt'] ).text-danger.h3.m-0
+            P(v-if="cartproducts.length === 0").text-center 目前沒有商品
           hr
           b-row
-            b-col(cols="2").ml-auto
+            b-col(cols="12" lg="2").ml-auto
               p.h3.text-right.mb-3 總計: ${{total }}
               b-button(class="next" @click="tostep2").mb-3.w-100 下一步
+
+        //- 第二步
         b-col(cols="12" v-if="step2")
           b-container()
             b-row
-              b-col(cols="6").mx-auto.d-flex.justify-content-center.align-items-center
-                div(class="step step2" ).mx-5
+              b-col(cols="12").mx-auto.d-flex.justify-content-center.align-items-center
+                div(class="step step2" ).mr-5
                   p 1
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
                 div(class="step step2" ).mx-5
                   p 2
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step step2" ).mx-5
+                div(class="step step2" ).ml-5
                   p 3
           hr
           b-form(v-if="step2").bg-white.p-3
@@ -88,7 +93,7 @@
                     p(v-if="order.howtosend.howtopay === '銀行轉帳' && user.payaccount !== ''").m-0.my-2 {{user.payaccount}}
                   b-form-radio(v-model="order.howtosend.howtopay" value="PChomePay" name="order2").mb-2 PChomePay
                 p(v-else).ml-3.mt-3  貨到付款無需選擇付款方式
-              b-col(cols="6")
+              b-col(cols="12" lg="6")
                 font-awesome-icon( :icon=['fas', 'user-astronaut'] ).h5.m-0
                 h5.d-inline.ml-2 收件人資訊 :
 
@@ -108,27 +113,30 @@
                   b-form-textarea(rows="5" v-model="order.note").w-100.mt-3
           hr
           b-row
-            b-col(cols="4").ml-auto.text-right
+            b-col(cols="12").ml-auto.text-right
               p   {{order.howtosend.method}} {{order.howtosend.howtopay}}
               p 運費: ${{order.howtosend.shipping}}
               p.h3.mb-3 總計: ${{total + order.howtosend.shipping}}
-              div.d-flex
-                b-button(class="" @click="tostep1").mb-3.w-100 上一步
-                b-button(class="next" @click="buy(user)").mb-3.w-100.ml-5 確定購買
+              div
+                b-row
+                  b-col(cols="12" lg="3")
+                    b-button(class="" @click="tostep1").mb-3.w-100 上一步
+                  b-col(cols="12" lg="3")
+                    b-button(class="next" @click="buy(user)").mb-3.w-100 確定購買
         b-col(cols="12" v-if="step3")
           b-container()
             b-row
-              b-col(cols="6").mx-auto.d-flex.justify-content-center.align-items-center
-                div(class="step step3" ).mx-5
+              b-col(cols="12").mx-auto.d-flex.justify-content-center.align-items-center
+                div(class="step step3" ).mr-5
                   p 1
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
                 div(class="step step3" ).mx-5
                   p 2
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step step3" ).mx-5
+                div(class="step step3" ).ml-5
                   p 3
           hr
-          div(style="padding-top: 10rem;padding-bottom: 10rem").bg-white.d-flex.justify-content-center.align-items-center.rounded
+          div(class="thank").d-flex.justify-content-center.align-items-center.rounded
             div
               p.m-0 謝謝您的購買與支持
               p Thank You !
@@ -136,7 +144,8 @@
               p 電話 : 0988555555 (02)2300-9966
               p 商品編號:
           hr
-          b-button(to="/products") 繼續購買
+          b-button(to="/products").w-100.my-3 回首頁
+          b-button(to="/products").w-100.my-3 繼續購買
 </template>
 
 <script>

@@ -1,4 +1,5 @@
 <template lang="pug">
+
   #news
     b-container.shadow
       b-row
@@ -7,7 +8,7 @@
           ul.p-0
             b-row
               b-col(cols="12" lg="9").mx-auto
-                h1 Toy News
+                h2.text-center.mb-4 Toy News
                 li(v-for="data in datas")
                   b-card(no-body).my-2
                     b-container
@@ -21,11 +22,16 @@
                           p {{data.innertext}}
                           p.text-right.mt-3 更新日期 : {{data.times}}
                 p.text-right 資料來源: 玩具人
+
 </template>
 
 <script>
+import VueLotteryRolling from 'vue-lottery-rolling'
 export default {
   name: 'News',
+  components: {
+    'vue-lottery-rolling': VueLotteryRolling
+  },
   data () {
     return {
       datas: null,
