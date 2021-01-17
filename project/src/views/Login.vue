@@ -6,7 +6,7 @@
           b-breadcrumb(:items="breads")
           b-container()
             b-row
-              b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.p-5
+              b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.bg-white.shadow
                 div.text-center
                   font-awesome-icon(:icon="['fas','user-astronaut']").text-black
                 b-form(@submit.stop.prevent="onSubmit")
@@ -39,11 +39,11 @@
                   b-row
                     b-col(cols="12")
                       button(@click.stop.prevent="onSubmit").w-100.py-2.shadow-sm 登入
-                    b-col(cols="6")
+                    b-col(cols="12")
                       p.mt-4.mb-0 還沒有帳號嗎?點我
                         a(href="#/reg") 註冊
-              b-col(cols="12" lg="5" class="logright").border.mr-auto.rounded-right
-                div.text-white
+              b-col(cols="12" lg="5" class="logright").border.mr-auto.rounded-right.shadow
+                div.text-white.text-center
                   h1 Welcome
                   h1 Back!!
 

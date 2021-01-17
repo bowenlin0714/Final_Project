@@ -4,7 +4,9 @@
       b-row
         b-breadcrumb(:items="breads")
         b-container
-          b-col(cols="12").bg-white.mb-3.p-3
+          b-col(cols="12" ).bg-white.mb-3.p-5
+            .title.mb-5
+             p Member Center
             h4.d-inline 會員資料 :
             b-button(class="editbtn" @click="edituser" size="sm" v-if="this.isEdit").mb-2.ml-3 確定
             b-button(class="editbtn" @click="edit" size="sm" v-else).mb-2.ml-3 編輯
@@ -78,8 +80,7 @@
 
                     p(v-if="completeOrder.length === 0").text-center 目前沒有內容
 
-            P 付款資訊 :
-            div.payinfo.mx-auto
+            div.payinfo.mx-auto.mt-5
               div.d-flex.justify-content-between
                 h6 匯款 :
                 div.mx-5.mt-3

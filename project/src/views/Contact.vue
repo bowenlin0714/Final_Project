@@ -36,9 +36,10 @@
               b-form-invalid-feedback().mb-3 {{ veeErrors.first('phone') }}
             b-form-group(label="建議與回饋 :" label-for="opinion")
               b-form-textarea(
+                rows="6"
                 name="opinion"
                 v-model="opinion"
-                placeholder="請輸入"
+                placeholder=""
                 :state="validateState('opinion')"
                 v-validate="{ required: true}"
                 data-vv-as="建議與回饋")

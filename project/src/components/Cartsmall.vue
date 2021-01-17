@@ -3,7 +3,7 @@
   .shop_cart
     .add
       transition(name='shop_cart')
-        img.add_img(v-if='this.$store.state.addShow' src='../assets/shopcar.png' alt style="width:6rem;filter: brightness(2)")
+        img.add_img(v-if='this.$store.state.addShow' src='../assets/shopcar.png' alt style="width:6rem;filter: brightness(1)")
     .cart.d-none
       img(src='../assets/shopcar.png' alt)
 </template>
@@ -56,7 +56,7 @@ export default {
     width: 6.25rem;
     position: absolute;
     left: 25.5rem;
-    bottom: 42rem;
+    bottom: 38rem;
   }
   /* 动画效果实现 */
   /* @keyframes bounce-in {

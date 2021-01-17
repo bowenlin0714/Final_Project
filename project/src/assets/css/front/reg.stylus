@@ -4,7 +4,7 @@
     position: relative
     font-weight: bolder
     &::after
-      drawline()
+      drawline(30%, -40%)
   p
     color: #808080
   .btn 

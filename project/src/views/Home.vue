@@ -45,6 +45,35 @@
             span New!!
             p.d-inline 最新商品
       New
+      div.titlepic.my-3
+        u-animate-container
+          u-animate(
+            name="fadeInLeft"
+            delay="0s"
+            duration="2s"
+            :iteration="1"
+            :offset="300"
+            animateClass="animated"
+            :begin="false"
+          )
+            span News!!
+            p.d-inline 公仔新知
+      b-container
+        b-row
+          b-col(cols="12" lg="9").mx-auto
+            li(v-for="(data, i) in news" v-if="i<6")
+              b-card(no-body).my-2
+                b-row
+                  b-col(cols="3").d-none.d-sm-block
+                    a(:href="'https://www.toy-people.com/' + data.href" target="blank")
+                      .img(:style="{ background: data.img }")
+                  b-col(cols="12" lg="9").p-5
+                    a(:href="'https://www.toy-people.com/' + data.href" target="blank")
+                      h3 {{data.text}}
+                    p {{data.innertext}}
+                    p.text-right.mt-3 更新日期 : {{data.times}}
+            a(href="#/news")
+              p.text-right.my-3 查看更多....
 
 </template>
 
@@ -56,6 +85,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      news: null,
       slide: 0,
       sliding: null
     }
@@ -87,6 +117,13 @@ export default {
       })
       var data = this.images
       this.$store.commit('bannerlists', data)
+    })
+
+    this.axios.get(process.env.VUE_APP_API + '/news').then((res) => {
+      this.news = res.data.result[0].data
+      console.log(this.data)
+    }).catch(err => {
+      console.log(err)
     })
   }
 

@@ -6,7 +6,7 @@
       b-col(cols="12")
         b-row
           b-col(cols="12" lg="3" ).ml-auto.mb-3
-            div(class="searchbar").d-flex.align-items-center.justify-content-center.mb-2
+            div(class="searchbar").mb-2
               font-awesome-icon( :icon=['fas', 'search'] ).h4.mt-2
               b-form-input(
                   type="text"
@@ -39,10 +39,11 @@
           b-col(cols="10" lg="4" v-for="item in finalLists")
             a(href="#/productsdetail", title="title" style="text-decoration:none" @click="showdetail(item)")
               b-card(class="productCard").mb-3.shadow.border.pb-0
-                div(style="max-height:30vh;overflow:hidden;line-height:30vh").border
+                .img.border
                   b-card-img(:src="item.src[0]" style="max-height:100%")
-                b-card-text.mt-2 {{item.name}}
-                b-card-text(style="vertical-align: middle").d-flex.align-items-center
+                b-card-text(style="height: 4rem").mt-2
+                  p {{item.name}}
+                b-card-text(style="vertical-align: middle").d-flex.align-items-center.mt-2
                  span.text-danger.mr-3(v-if="item.onsale").h5 特價: NT: {{item.countPrice}}
                  s(v-if="item.onsale") NT: {{item.price}}
                  span(v-else) NT: {{item.price}}

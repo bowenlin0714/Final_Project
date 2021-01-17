@@ -13,22 +13,30 @@
             b-list-group-item.p-0.text-center.d-block
               div(v-ripple class="button is-primary")
                 a(href="#/products").text-white
-                  b-button(@click="tagCategory(category)" style="font-size:14px" ).w-100.shadow-sm {{category.text}}
+                  b-button(
+                    class="activebtn"
+                    @click="tagCategory(category)"
+                    style="font-size:0.9rem"
+                    v-if="tag === category.value").w-100.shadow-sm {{category.text}}
+                  b-button(
+                    @click="tagCategory(category)"
+                    style="font-size:0.9rem"
+                    v-else).w-100.shadow-sm {{category.text}}
 
-        b-col(cols="12" lg="9").border.bg-white.pt-3
+        b-col(cols="12" lg="9" class="right").border.bg-white.pt-3
             b-row
               b-col(cols="12" lg="7")
                 div(class="bigimg").ml-1.border
                   img(v-show="preview" :src="productdetail.src[0]")
                   img(:src="bigURL")
                 ul.d-flex
-                  li(v-for="image in productdetail.src" style="width:100px;height:100px;overflow:hidden;background:black;display:flex;justify-content:center;align-items-center").m-2.border
+                  li(v-for="image in productdetail.src" style="").m-2.border
                     img(:src="image" @click="changeimg(image)").w-100.h-auto
               b-col(cols="12" lg="5")
-                div(style="min-height:50vh").d-flex.flex-column.justify-content-lg-between
+                div(style="min-height:50vh").d-flex.flex-column.justify-content-around
                   div.d-flex.justify-content-lg-between
                     p 商品編號 : {{productdetail.productNumber}}
-                    button(class="favbut" )
+                    button(class="favbut" ).d-none.d-lg-block
                      font-awesome-icon( :icon=['far', 'heart'] v-if="!checkfav" @click="addfav(productdetail)").m-0
                      font-awesome-icon( :icon=['fas', 'heart'] v-else @click="cancelfav(productdetail)").text-danger.m-0
 
@@ -47,11 +55,12 @@
                       v-model="cartProducts.amount"
                     ).w-50.ml-3
                   b-button(class="disabled" v-if="productdetail.amount === 0" ).w-100.py-2.mt-4 目前缺貨中
-                  b-button(class="shopbtn" @click="addcartProduct(productdetail )" v-else ).w-100.py-2.mt-4 加入購物車
+                  b-button(class="shopbtn" @click="addcartProduct(productdetail )" v-else ).py-2.mt-4 加入購物車
                     CartAnimation(style="position:absolute;top:25%;left:-150%").d-none.d-lg-block
                     Cartsmall(style="position:absolute;top:7%;left:0%").d-block.d-lg-none
-                  p 付款與運送: 店到店 + 80 自取免運
-              b-col(cols="12")
+                  b-button(class="favbtn" @click="addfav(productdetail)" ).w-100.py-2.d-block.d-lg-none 加入追蹤商品
+                  p 付款與運送: 自取免運 詳情請見購物須知
+              b-col(cols="12").mt-3
                 b-tabs(style="min-height:40vh").mb-3
                   b-tab(title="商品詳細")
                     pre.h5.mt-5 {{productdetail.description}}
@@ -68,7 +77,7 @@
                               p.mt-2.ml-2 {{comment.accounts}} : {{comment.comment}}
                               b-button(@click="delComments(productdetail, index)" v-if="user.isAdmin === true").mb-2.bg-danger 刪除
                           hr
-                          h3.mb-3 留下評論 :
+                          h6.mb-3 留下評論 :
                         b-col(cols="12" class="form").pt-2.rounded
                           b-form
                             p 滿意程度 :
@@ -78,7 +87,31 @@
                             b-row
                               b-col(cols="3").mb-3.ml-auto.mr-3
                                 b-button(@click="sendcomments(productdetail)").w-100 送出
+            p 購物須知
+            p 購物流程
+            p 請您先登入會員，挑選喜愛的商品，進入商品頁之後點選數量，按"加入購物車"，全部挑選完畢後，在螢幕上方購物車的畫面，點選"訂單結帳"。進入結帳畫面後，依系統指示輸入資料，並選擇送貨方式與付款方式，再按"確定購買"，系統會依照您選擇的付款方式引導您完成結帳動作，即可完成購物。
+            p | 如何加入會員
+            p | 付款方式
+            p 選好商品之後，進入結帳畫面，您可以依據您希望的配送方式，選擇付款方式
+              | 若您選擇「貨到付款」，則宅配人員在配送商品時，會一併向您收取該筆訂單款項
+              | 若您選擇「先付款宅配到府/7-11超商取貨」，則有信用卡，ATM櫃員機，Line Pay等付款方式可以選擇
+              | 選擇ATM轉帳必須在三日內付款完成，否則系統將會自動取消該筆訂單
+            p | 配送方式與運費
+            p 先付款後宅配之運費：每筆70元
+              | 7-11 取貨付款 80 元
+              |  7-11 取貨 30 元
+              |  全家 取貨付款 70 元
+              |  全家 取貨 20 元
+              |  黑貓宅急便 120元
+              |  郵寄 100元
+              |  自取 免費
+              | 商品訂購後，預計3-14天送達
+            p | 收到商品錯誤或收到瑕疵品
+            p 收到商品如果有問題，請於三天內聯絡我們的電話，或是透過訊息中心告知
+              | 請詳述您的問題，並提供該筆訂單編號、下單時所使用的手機號碼、收到的實際商品的照片，
+              | 經由客服人員判斷確為商品有錯誤，會協助您進入退貨服務流程，並重新寄送正確商品給您。
 
+              | 提醒您，退回的商品必須是全新的狀態、而且完整包裝(含商品本體、配件、贈品、保證書、原廠包裝及所有附隨文件或資料的完整性)， 切勿缺漏任何             | 配件、請勿自行拆解檢查商品或損毀原廠外盒。原廠外盒及原廠包裝都屬於商品的一部分，或有遺失、毀損或缺件，可能影響您退貨的權益，也可能依照            | 損毀程度扣除為回復原狀所必要的費用。
         b-col(cols="12")
           hr
           h1.text-center.my-4 相關商品
@@ -122,6 +155,12 @@ export default {
     Cartsmall
   },
   computed: {
+    tag () {
+      return this.$store.state.tag
+    },
+    category () {
+      return this.$store.state.categories
+    },
     user () {
       return this.$store.state.user
     },

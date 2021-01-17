@@ -7,6 +7,7 @@
           b-container
             b-row.mb-3
               b-col(cols="4").bg-dark.ml-auto
+                h4 歡迎加入BUYFIG
               b-col(cols="6").border.mr-auto
                 div.p-4
                   h3.text-center Sign Up

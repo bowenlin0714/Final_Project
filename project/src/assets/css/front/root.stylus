@@ -6,17 +6,7 @@ smoke = #EFEFEF
 deepblue = #444B53
 
 
-@keyframes line { 
-    0% { 
-        width: 0%; 
-    }
 
-    50% { 
-        width: 30%; 
-    }
-
-    
-  } 
 
 toCenter() {
   position: absolute
@@ -31,14 +21,25 @@ flexcenter() {
   justify-content: center
 }
 
-drawline() {
+drawline(length, bottom) {
+  @keyframes line { 
+    0% { 
+        width: 0%; 
+    }
+
+    50% { 
+        width: length; 
+    }
+
+    
+  } 
   content: ""; 
   position: absolute; 
-  bottom: -40%; 
+  bottom: bottom
   left: 50%; 
   transform: translateX(-50%)
-  width: 30%; 
-  height: 0.2rem; 
+  width: length; 
+  height: 0.15rem; 
   background: deepblue; 
   animation: line 1.5s linear 1; 
   

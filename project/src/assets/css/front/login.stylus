@@ -1,7 +1,9 @@
 .logright
   background-color: watermelon
 .logleft
+  padding: 4rem
   > div
+    
     position: absolute
     top: 0
     color: white

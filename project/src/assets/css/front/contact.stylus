@@ -2,9 +2,11 @@
   .contactus
     color: deepblue
     &::after  
-      drawline()
+      drawline(30%,-40%)
     
   
   .btn 
     background-color: watermelon
     border-radius: 1.5rem
+    &:hover
+        background-color: rgb(255, 90, 90)

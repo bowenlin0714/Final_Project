@@ -9,6 +9,7 @@
       background-color: watermelon
       border: none
   .searchbar
+    flexcenter()
     color: watermelon
     input 
       border-radius: 20px
@@ -64,6 +65,10 @@
         bottom: 0
         background-color: black
         opacity: 0.6
+    .img
+      max-height:30vh;
+      overflow:hidden;
+      line-height:30vh    
     .card-text
       color: black
       overflow:hidden;
