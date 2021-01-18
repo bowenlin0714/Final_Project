@@ -2,7 +2,7 @@
   #adminproducts.min-vh-100
     b-container
       div.d-flex.align-items-center.justify-content-center.position-relative
-        h1(class="my-3 mb-2" style="z-index:2").text-center 商品管理
+        h1(class="my-3 mb-2" style="z-index:2").text-left 商品管理
       b-row
         b-col(cols="12"  lg="3").ml-auto
           b-form-input(

@@ -1,7 +1,7 @@
 <template lang="pug">
   #adminmembers.min-vh-100
     b-container()
-      h1(class="my-3 mb-2") 會員資料管理
+      h1.my-3.mb-2.text-center 會員資料管理
       b-row
         b-col(cols="12" lg="6")
           b-form-group()

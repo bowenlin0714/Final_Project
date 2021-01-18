@@ -1,4 +1,6 @@
 #adminorders
+  h1
+    color: grey
   .btn-secondary
     background: transparent;
     border:none

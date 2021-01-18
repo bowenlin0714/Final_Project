@@ -3,7 +3,7 @@
     b-container
       b-row
         b-col(cols="12")
-          h1 訂單管理
+          h1.my-3.mb-2.text-center 訂單管理
           b-table(
           class=""
           class="mx-auto"

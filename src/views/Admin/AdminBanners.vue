@@ -1,7 +1,7 @@
 <template lang="pug">
   #adminbanners.min-vh-100
     b-container
-      h1(class="my-3 mb-2") 輪播圖管理
+      h1.my-3.mb-2.text-center 輪播圖管理
       b-col(cols="12")
         b-button(v-b-modal.addBanner).bg-success.mb-3 新增
         b-modal(
