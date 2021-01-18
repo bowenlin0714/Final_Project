@@ -1,4 +1,16 @@
 #reg
+  .left
+    background-image: url('~@/assets/superman.png')
+    background-size: cover
+    background-position: center 
+    background-repeat: no-repeat
+    display: flex
+    align-items: center
+    justify-content: center
+    h2
+      color: white
+      font-weight: 700
+      font-size: 3rem
   h3
     color: deepblue
     position: relative

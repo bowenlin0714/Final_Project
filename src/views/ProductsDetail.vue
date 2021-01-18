@@ -299,23 +299,24 @@ export default {
       this.bigURL = image
     },
     sendcomments (data) {
-      this.$validator.validateAll().then(result => {
-        if (!result) {
-          return
-        }
+      if (this.user.name === '') {
+        alert('請先登入')
+        this.$router.push('/login')
+      } else {
+        this.$validator.validateAll().then(result => {
+          if (!result) {
+            return
+          }
 
-        this.id = data._id
-        var comments = {
-          accounts: this.$store.state.user.account,
-          comment: this.comment,
-          stars: this.rating
-        }
-        data.comments.push(comments)
-        console.log(data.comments)
-        if (this.user.name === '') {
-          alert('請先登入')
-          this.$router.push('/login')
-        } else {
+          this.id = data._id
+          var comments = {
+            accounts: this.$store.state.user.account,
+            comment: this.comment,
+            stars: this.rating
+          }
+          data.comments.push(comments)
+          console.log(data.comments)
+
           this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
             comments: data.comments
           }).then(res => {
@@ -325,8 +326,8 @@ export default {
             this.comment = ''
             this.rating = null
           })
-        }
-      })
+        })
+      }
     }
   }
 

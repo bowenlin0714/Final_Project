@@ -6,9 +6,11 @@
           b-breadcrumb(:items="breads")
           b-container
             b-row.mb-3
-              b-col(cols="4").bg-dark.ml-auto.shadow
-                h4 歡迎加入BUYFIG
-              b-col(cols="6").border.mr-auto.bg-white.shadow
+              b-col(cols="12" lg="4").bg-dark.ml-auto.shadow.left.p-5
+                div
+                  h2 歡迎加入
+                  h2 BUYFIG
+              b-col(cols="12" lg="6").border.mr-auto.bg-white.shadow
                 div.p-4
                   h3.text-center Sign Up
                   b-form(@submit.stop.prevent="onSubmit").mt-4
