@@ -6,10 +6,11 @@
           b-breadcrumb(:items="breads")
           b-container
             b-row.mb-3
-              b-col(cols="12" lg="4").bg-dark.ml-auto.shadow.left.p-5
-                div
+              b-col(cols="12" lg="4" ).bg-dark.ml-auto.shadow.left.p-5
+                div(style="width:75%")
                   h2 歡迎加入
                   h2 BUYFIG
+                  p 填寫註冊資料之後案註冊，成功之後登入就可以開始購物嘍
               b-col(cols="12" lg="6").border.mr-auto.bg-white.shadow
                 div.p-4
                   h3.text-center Sign Up
@@ -43,6 +44,7 @@
                           label="密碼 :"
                           label-for="password")
                           b-form-input(
+                            type="password"
                             name="password"
                             v-model="password"
                             placeholder="password"
@@ -87,7 +89,8 @@
                         )
                     input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
                     br
-                    b-button(@click="onSubmit" style="border-radius:20px").py-2.w-100.shadow 註冊
+                    b-col(cols="10").mx-auto
+                      b-button(@click="onSubmit" style="border-radius:20px").py-2.shadow.w-100 註冊
                     p.mt-4.mb-0 已經有帳號了嗎?點我
                       a(href="#/login") 登入
 

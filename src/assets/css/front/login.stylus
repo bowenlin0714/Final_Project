@@ -2,15 +2,17 @@
   background-color: watermelon
 .logleft
   padding: 4rem
+  padding-top:  6rem
+  padding-bottom:  6rem
   > div
     
     position: absolute
-    top: 0
+    top: 5%
     color: white
     left 50%
     transform: translate(-50%,-50%)
-    width:6rem
-    height:6rem
+    width:6.5rem
+    height:6.5rem
     line-height: 6rem
     background-color: watermelon
     border-radius: 50%
@@ -22,5 +24,5 @@
   button
     background-color: sky
     border-radius: 5rem
-    border: 0.1rem solid grey
+    border: 0.1rem solid carbon
     outline: 0;

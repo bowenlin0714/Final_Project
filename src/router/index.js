@@ -62,7 +62,7 @@ const routes = [
   },
   {
     path: '/news',
-    name: 'Contact',
+    name: 'News',
     component: () => import(/* webpackChunkName: "news" */ '../views/News.vue'),
     meta: {
       title: 'BUYFIG / 公仔新知'

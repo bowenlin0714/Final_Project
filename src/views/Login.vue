@@ -21,7 +21,7 @@
                       :state="validateState('account')"
                       v-validate="{ required: true }"
                       data-vv-as="帳號")
-                     b-form-invalid-feedback() {{ veeErrors.first('account') }}
+                    b-form-invalid-feedback() {{ veeErrors.first('account') }}
                   b-form-group(
                     label="密碼 :"
                     label-for="password"
@@ -35,7 +35,8 @@
                       v-validate="{ required: true, min:4 }"
                       data-vv-as="密碼"
                     )
-                     b-form-invalid-feedback().mb-3 {{ veeErrors.first('password') }}
+                    b-form-invalid-feedback().mb-3 {{ veeErrors.first('password') }}
+                  b-form-checkbox.my-3 記住我
                   b-row
                     b-col(cols="12")
                       button(@click.stop.prevent="onSubmit").w-100.py-2.shadow-sm 登入
@@ -79,23 +80,29 @@ export default {
       return null
     },
     onSubmit () {
-      this.axios.post(process.env.VUE_APP_API + '/users/login', this.$data)
-        .then(res => {
-          if (res.data.success) {
-            alert('登入成功')
-            this.$store.commit('login', res.data.result)
-            if (res.data.result.isAdmin) {
-              this.$router.push('/admin')
-            } else {
-              this.$router.push('/')
-            }
-          } else {
-            alert('登入失敗')
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+
+        } else {
+          this.axios.post(process.env.VUE_APP_API + '/users/login', this.$data)
+            .then(res => {
+              if (res.data.success) {
+                alert('登入成功')
+                this.$store.commit('login', res.data.result)
+                if (res.data.result.isAdmin) {
+                  this.$router.push('/admin')
+                } else {
+                  this.$router.push('/')
+                }
+              } else {
+                alert('登入失敗')
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
+      })
     }
 
   }

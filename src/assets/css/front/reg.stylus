@@ -11,6 +11,8 @@
       color: white
       font-weight: 700
       font-size: 3rem
+    p  
+      color: white
   h3
     color: deepblue
     position: relative
@@ -22,3 +24,6 @@
   .btn 
     background-color: watermelon
     border: none
+    &:hover
+      background-color: rgb(255, 90, 90)
+        

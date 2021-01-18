@@ -11,12 +11,12 @@
         b-collapse#nav-collapse(is-nav style="width:6rem !important")
           b-navbar-nav(class = "mainnav").ml-auto
             b-nav-item(class="mainNavitem" to="/products") 商品列表
-            b-nav-item(class="mainNavitem" to="/contact") 聯絡我們
-            b-nav-item(class="mainNavitem" to="/news") 公仔新知
-            b-nav-item(class="mainNavitem" to="/about") 關於我們
             b-nav-item(class="mainNavitem" @click="toCart") 購物車
               .orange.lg
                 p(style="").position-absolute.text-white {{this.$store.state.user.shopcar.length}}
+            b-nav-item(class="mainNavitem" to="/news") 公仔新知
+            b-nav-item(class="mainNavitem" to="/contact") 聯絡我們
+            b-nav-item(class="mainNavitem" to="/about") 關於我們
             b-nav-item(disabled).d-none.d-lg-block |
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''") {{user.account}}
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else) 會員中心

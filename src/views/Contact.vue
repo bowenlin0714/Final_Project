@@ -3,7 +3,7 @@
     b-container(style="min-height:70vh").shadow
       b-breadcrumb(:items="breads")
       b-row
-        b-col(cols="12" lg="6").bg-white.rounded.mx-auto.mb-3.p-5.shadow
+        b-col(cols="12" lg="6").bg-white.rounded.mx-auto.mb-5.p-5.shadow
           b-form(@submit.stop.prevent="onSubmit")
             h3.text-center.contactus.position-relative Contact us
             b-form-group(label="姓名 :" label-for="name")
@@ -45,7 +45,7 @@
                 data-vv-as="建議與回饋")
               b-form-invalid-feedback().mb-3 {{ veeErrors.first('opinion') }}
             b-col(cols="10").mx-auto
-              b-button(@click="onSubmit" ).w-100.shadow-sm.mt-3.py-2 送出
+              b-button(@click="onSubmit" ).w-100.shadow.mt-3.py-2 送出
 </template>
 
 <script>

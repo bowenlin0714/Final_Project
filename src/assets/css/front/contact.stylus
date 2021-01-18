@@ -6,6 +6,7 @@
     
   
   .btn 
+    border: none
     background-color: watermelon
     border-radius: 1.5rem
     &:hover
