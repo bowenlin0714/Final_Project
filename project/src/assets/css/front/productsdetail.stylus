@@ -2,6 +2,9 @@ pre
   white-space: pre-wrap;
   word-wrap: break-word;
 #productsdetail
+  .text
+    color: rgb(100,100,100)
+    font-size: 0.9rem
   .activebtn
     background-color: watermelon !important
   svg 

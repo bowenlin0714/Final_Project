@@ -2,13 +2,13 @@
   #reg
     b-container.shadow
       b-row
-        b-col(cols="12")
+        b-col(cols="12").my-3
           b-breadcrumb(:items="breads")
           b-container
             b-row.mb-3
-              b-col(cols="4").bg-dark.ml-auto
+              b-col(cols="4").bg-dark.ml-auto.shadow
                 h4 歡迎加入BUYFIG
-              b-col(cols="6").border.mr-auto
+              b-col(cols="6").border.mr-auto.bg-white.shadow
                 div.p-4
                   h3.text-center Sign Up
                   b-form(@submit.stop.prevent="onSubmit").mt-4

@@ -47,6 +47,7 @@
                  span.text-danger.mr-3(v-if="item.onsale").h5 特價: NT: {{item.countPrice}}
                  s(v-if="item.onsale") NT: {{item.price}}
                  span(v-else) NT: {{item.price}}
+                //-  font-awesome-icon( :icon=['fas', 'heart'] ).text-danger.m-0.text-right
         b-pagination(
             v-model="currentPage"
             :total-rows="filterLists.length"

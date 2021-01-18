@@ -55,7 +55,7 @@ export default {
   .shop_cart .add_img {
     width: 6.25rem;
     position: absolute;
-    left: -20.5rem;
+    left: -30.5rem;;
     top: -27rem;
   }
   /* 动画效果实现 */

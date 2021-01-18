@@ -2,7 +2,7 @@
   #app.d-flex.flex-column.justify-content-between
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow
       b-container
-        b-navbar-brand(to='/') BUYFIG
+        b-navbar-brand(to='/' style="font-weight: bolder") BUYFIG
         a( title="title" @click="toCart").class.ml-auto.d-flex.position-relative.mr-3.d-block.d-lg-none
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange.sm
@@ -55,6 +55,7 @@ export default {
     toCart () {
       if (this.user.name === '') {
         this.$router.push('/login')
+        alert('請先登入')
       } else {
         this.$router.push('/shopcar')
       }

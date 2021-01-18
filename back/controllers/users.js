@@ -115,10 +115,10 @@ export const finduser = async (req, res) => {
 
 // 會員名單
 export const accounts = async (req, res) => {
-  // if (req.session.user === undefined) {
-  //   res.status(401).send({ success: false, message: '未登入' })
-  //   return
-  // }
+  if (req.session.user === undefined) {
+    res.status(401).send({ success: false, message: '未登入' })
+    return
+  }
   // if (req.session.user.isAdmin !== true) {
   //   res.status(403).send({ success: false, message: '沒有權限' })
   //   return
@@ -159,9 +159,9 @@ export const del = async (req, res) => {
 
 // 編輯會員資料
 export const edit = async (req, res) => {
-  // if (req.session.user === undefined) {
-  //   res.status(401).send({ success: false, message: '未登入' })
-  // } else if (req.session.user.isAdmin !== true) {
+  if (req.session.user === undefined) {
+    res.status(401).send({ success: false, message: '未登入' })
+  }
   //   res.status(403).send({ success: false, message: '沒有權限' })
   //   return
   // }

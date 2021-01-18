@@ -1,6 +1,6 @@
 <template lang="pug">
   #shopcar
-    b-container.shadow
+    b-container(style="min-height:70vh").shadow
       b-row
         b-breadcrumb(:items="breads")
         b-col(cols="12" v-if="step1")
@@ -48,9 +48,11 @@
             P(v-if="cartproducts.length === 0").text-center 目前沒有商品
           hr
           b-row
-            b-col(cols="12" lg="2").ml-auto
-              p.h3.text-right.mb-3 總計: ${{total }}
-              b-button(class="next" @click="tostep2").mb-3.w-100 下一步
+            b-col(cols="12" lg="5" class="steps").ml-auto
+              p.h4.mb-3 總計: ${{total }}
+              div.d-flex
+                b-button(class="next" to="/products").mb-3.w-100 回商品列表
+                b-button(class="next" @click="tostep2").mb-3.w-100.ml-5 下一步
 
         //- 第二步
         b-col(cols="12" v-if="step2")
@@ -97,20 +99,20 @@
                 font-awesome-icon( :icon=['fas', 'user-astronaut'] ).h5.m-0
                 h5.d-inline.ml-2 收件人資訊 :
 
-                div.d-flex.mt-3
+                div.d-flex.mt-3.ml-3
                   p.mr-2.mb-0 姓名 :
                   b-form-input( v-model="user.name" size="sm" v-if="isedit"  ).w-25
                   p(v-else).mb-0 {{user.name}}
-                div.d-flex.mt-4
+                div.d-flex.mt-4.ml-3
                   p.mr-2.m-0 電話 :
                   b-form-input( v-model="user.phone" size="sm" v-if="isedit").w-25
                   p(v-else).m-0  {{user.phone}}
-                b-button( size="sm" style="font-size: 0.8rem" @click="checkedit").d-block.my-3
+                b-button( size="sm" style="font-size: 0.8rem" @click="checkedit").d-block.my-3.ml-3
                   p( v-if="isedit").m-0 確定
                   p( v-else).my-1.w-100 修改收件資訊
                 font-awesome-icon( :icon=['fas', 'sticky-note'] ).h5.m-0
                 label.w-100.d-inline.h5.ml-2 備註 :
-                  b-form-textarea(rows="5" v-model="order.note").w-100.mt-3
+                  b-form-textarea(rows="5" v-model="order.note" placeholder="請輸入").w-100.mt-3
           hr
           b-row
             b-col(cols="12").ml-auto.text-right
@@ -119,10 +121,11 @@
               p.h3.mb-3 總計: ${{total + order.howtosend.shipping}}
               div
                 b-row
-                  b-col(cols="12" lg="3")
-                    b-button(class="" @click="tostep1").mb-3.w-100 上一步
-                  b-col(cols="12" lg="3")
-                    b-button(class="next" @click="buy(user)").mb-3.w-100 確定購買
+                  b-col(cols="12" lg="5").ml-auto
+                    div.d-flex
+                      b-button(class="" @click="tostep1").mb-3.w-100 上一步
+                      b-button(class="next" @click="buy(user)").mb-3.w-100.ml-5  確定購買
+
         b-col(cols="12" v-if="step3")
           b-container()
             b-row

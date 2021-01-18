@@ -82,39 +82,46 @@
                           b-form
                             p 滿意程度 :
                             star-rating(:show-rating="false" :star-size="20" v-model="rating").mb-3.mt-2
-                            p 商品評價 :
-                            b-form-textarea(v-model="comment").mb-3
+                            p.mb-3 商品評價 :
+                            b-form-textarea(
+                              name="comment"
+                              v-model="comment"
+                              placeholder="請輸入"
+                              :state="validateState('comment')"
+                              v-validate="{ required: true }"
+                              data-vv-as="商品評價 :").mb-3
+                            b-form-invalid-feedback() {{ veeErrors.first('comment') }}
                             b-row
                               b-col(cols="3").mb-3.ml-auto.mr-3
-                                b-button(@click="sendcomments(productdetail)").w-100 送出
-            p 購物須知
-            p 購物流程
-            p 請您先登入會員，挑選喜愛的商品，進入商品頁之後點選數量，按"加入購物車"，全部挑選完畢後，在螢幕上方購物車的畫面，點選"訂單結帳"。進入結帳畫面後，依系統指示輸入資料，並選擇送貨方式與付款方式，再按"確定購買"，系統會依照您選擇的付款方式引導您完成結帳動作，即可完成購物。
-            p | 如何加入會員
-            p | 付款方式
-            p 選好商品之後，進入結帳畫面，您可以依據您希望的配送方式，選擇付款方式
-              | 若您選擇「貨到付款」，則宅配人員在配送商品時，會一併向您收取該筆訂單款項
-              | 若您選擇「先付款宅配到府/7-11超商取貨」，則有信用卡，ATM櫃員機，Line Pay等付款方式可以選擇
-              | 選擇ATM轉帳必須在三日內付款完成，否則系統將會自動取消該筆訂單
-            p | 配送方式與運費
-            p 先付款後宅配之運費：每筆70元
-              | 7-11 取貨付款 80 元
-              |  7-11 取貨 30 元
-              |  全家 取貨付款 70 元
-              |  全家 取貨 20 元
-              |  黑貓宅急便 120元
-              |  郵寄 100元
-              |  自取 免費
-              | 商品訂購後，預計3-14天送達
-            p | 收到商品錯誤或收到瑕疵品
-            p 收到商品如果有問題，請於三天內聯絡我們的電話，或是透過訊息中心告知
-              | 請詳述您的問題，並提供該筆訂單編號、下單時所使用的手機號碼、收到的實際商品的照片，
-              | 經由客服人員判斷確為商品有錯誤，會協助您進入退貨服務流程，並重新寄送正確商品給您。
+                                b-button(@click="sendcomments(productdetail)" class="send").w-100 送出
+            div.p-3.mb-3
+              p.text-center 購物須知
+              p.my-3 | 購物流程
+              p.text 請您先登入會員，挑選喜愛的商品，進入商品頁之後點選數量，按"加入購物車"，全部挑選完畢後，在螢幕上方購物車的畫面，點選"訂單結帳"。進入結帳畫面後，依系統指示輸入資料，並選擇送貨方式與付款方式，再按"確定購買"，系統會依照您選擇的付款方式引導您完成結帳動作，即可完成購物。
+              p.my-3 | 付款方式
+              p.text 選好商品之後，進入結帳畫面，您可以依據您希望的配送方式，選擇付款方式
+                | 若您選擇「貨到付款」，則宅配人員在配送商品時，會一併向您收取該筆訂單款項
+                | 若您選擇「先付款宅配到府/7-11超商取貨」，則有信用卡，ATM櫃員機，Line Pay等付款方式可以選擇
+                | 選擇ATM轉帳必須在三日內付款完成，否則系統將會自動取消該筆訂單
+              p.my-3 | 配送方式與運費
+              div.text 先付款後宅配之運費：每筆70元
+                p 7-11 取貨付款 80 元
+                p  7-11 取貨 30 元
+                p  全家 取貨付款 70 元
+                p  全家 取貨 20 元
+                p  黑貓宅急便 120元
+                p  郵寄 100元
+                p  自取 免費
+                | 商品訂購後，預計3-14天送達
+              p.my-3 | 收到商品錯誤或收到瑕疵品
+              p.text 收到商品如果有問題，請於三天內聯絡我們的電話，或是透過訊息中心告知
+                | 請詳述您的問題，並提供該筆訂單編號、下單時所使用的手機號碼、收到的實際商品的照片，
+                | 經由客服人員判斷確為商品有錯誤，會協助您進入退貨服務流程，並重新寄送正確商品給您。
 
-              | 提醒您，退回的商品必須是全新的狀態、而且完整包裝(含商品本體、配件、贈品、保證書、原廠包裝及所有附隨文件或資料的完整性)， 切勿缺漏任何             | 配件、請勿自行拆解檢查商品或損毀原廠外盒。原廠外盒及原廠包裝都屬於商品的一部分，或有遺失、毀損或缺件，可能影響您退貨的權益，也可能依照            | 損毀程度扣除為回復原狀所必要的費用。
+                | 提醒您，退回的商品必須是全新的狀態、而且完整包裝(含商品本體、配件、贈品、保證書、原廠包裝及所有附隨文件或資料的完整性)， 切勿缺漏任何             | 配件、請勿自行拆解檢查商品或損毀原廠外盒。原廠外盒及原廠包裝都屬於商品的一部分，或有遺失、毀損或缺件，可能影響您退貨的權益，也可能依照            | 損毀程度扣除為回復原狀所必要的費用。
         b-col(cols="12")
           hr
-          h1.text-center.my-4 相關商品
+          h4.text-center.my-4 相關商品
           Hot
 
 </template>
@@ -128,6 +135,7 @@ import { Carousel3d, Slide } from 'vue-carousel-3d'
 import Hot from '@/components/Hot'
 import CartAnimation from '@/components/CartAnimation'
 import Cartsmall from '@/components/Cartsmall'
+// import { Validator } from 'vee-validate'
 
 export default {
   name: 'productsdetail',
@@ -186,6 +194,15 @@ export default {
     }
   },
   methods: {
+    validateState (ref) {
+      if (
+        this.veeFields[ref] &&
+        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
+      ) {
+        return !this.veeErrors.has(ref)
+      }
+      return null
+    },
     addfav (data) {
       // this.checkfav = true
       let rel = true
@@ -282,22 +299,33 @@ export default {
       this.bigURL = image
     },
     sendcomments (data) {
-      this.id = data._id
-      var comments = {
-        accounts: this.$store.state.user.account,
-        comment: this.comment,
-        stars: this.rating
-      }
-      data.comments.push(comments)
-      console.log(data.comments)
-      this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
-        comments: data.comments
-      }).then(res => {
-        if (res.data.success) {
-          this.$store.commit('sendcomments', data)
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return
         }
-        this.comment = ''
-        this.rating = null
+
+        this.id = data._id
+        var comments = {
+          accounts: this.$store.state.user.account,
+          comment: this.comment,
+          stars: this.rating
+        }
+        data.comments.push(comments)
+        console.log(data.comments)
+        if (this.user.name === '') {
+          alert('請先登入')
+          this.$router.push('/login')
+        } else {
+          this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
+            comments: data.comments
+          }).then(res => {
+            if (res.data.success) {
+              this.$store.commit('sendcomments', data)
+            }
+            this.comment = ''
+            this.rating = null
+          })
+        }
       })
     }
   }

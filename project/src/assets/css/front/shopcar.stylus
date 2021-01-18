@@ -1,7 +1,16 @@
  #shopcar
+  .btn
+      border: none
   .custom-control-input:checked~.custom-control-label::before
     background-color: watermelon 
     border: watermelon
+  .steps
+    p 
+      text-align: right
+    .btn
+      &:first-child
+        background-color: sky
+        color: black
   .step
     width:3rem
     height:3rem
