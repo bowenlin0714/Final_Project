@@ -17,7 +17,7 @@
                     b-form-input(
                       name="account"
                       v-model="account"
-                      placeholder="請輸入帳號"
+                      placeholder="account"
                       :state="validateState('account')"
                       v-validate="{ required: true }"
                       data-vv-as="帳號")
@@ -30,7 +30,7 @@
                       type="password"
                       name="password"
                       v-model="password"
-                      placeholder="請輸入密碼"
+                      placeholder="password"
                       :state="validateState('password')"
                       v-validate="{ required: true, min:4 }"
                       data-vv-as="密碼"
