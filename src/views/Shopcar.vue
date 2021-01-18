@@ -273,6 +273,10 @@ export default {
       this.step2 = true
     },
     buy (user) {
+      if (this.cartproducts.length === 0) {
+        alert('購物車沒有商品')
+        return
+      }
       this.step3 = true
       this.step1 = false
       this.step2 = false
