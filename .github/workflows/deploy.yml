@@ -33,6 +33,4 @@ jobs:
           BUILD_SCRIPT: npm install && npm run build
           # 動作完成後清除檔案
           CLEAN: true
-          VUE_APP_API: ${{secrets.VUE_APP_API}}
-          VUE_APP_GA: ${{secrets.VUE_APP_GA}}
-         
+          VUE_APP_API: ${{ secrets.GITHUB_TOKEN }}
