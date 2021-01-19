@@ -85,7 +85,6 @@ export default {
   name: 'Home',
   data () {
     return {
-      news: null,
       slide: 0,
       sliding: null
     }
@@ -97,6 +96,9 @@ export default {
     New
   },
   computed: {
+    news () {
+      return this.$store.state.news
+    }
   },
   methods: {
     onSlideStart (slide) {
@@ -117,13 +119,6 @@ export default {
       })
       var data = this.images
       this.$store.commit('bannerlists', data)
-    })
-
-    this.axios.get(process.env.VUE_APP_API + '/news').then((res) => {
-      this.news = res.data.result[0].data
-      console.log(this.data)
-    }).catch(err => {
-      console.log(err)
     })
   }
 

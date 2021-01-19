@@ -63,6 +63,8 @@ export default {
   name: 'Products',
   data () {
     return {
+      isLoading: false,
+      fullPage: true,
       keyword: '',
       currentPage: 1,
       perPage: 9,

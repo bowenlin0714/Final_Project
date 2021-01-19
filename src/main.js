@@ -16,6 +16,8 @@ import VueWow from 'vue-wow'
 import cheerio from 'cheerio'
 import wheel from 'vue-fortune-wheel'
 import lottery from 'vue-lottery'
+import Loading from 'vue-loading-overlay' // component
+import 'vue-loading-overlay/dist/vue-loading.css' // style
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -37,6 +39,8 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 axios.defaults.withCredentials = true
 
 Vue.config.productionTip = false
+
+Vue.component('Loading', Loading)
 
 Vue.use(VueAxios, axios)
 Vue.use(Carousel3d)

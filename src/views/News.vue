@@ -9,7 +9,7 @@
             b-row
               b-col(cols="12" lg="9").mx-auto
                 h2.text-center.mb-4 Toy News
-                li(v-for="data in datas")
+                li(v-for="data in news")
                   b-card(no-body).my-2
                     b-container
                       b-row
@@ -34,7 +34,6 @@ export default {
   },
   data () {
     return {
-      datas: null,
       breads: [
         {
           text: '首頁',
@@ -47,13 +46,13 @@ export default {
       ]
     }
   },
+  computed: {
+    news () {
+      return this.$store.state.news
+    }
+  },
   mounted () {
-    this.axios.get(process.env.VUE_APP_API + '/news').then((res) => {
-      this.datas = res.data.result[0].data
-      console.log(this.data)
-    }).catch(err => {
-      console.log(err)
-    })
+
   }
 }
 </script>

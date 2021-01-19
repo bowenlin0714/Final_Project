@@ -43,7 +43,8 @@ export default new Vuex.Store({
     unfinishOrder: [],
     tag: '',
     comments: '',
-    addShow: false
+    addShow: false,
+    news: null
   },
   mutations: {
     login (state, data) {
@@ -105,6 +106,9 @@ export default new Vuex.Store({
     unfinishOrder (state, data) {
       state.unfinishOrde = data
     },
+    news (state, data) {
+      state.news = data
+    },
     cartproducts (state, data) {
       state.user.shopcar = data
     },
@@ -117,6 +121,9 @@ export default new Vuex.Store({
     cartlists (state, data) {
       state.cartlists = []
       state.cartlists = (data)
+    },
+    cleancart (state) {
+      state.user.shopcar = []
     },
     productlists (state, data) {
       state.productlists = []

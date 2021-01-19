@@ -1,5 +1,10 @@
 <template lang="pug">
   #app.d-flex.flex-column.justify-content-between
+    loading(:active.sync="isLoading"  )
+        .loadingio-spinner-ripple-3q2sldg35oh
+          .ldio-xoybongjwx
+            div
+            div
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow
       b-container
         b-navbar-brand(to='/' style="font-weight: bolder") BUYFIG
@@ -24,8 +29,9 @@
             b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout") 登出
     #socialLink(v-if="$route.path!=='/admin'")
       a(href="#")
-       font-awesome-icon(:icon="['fas','chevron-circle-up']")
+        font-awesome-icon(:icon="['fas','chevron-circle-up']")
     b-container(fluid).p-0
+
       router-view
       Footer
 </template>
@@ -37,6 +43,11 @@ import Footer from '@/components/Footer'
 export default {
   name: 'App',
   components: { Footer },
+  data () {
+    return {
+      isLoading: true
+    }
+  },
   computed: {
     user () {
       return this.$store.state.user
@@ -109,12 +120,26 @@ export default {
     }
   },
   mounted () {
+    // this.isLoading = true
+
     this.heartbeat()
     setInterval(() => {
       this.heartbeat()
     }, 5000)
     console.log(this.user)
+
+    this.axios.get(process.env.VUE_APP_API + '/news').then((res) => {
+      console.log(this.data)
+    }).then(res => {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 2000)
+        .this.$store.commit('news', res.data.result[0].data)
+    }).catch(err => {
+      console.log(err)
+    })
   }
+
 }
 </script>
 

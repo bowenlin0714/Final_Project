@@ -1,7 +1,7 @@
 <template lang="pug">
   #adminopinions.min-vh-100
     b-container(class="")
-      h1(class="my-3 mb-2") 意見表管理
+      h1(class="my-3 mb-2").text-center 意見表管理
       b-row
         b-col(cols="12" lg="6")
           //- b-form-select(v-if="" v-model="selected" :options="options")

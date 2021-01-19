@@ -244,6 +244,15 @@ export default {
     }
   },
   methods: {
+    validateState (ref) {
+      if (
+        this.veeFields[ref] &&
+        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
+      ) {
+        return !this.veeErrors.has(ref)
+      }
+      return null
+    },
     changeamount (data) {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
         shopcar: this.cartproducts
@@ -330,7 +339,7 @@ export default {
             this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
               shopcar: []
             }).then(res => {
-              user.shpocar = []
+              this.$store.commit('cleancart')
             })
           })
         }

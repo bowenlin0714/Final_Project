@@ -63,7 +63,7 @@
           input(type="input" placeholder="請輸入" v-model="description" )
           img(:src="selected.src" style="width:100%").pt-3
       div.w-100
-        p(v-if="bannerlists.length == 0").text-center.h1.text-white 目前沒有內容
+        p(v-if="bannerlists.length == 0").text-center.text-white 目前沒有內容
 
 </template>
 <style lang="stylus">
