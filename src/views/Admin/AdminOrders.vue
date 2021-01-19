@@ -55,9 +55,9 @@
                   span.ml-3  出貨狀態 :
                   span.text-danger {{orderdetail.shipment}}
                 b-table(
+                  stacked="md"
                   :items="orderdetail.products"
                   :fields="detailProducts"
-
                 ).mt-3
 
                   template(#cell(name)='data')
@@ -202,14 +202,15 @@ export default {
     }
   },
   mounted () {
-    this.axios.get(process.env.VUE_APP_API + '/users/').then((response) => {
-      var data = response.data.result
+    this.axios.get(process.env.VUE_APP_API + '/users/').then((res) => {
+      var data = res.data.result
       const result = data.filter(res => {
         return res.orders.length !== 0
       })
       for (const one of result) {
         for (const two of one.orders) {
           this.images = two.products.map(product => {
+            console.log(product)
             product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file
           })
         }

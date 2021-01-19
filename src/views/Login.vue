@@ -70,6 +70,7 @@ export default {
     }
   },
   methods: {
+
     validateState (ref) {
       if (
         this.veeFields[ref] &&
@@ -87,7 +88,11 @@ export default {
           this.axios.post(process.env.VUE_APP_API + '/users/login', this.$data)
             .then(res => {
               if (res.data.success) {
-                alert('登入成功')
+                this.$notify({
+                  group: 'foo',
+                  title: '登入成功',
+                  text: '登入成功'
+                })
                 this.$store.commit('login', res.data.result)
                 if (res.data.result.isAdmin) {
                   this.$router.push('/admin')

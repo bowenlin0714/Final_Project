@@ -1,5 +1,6 @@
 <template lang="pug">
   #app.d-flex.flex-column.justify-content-between
+    notifications(group="foo" position="top  ")
     loading(:active.sync="isLoading"  )
         .loadingio-spinner-ripple-3q2sldg35oh
           .ldio-xoybongjwx
@@ -31,9 +32,10 @@
       a(href="#")
         font-awesome-icon(:icon="['fas','chevron-circle-up']")
     b-container(fluid).p-0
-
+      b-button(@click="test") aaa
       router-view
       Footer
+
 </template>
 
 <script>
@@ -63,6 +65,12 @@ export default {
 
   },
   methods: {
+    test () {
+      this.$notify({
+        group: 'foo',
+        text: '登入成功'
+      })
+    },
     toCart () {
       if (this.user.name === '') {
         this.$router.push('/login')
@@ -146,4 +154,9 @@ export default {
 html {
   overflow-y: overlay;
 }
+.vue-notification
+  background red
+  font-size: 1rem;
+  padding 1rem
+  margin 1rem
 </style>
