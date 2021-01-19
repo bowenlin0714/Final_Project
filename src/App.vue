@@ -128,16 +128,15 @@ export default {
     }, 5000)
     console.log(this.user)
 
-    this.axios.get(process.env.VUE_APP_API + '/news').then((res) => {
-      console.log(this.data)
-    }).then(res => {
-      setTimeout(() => {
-        this.isLoading = false
-      }, 2000)
-        .this.$store.commit('news', res.data.result[0].data)
-    }).catch(err => {
-      console.log(err)
-    })
+    this.axios.get(process.env.VUE_APP_API + '/news')
+      .then(res => {
+        setTimeout(() => {
+          this.isLoading = false
+        }, 2000)
+        this.$store.commit('news', res.data.result[0].data)
+      }).catch(err => {
+        console.log(err)
+      })
   }
 
 }

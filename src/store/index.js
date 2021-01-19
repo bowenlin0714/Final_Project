@@ -28,7 +28,9 @@ export default new Vuex.Store({
       orders: [],
       fav: [],
       payaccount: '',
-      isAdmin: false
+      isAdmin: false,
+      toAdmin: [],
+      toMember: []
     },
     memberlists: null,
     formlists: null,
@@ -58,6 +60,8 @@ export default new Vuex.Store({
       state.user.email = data.email
       state.user.payaccount = data.payaccount
       state.user.fav = data.fav
+      state.user.toAdmin = data.toAdmin
+      state.user.toMember = data.toMember
       // console.log(data)
     },
     logout (state) {
@@ -71,6 +75,8 @@ export default new Vuex.Store({
       state.user.email = ''
       state.user.payaccount = ''
       state.user.fav = []
+      state.user.toAdmin = []
+      state.user.toMember = []
     },
     memberlists (state, data) {
       state.memberlists = []
@@ -98,11 +104,6 @@ export default new Vuex.Store({
     centerOrders (state, data) {
       state.user.orders = data
     },
-    // orderlists (state, data) {
-    //   // console.log(data)
-    //   state.orderlists = []
-    //   state.orderlists = data
-    // },
     unfinishOrder (state, data) {
       state.unfinishOrde = data
     },

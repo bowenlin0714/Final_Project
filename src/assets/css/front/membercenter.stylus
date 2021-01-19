@@ -1,7 +1,25 @@
 
 #membercenter
+  .msgbox
+    // height: 6rem
+    min-width: 3rem
+    display: flex
+    p
+      padding: 0.7rem
+      margin: 1rem
+      background-color: white 
+    span 
+      color: grey
+      font-size: 0.6rem  
+      padding-top: 2rem
+      
+  .msgbutton
+    background-color: watermelon
+  .nav-link
+    color: black
+  .nav-link.active
+    background-color: sky
   h4
-    
     &::before
       content: '1'
       color: watermelon
@@ -29,6 +47,9 @@
       white-space: nowrap ;
       overflow hidden
       text-overflow: ellipsis ;
+    @media (max-width: 768px)   
+      max-width: 100% 
+  
   //   width:10rem !important;
   //   margin:0 !important
   //   overflow:hidden;
@@ -39,7 +60,7 @@
   .editbtn
       background-color: watermelon
   .payinfo
-    width 90%
+    width 100%
     background-color: sky 
     padding: 1rem  
     border: 1px dashed black

@@ -26,8 +26,34 @@
               b-form-input(size="sm" v-model="user.payaccount" v-if="isEdit").w-25.d-inline.ml-3
               span(v-else).ml-3 {{user.payaccount}}
             hr
+            h4  訊息中心 :
+            b-card(n-body)
+              b-tabs
+                b-row
+                  b-col(cols="12" lg="8").mx-auto.mt-4
+                    b-tab(title="官方訊息")
+                      p.text-center.my-4 目前沒有訊息
+                    b-tab(title="傳送訊息")
+                      p(v-if="user.toAdmin === 0").text-center.my-4 目前沒有訊息
+                      div(v-for="msg in user.toAdmin" v-else class="msgbox").bg-light
+                        p {{msg.detail}}
+                        span {{msg.date}}
+                      b-form.my-3
+                        b-form-input(
+                          name="message"
+                          v-model="message"
+                          placeholder="請輸入"
+                          :state="validateState('message')"
+                          v-validate="{ required: true }"
+                          data-vv-as="訊息 :")
+                        b-form-invalid-feedback() {{ veeErrors.first('message') }}
+                        b-row
+                          b-col(cols="12" lg="3").ml-auto
+                            b-button(class="msgbutton" @click="sendmsg").w-100.mt-3 傳送訊息
+            hr
             h4  追蹤中商品 :
             b-table(
+              stacked="md"
               :items="user.fav"
               :fields="favfields"
               ).text-center
@@ -38,12 +64,14 @@
               template(#cell(image)='data')
                 img(:src="data.item.src[0]" style="max-height:5rem")
             p(v-if="user.fav.length === 0").text-center 目前沒有內容
+            hr
             div
               h4  我的訂單 :
               b-card(n-body)
                 b-tabs
                   b-tab(title="未完成")
                     b-table(
+                      stacked="md"
                       :items="unfinishOrder"
                       :fields="fields"
                     ).mt-3.text-center
@@ -57,11 +85,13 @@
                         b-button(v-b-modal.unfinishDetail  @click="showUnfinishOrder(row.item)") 訂單明細
                       template(#cell(check)='data')
                         b-button(@click="checkreceive(data)" v-if="data.item.shipment === '已出貨'") 確認收貨
+                        p(v-else).text-secondary 尚未出貨
                       template(#cell(orderAmount)='data')
                         p {{data.item.products.length}}
                     p(v-if="unfinishOrder.length === 0").text-center 目前沒有內容
                   b-tab(title="已完成")
                     b-table(
+                      stacked="md"
                       class="complete"
                       :items="completeOrder"
                       :fields="fields"
@@ -80,43 +110,44 @@
 
                     p(v-if="completeOrder.length === 0").text-center 目前沒有內容
 
-            div.payinfo.mx-auto.mt-5
-              div.d-flex.justify-content-between
+            div.payinfo.mx-auto.mt-5.p-3
+              div.d-flex.justify-content-between.flex-column.flex-lg-row
                 h6 匯款 :
                 div.mx-5.mt-3
                   p.m-0 富邦 4699 5555 5555 5555
                   p.m-0 玉山 4699 5555 5555 5555
                   p  郵局 4699 5555 5555 5555
-                h6 Line Pay :
+                h6.mt-3 Line Pay :
                 img(src="../assets/qrcode.png" style="width:6rem;height:6rem").mx-5.mt-3
-                h6 PChomePay :
+                h6.mt-3 PChomePay :
                 a(href="https://web.pchomepay.com.tw/")
                   img(src="../assets/pchome.png" style="width:6rem;height:3rem").mx-5.mt-3
               p.m-0.mt-3.text-center.w-100 確認匯款資訊後會立刻為您確認，如選擇貨到付款可忽略此訊息~
 
             b-modal(id="unfinishDetail" title="訂單明細 : "
-              size="xl" hide-footer modal-class="tdClass")
+              size="xl" hide-footer )
               b-container
                 b-row
-                  b-col(cols="12")
+                  b-col(cols="12" style="line-height:2rem")
                     b-row
-                      b-col(cols="6")
+                      b-col(cols="12" lg="6")
                         p  購買日期 : {{unfinishDetail.date}}
-                          span.ml-3 訂單編號: {{unfinishDetail._id}}
-                      b-col(cols="6")
-                        p.text-right  收件人 : {{unfinishDetail.name}}
+                        p 訂單編號: {{unfinishDetail._id}}
+                      b-col(cols="12" lg="6")
+                        p.text-left.text-lg-right  收件人 : {{unfinishDetail.name}}
                           span.ml-3 電話 : {{unfinishDetail.phone}}
                     p  運送地址 : {{unfinishDetail.where}}
                     p  付款方式 : {{unfinishDetail.howtopay}}
                       span.ml-3 付款帳戶 : {{unfinishDetail.payaccount}}
                       span.ml-3 付款狀態 :
-                      span(v-if="unfinishDetail.shipment").text-success 已付款
+                      span(v-if="unfinishDetail.ispaid").text-success 已付款
                       span(v-else).text-danger 未付款
-                    p 運送方式 : {{unfinishDetail.method}}
+                    p 運送方式 :
                       span.ml-3  出貨狀態 :
-                      span(v-if="unfinishDetail.shipment").text-info 已出貨
+                      span(v-if="unfinishDetail.shipment === '已出貨'").text-info 已出貨
                       span(v-else).text-danger 未出貨
                     b-table(
+                      stacked="md"
                       :items="unfinishDetail.products"
                       :fields="detailProducts"
                     ).mt-3
@@ -131,8 +162,7 @@
                     hr
                     div.text-left
                       p 備註 : {{unfinishDetail.note}}
-                    div.text-right
-                      //- p.m-0 商品數量 : {{orderlength}}
+                    div.text-left.text-lg-right
                       p.m-0 小計 : {{unfinishDetail.total - unfinishDetail.shipping}}
                       p 運費 : {{unfinishDetail.shipping}}
                       hr
@@ -146,6 +176,7 @@ export default {
   data () {
     return {
       unfinishDetail: '',
+      message: '',
       isEdit: false,
       orderAmount: '',
       breads: [
@@ -252,6 +283,15 @@ export default {
     }
   },
   methods: {
+    validateState (ref) {
+      if (
+        this.veeFields[ref] &&
+        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
+      ) {
+        return !this.veeErrors.has(ref)
+      }
+      return null
+    },
     checkreceive (data) {
       data.item.shipment = '已收貨'
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, this.user)
@@ -263,10 +303,32 @@ export default {
     edit () {
       this.isEdit = true
     },
+    sendmsg () {
+      var now = new Date()
+      var year = now.getFullYear()
+      var month = now.getMonth() + 1
+      var day = now.getDate()
+      var date = year + '/' + month + '/' + day
+      var data = {
+        detail: this.message,
+        date: date
+      }
+      this.user.toAdmin.push(data)
+      this.$validator.validateAll().then(res => {
+        if (!res) {
+        } else {
+          this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
+            toAdmin: this.user.toAdmin
+          }).then(res => {
+            this.message = ''
+            // this.$store.commit('toAdmin', data)
+          })
+        }
+      })
+    },
     edituser () {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, this.user)
         .then(res => {
-          console.log(res)
           this.isEdit = false
         })
         .catch(err => {
@@ -278,9 +340,7 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$store.state.user)
     this.axios.get(process.env.VUE_APP_API + '/users/' + this.user.id).then((res) => {
-      console.log(res.data.result)
       for (const one of res.data.result.orders) {
         one.products.map(product => {
           product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file

@@ -147,8 +147,10 @@
               p 電話 : 0988555555 (02)2300-9966
               p 商品編號: {{}}
           hr
-          b-button(to="/").w-100.my-3 回首頁
-          b-button(to="/products").w-100.my-3 繼續購買
+          b-col(cols="12" lg="5" class="steps").ml-auto
+            div.d-flex
+              b-button(class="next" to="/").mb-3.w-100 回首頁
+              b-button(class="next" to="/products").mb-3.w-100.ml-5 繼續購買
 </template>
 
 <script>
@@ -244,15 +246,6 @@ export default {
     }
   },
   methods: {
-    validateState (ref) {
-      if (
-        this.veeFields[ref] &&
-        (this.veeFields[ref].dirty || this.veeFields[ref].validated)
-      ) {
-        return !this.veeErrors.has(ref)
-      }
-      return null
-    },
     changeamount (data) {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
         shopcar: this.cartproducts
@@ -339,7 +332,7 @@ export default {
             this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
               shopcar: []
             }).then(res => {
-              this.$store.commit('cleancart')
+              user.shpocar = []
             })
           })
         }

@@ -63,7 +63,7 @@
               b-col(cols="12").mt-3
                 b-tabs(style="min-height:40vh").mb-3
                   b-tab(title="商品詳細")
-                    pre.h5.mt-5 {{productdetail.description}}
+                    pre.h6.mt-5 {{productdetail.description}}
                     div.text-center
                       img(v-for="image in productdetail.src" :src="image" style="max-width:100%").my-2
                   b-tab(title="商品評論")
