@@ -68,9 +68,13 @@ export default {
     toCart () {
       if (this.user.name === '') {
         this.$router.push('/login')
-        this.$notify({
-          group: 'foo',
-          text: '請先登入'
+        this.$swal.fire({
+          toast: true,
+          position: 'top-start',
+          icon: 'warning',
+          title: '請先登入',
+          showConfirmButton: false,
+          timer: 3000
         })
       } else {
         this.$router.push('/shopcar')
@@ -158,9 +162,5 @@ export default {
 html {
   overflow-y: overlay;
 }
-.vue-notification
-  background sky
-  font-size: 0.7rem;
-  padding 0.8rem
-  margin 1.5rem
+
 </style>

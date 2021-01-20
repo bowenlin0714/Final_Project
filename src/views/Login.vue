@@ -103,10 +103,13 @@ export default {
                   this.$router.push('/')
                 }
               } else {
-                this.$notify({
-                  group: 'foo',
-                  title: 'FAIL!',
-                  text: '登入失敗 !'
+                this.$swal.fire({
+                  toast: true,
+                  position: 'top-start',
+                  icon: 'warning',
+                  title: '登入失敗',
+                  showConfirmButton: false,
+                  timer: 3000
                 })
               }
             })

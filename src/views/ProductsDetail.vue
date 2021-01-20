@@ -237,9 +237,13 @@ export default {
       }, 800)
 
       if (this.user.name === '') {
-        this.$notify({
-          group: 'foo',
-          text: '請先登入'
+        this.$swal.fire({
+          toast: true,
+          position: 'top-start',
+          icon: 'warning',
+          title: '請先登入',
+          showConfirmButton: false,
+          timer: 3000
         })
         this.$router.push('/login')
       } else {
@@ -299,9 +303,13 @@ export default {
     },
     sendcomments (data) {
       if (this.user.name === '') {
-        this.$notify({
-          group: 'foo',
-          text: '請先登入'
+        this.$swal.fire({
+          toast: true,
+          position: 'top-start',
+          icon: 'warning',
+          title: '請先登入',
+          showConfirmButton: false,
+          timer: 3000
         })
         this.$router.push('/login')
       } else {

@@ -89,10 +89,13 @@ export default {
             .then(res => {
               console.log(res)
               if (res.data.success) {
-                this.$notify({
-                  group: 'foo',
-                  title: 'SUCCESS! 送出成功 !',
-                  text: ' 感謝您的建議與意見 我們會盡快跟您聯絡'
+                this.$swal.fire({
+                  toast: true,
+                  position: 'top-start',
+                  icon: 'success',
+                  title: '送出成功!! 我們會盡快跟您聯絡',
+                  showConfirmButton: false,
+                  timer: 3000
                 })
                 this.$router.push('/')
               } else {
