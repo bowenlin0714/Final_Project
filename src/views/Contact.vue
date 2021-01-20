@@ -1,7 +1,9 @@
 <template lang="pug">
   #contact
     b-container(style="min-height:70vh").shadow
-      b-breadcrumb(:items="breads")
+      b-breadcrumb
+        b-breadcrumb-item(to="/") 首頁
+        b-breadcrumb-item(active) 聯絡我們
       b-row
         b-col(cols="12" lg="6").bg-white.rounded.mx-auto.mb-5.p-5.shadow
           b-form(@submit.stop.prevent="onSubmit")
@@ -55,16 +57,6 @@ export default {
   nane: 'Contact',
   data () {
     return {
-      breads: [
-        {
-          text: '首頁',
-          to: '/'
-        },
-        {
-          text: '聯絡我們',
-          active: true
-        }
-      ],
       name: '',
       phone: '',
       email: '',
@@ -92,14 +84,17 @@ export default {
           var month = date.getMonth() + 1
           var day = date.getDate()
           this.date = year + '/' + month + '/' + day
-          console.log(this.date)
+          console.log(this.$data)
           this.axios.post(process.env.VUE_APP_API + '/forms/create', this.$data)
             .then(res => {
+              console.log(res)
               if (res.data.success) {
-                alert('送出成功')
-                if (!this.$store.state.user.isAdmin) {
-                  this.$router.push('/')
-                }
+                this.$notify({
+                  group: 'foo',
+                  title: 'SUCCESS! 送出成功 !',
+                  text: ' 感謝您的建議與意見 我們會盡快跟您聯絡'
+                })
+                this.$router.push('/')
               } else {
                 alert('送出失敗')
               }

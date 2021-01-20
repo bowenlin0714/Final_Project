@@ -1,11 +1,11 @@
 #adminproducts
+  
   .footer
     color: grey
   h1
     color: grey
   .products
       width:100%
-      border  1px solid white
       height auto
       background black
       border-radius: 10px

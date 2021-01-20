@@ -26,11 +26,15 @@
         b-col(cols="12" lg="10"  class="bgright").min-vh-100
           b-container(v-if="$route.path =='/admin'")
             b-row
-              b-col(cols="12").text-center
-                h1.text-white 管理者後台
+              b-col(cols="12" class="title").text-center.mx-auto
+                h1 BUYFIG
+                h2 管理者後台
+                b-form-input(v-model="msg" placeholder="請輸入").my-4.w-100
+                b-button(@click="sendmsg").bg-info 發布訊息
           router-view
       div(class="block d-lg-none")
-        b-nav(vertical class="")
+        b-nav(vertical class="").shadow
+            b-nav-item(to="/admin") 管理員首頁
             b-nav-item(to="/admin/adminproducts") 商品管理
             b-nav-item(to="/admin/adminmembers") 會員資料管理
             b-nav-item(to="/admin/adminorders") 訂單管理`
@@ -51,11 +55,36 @@ export default {
   name: 'AdminHome',
   data () {
     return {
-
+      msg: '',
+      users: null
     }
   },
   methods: {
+    sendmsg () {
+      var now = new Date()
+      var year = now.getFullYear()
+      var month = now.getMonth() + 1
+      var day = now.getDate()
+      var newdate = year + '/' + month + '/' + day
+      const users = this.users
 
+      for (const user of users) {
+        var data = {
+          detail: this.msg,
+          date: newdate
+        }
+        user.toMember.push(data)
+        this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user._id, { toMember: user.toMember }).then(res => {
+          this.msg = ''
+        })
+      }
+    }
+  },
+  mounted () {
+    this.axios.get(process.env.VUE_APP_API + '/users/').then(res => {
+      this.users = res.data.result
+      console.log(this.users)
+    })
   }
 }
 </script>

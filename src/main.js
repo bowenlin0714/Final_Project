@@ -14,13 +14,12 @@ import VueI18n from 'vue-i18n'
 import 'animate.css'
 import VueWow from 'vue-wow'
 import cheerio from 'cheerio'
-import wheel from 'vue-fortune-wheel'
-import lottery from 'vue-lottery'
 import Loading from 'vue-loading-overlay' // component
 import 'vue-loading-overlay/dist/vue-loading.css' // style
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import Notifications from 'vue-notification'
+import VueFab from 'vue-float-action-button'
 // import swal from 'sweetalert2'
 
 import App from './App.vue'
@@ -54,8 +53,7 @@ Vue.use(Vuelidate)
 Vue.use(VueI18n)
 Vue.use(VueWow)
 Vue.use(cheerio)
-Vue.use(wheel)
-Vue.use(lottery)
+Vue.use(VueFab)
 
 Vue.directive('ripple', Ripple)
 

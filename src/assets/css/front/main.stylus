@@ -160,7 +160,12 @@ html,body
     opacity: 0;
   }
 }
-
+.vue-notification
+  background sky
+  font-size: 0.7rem;
+  padding 0.8rem
+  margin 1.5rem
+  
 .ldio-xoybongjwx div {
   position: absolute;
   border-width: 16px;

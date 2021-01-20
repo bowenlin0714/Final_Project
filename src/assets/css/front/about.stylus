@@ -33,11 +33,11 @@
   h1
     color: deepblue
     position relative
-    font-size: 3.5rem
+    font-size: 3rem
     // height: 2rem
     font-weight: bold
     &:after
-      drawline(14rem, -1rem)
+      drawline(12rem, -1rem)
   .row
     .col-12
       padding-top: 25vh

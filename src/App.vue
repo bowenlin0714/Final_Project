@@ -1,6 +1,6 @@
 <template lang="pug">
   #app.d-flex.flex-column.justify-content-between
-    notifications(group="foo" position="top  ")
+    notifications(group="foo" position="top")
     loading(:active.sync="isLoading"  )
         .loadingio-spinner-ripple-3q2sldg35oh
           .ldio-xoybongjwx
@@ -32,7 +32,6 @@
       a(href="#")
         font-awesome-icon(:icon="['fas','chevron-circle-up']")
     b-container(fluid).p-0
-      b-button(@click="test") aaa
       router-view
       Footer
 
@@ -65,16 +64,14 @@ export default {
 
   },
   methods: {
-    test () {
-      this.$notify({
-        group: 'foo',
-        text: '登入成功'
-      })
-    },
+
     toCart () {
       if (this.user.name === '') {
         this.$router.push('/login')
-        alert('請先登入')
+        this.$notify({
+          group: 'foo',
+          text: '請先登入'
+        })
       } else {
         this.$router.push('/shopcar')
       }
@@ -90,7 +87,14 @@ export default {
       this.axios.delete(process.env.VUE_APP_API + '/users/logout')
         .then(res => {
           if (res.data.success) {
-            alert('登出成功')
+            this.$swal.fire({
+              toast: true,
+              position: 'top-start',
+              icon: 'success',
+              title: '登出成功',
+              showConfirmButton: false,
+              timer: 3000
+            })
             this.$store.commit('logout')
 
             if (this.$router.path !== '/') {
@@ -155,8 +159,8 @@ html {
   overflow-y: overlay;
 }
 .vue-notification
-  background red
-  font-size: 1rem;
-  padding 1rem
-  margin 1rem
+  background sky
+  font-size: 0.7rem;
+  padding 0.8rem
+  margin 1.5rem
 </style>

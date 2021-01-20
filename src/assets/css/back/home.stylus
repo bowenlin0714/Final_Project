@@ -2,6 +2,7 @@
 
 #adminhome
   background:black
+  
 .bgleft
   background:black
   color: deepgrey
@@ -21,7 +22,15 @@
   background: deepblue
   width: 100%
   box-sizing: border-box;
-
+  .title
+    h1 
+      color: #FF3B3F
+      font-size: 6rem
+      text-shadow: 5px 5px 5px black
+    h2 
+      font-size: 3rem
+      color: white 
+      text-shadow: 5px 5px 5px black
 
 
 
@@ -63,5 +72,9 @@
 .block:hover
   cursor pointer
   right 0
+.fab-item-title
+  margin-right: 1rem  
+.vue-fab-material-icons.material-icons
+  color: black 
 
 

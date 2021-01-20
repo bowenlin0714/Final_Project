@@ -216,8 +216,6 @@ export default {
         this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
           fav: this.user.fav
         }).then(res => {
-          console.log(res)
-          console.log(res)
           this.$store.commit('addfav', res.data.result.fav)
         })
       }
@@ -230,7 +228,6 @@ export default {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
         fav: this.user.fav
       }).then(res => {
-        console.log(res)
       })
     },
     addcartProduct (data) {
@@ -240,7 +237,10 @@ export default {
       }, 800)
 
       if (this.user.name === '') {
-        alert('請先登入')
+        this.$notify({
+          group: 'foo',
+          text: '請先登入'
+        })
         this.$router.push('/login')
       } else {
         var user = this.$store.state.user
@@ -267,7 +267,6 @@ export default {
         }).then(res => {
           if (res.data.success) {
             // this.$router.push('/shopcar')
-            console.log(res)
             this.$store.commit('addcartProduct', res.data.result.shopcar)
           } else {
             alert('發生錯誤')
@@ -300,7 +299,10 @@ export default {
     },
     sendcomments (data) {
       if (this.user.name === '') {
-        alert('請先登入')
+        this.$notify({
+          group: 'foo',
+          text: '請先登入'
+        })
         this.$router.push('/login')
       } else {
         this.$validator.validateAll().then(result => {

@@ -5,7 +5,7 @@
         b-col(cols="12")
           b-breadcrumb(:items="breads")
           b-container()
-            b-row
+            b-row.my-5
               b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.bg-white.shadow
                 div.text-center
                   font-awesome-icon(:icon="['fas','user-astronaut']").text-black
@@ -43,7 +43,7 @@
                     b-col(cols="12")
                       p.mt-4.mb-0 還沒有帳號嗎?點我
                         a(href="#/reg") 註冊
-              b-col(cols="12" lg="5" class="logright").border.mr-auto.rounded-right.shadow
+              b-col(cols="12" lg="5" class="logright").border.mr-auto.rounded-right.shadow.py-2
                 div.text-white.text-center
                   h1 Welcome
                   h1 Back!!
@@ -88,10 +88,13 @@ export default {
           this.axios.post(process.env.VUE_APP_API + '/users/login', this.$data)
             .then(res => {
               if (res.data.success) {
-                this.$notify({
-                  group: 'foo',
+                this.$swal.fire({
+                  toast: true,
+                  position: 'top-start',
+                  icon: 'success',
                   title: '登入成功',
-                  text: '登入成功'
+                  showConfirmButton: false,
+                  timer: 3000
                 })
                 this.$store.commit('login', res.data.result)
                 if (res.data.result.isAdmin) {
@@ -100,7 +103,11 @@ export default {
                   this.$router.push('/')
                 }
               } else {
-                alert('登入失敗')
+                this.$notify({
+                  group: 'foo',
+                  title: 'FAIL!',
+                  text: '登入失敗 !'
+                })
               }
             })
             .catch(err => {

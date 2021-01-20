@@ -141,7 +141,14 @@ export default {
           this.axios.post(process.env.VUE_APP_API + '/users/create', this.$data)
             .then(res => {
               if (res.data.success) {
-                alert('註冊成功')
+                this.$swal.fire({
+                  toast: true,
+                  position: 'top-start',
+                  icon: 'success',
+                  title: '註冊成功',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
                 if (!this.$store.state.user.isAdmin) {
                   this.$router.push('/login')
                 }

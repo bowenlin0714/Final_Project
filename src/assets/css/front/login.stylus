@@ -1,5 +1,8 @@
 .logright
   background-color: watermelon
+  flexcenter()
+  h1
+    font-weight: 700
 .logleft
   padding: 4rem
   padding-top:  6rem

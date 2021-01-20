@@ -1,6 +1,6 @@
 <template lang="pug">
   #shopcar
-    b-container(style="min-height:70vh").shadow
+    b-container(style="min-height:68vh").shadow
       b-row
         b-breadcrumb(:items="breads")
         b-col(cols="12" v-if="step1")
@@ -45,7 +45,7 @@
               template(#cell(delete)='data')
                 b-button(style="background:transparent" @click="delshopitem(data.index)")
                   font-awesome-icon( :icon=['fas', 'trash-alt'] ).text-danger.h3.m-0
-            P(v-if="cartproducts.length === 0").text-center 目前沒有商品
+            P(v-if="cartproducts.length === 0").text-center.my-5 目前沒有商品
           hr
           b-row
             b-col(cols="12" lg="5" class="steps").ml-auto
@@ -145,7 +145,7 @@
               p Thank You !
               p 收到商品後有任何問題,請盡量於三天內與我們聯繫,我們會盡快為您處理
               p 電話 : 0988555555 (02)2300-9966
-              p 商品編號: {{}}
+              p 商品編號: {{user.orders[0]._id}}
           hr
           b-col(cols="12" lg="5" class="steps").ml-auto
             div.d-flex
@@ -246,6 +246,17 @@ export default {
     }
   },
   methods: {
+    test () {
+      this.$swal.fire({
+        width: '20rem',
+        padding: '1rem',
+        title: '確認購買',
+        showDenyButton: true,
+        showCancelButton: false,
+        denyButtonText: '取消',
+        confirmButtonText: '確定'
+      })
+    },
     changeamount (data) {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
         shopcar: this.cartproducts
@@ -276,67 +287,86 @@ export default {
     },
     buy (user) {
       if (this.cartproducts.length === 0) {
-        alert('購物車沒有商品')
-        return
-      }
-      this.step3 = true
-      this.step1 = false
-      this.step2 = false
-      const now = new Date()
-      const year = now.getFullYear()
-      const month = now.getMonth() + 1
-      const day = now.getDate()
-
-      const name = this.user.name
-      const phone = this.user.phone
-      const date = year + '/' + month + '/' + day
-      const where = this.order.howtosend.where
-      const method = this.order.howtosend.method
-      const howtopay = this.order.howtosend.howtopay
-      var payaccount = ''
-      if (this.order.howtosend.howtopay === '銀行轉帳' && user.payaccount !== '') {
-        payaccount = this.user.payaccount
+        this.$swal.fire({
+          toast: true,
+          position: 'top-start',
+          icon: 'warning',
+          title: '購物車沒有商品',
+          showConfirmButton: false,
+          timer: 3000
+        })
       } else {
-        payaccount = this.order.payaccount
-      }
-      const note = this.order.note
-      const shipping = this.order.howtosend.shipping
-      const total = this.total + this.order.howtosend.shipping
-      user.orders.push({
-        name: name,
-        phone: phone,
-        date: date,
-        where: where,
-        method: method,
-        payaccount: payaccount,
-        howtopay: howtopay,
-        shipment: '未出貨',
-        ispaid: false,
-        note: note,
-        shipping: shipping,
-        total: total,
-        products: user.shopcar
+        this.$swal.fire({
+          width: '20rem',
+          padding: '1rem',
+          title: '確認購買',
+          showDenyButton: true,
+          showCancelButton: false,
+          denyButtonText: '取消',
+          confirmButtonText: '確定'
+        }).then(result => {
+          if (result.isConfirmed) {
+            this.step3 = true
+            this.step1 = false
+            this.step2 = false
+            const now = new Date()
+            const year = now.getFullYear()
+            const month = now.getMonth() + 1
+            const day = now.getDate()
 
-      })
-      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
-        lastbuydate: date,
-        orders: user.orders
-      }).then(res => {
-        console.log(res)
-        for (let i = 0; i < user.shopcar.length; i++) {
-          this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + user.shopcar[i].p_id._id, {
-            amount: user.shopcar[i].p_id.amount -= user.shopcar[i].amount,
-            sold: user.shopcar[i].p_id.sold += user.shopcar[i].amount
-          }).then(res => {
-            console.log(res)
-            this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
-              shopcar: []
-            }).then(res => {
-              user.shpocar = []
+            const name = this.user.name
+            const phone = this.user.phone
+            const date = year + '/' + month + '/' + day
+            const where = this.order.howtosend.where
+            const method = this.order.howtosend.method
+            const howtopay = this.order.howtosend.howtopay
+            var payaccount = ''
+            if (this.order.howtosend.howtopay === '銀行轉帳' && user.payaccount !== '') {
+              payaccount = this.user.payaccount
+            } else {
+              payaccount = this.order.payaccount
+            }
+            const note = this.order.note
+            const shipping = this.order.howtosend.shipping
+            const total = this.total + this.order.howtosend.shipping
+            user.orders.push({
+              name: name,
+              phone: phone,
+              date: date,
+              where: where,
+              method: method,
+              payaccount: payaccount,
+              howtopay: howtopay,
+              shipment: '未出貨',
+              ispaid: false,
+              note: note,
+              shipping: shipping,
+              total: total,
+              products: user.shopcar
+
             })
-          })
-        }
-      })
+            this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
+              lastbuydate: date,
+              orders: user.orders
+            }).then(res => {
+              console.log(res)
+              for (let i = 0; i < user.shopcar.length; i++) {
+                this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + user.shopcar[i].p_id._id, {
+                  amount: user.shopcar[i].p_id.amount -= user.shopcar[i].amount,
+                  sold: user.shopcar[i].p_id.sold += user.shopcar[i].amount
+                }).then(res => {
+                  console.log(res)
+                  this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
+                    shopcar: []
+                  }).then(res => {
+                    this.$store.commit('cartproducts', [])
+                  })
+                })
+              }
+            })
+          }
+        })
+      }
     }
   },
   mounted () {

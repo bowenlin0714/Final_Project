@@ -32,7 +32,10 @@
                 b-row
                   b-col(cols="12" lg="8").mx-auto.mt-4
                     b-tab(title="官方訊息")
-                      p.text-center.my-4 目前沒有訊息
+                      p(v-if="user.toMember === 0").text-center.my-4 目前沒有訊息
+                       div(v-for="msg in user.toMember" class="msgbox").bg-light
+                        p {{msg.detail}}
+                        span {{msg.date}}
                     b-tab(title="傳送訊息")
                       p(v-if="user.toAdmin === 0").text-center.my-4 目前沒有訊息
                       div(v-for="msg in user.toAdmin" v-else class="msgbox").bg-light
@@ -320,6 +323,7 @@ export default {
           this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
             toAdmin: this.user.toAdmin
           }).then(res => {
+            location.reload()
             this.message = ''
             // this.$store.commit('toAdmin', data)
           })
