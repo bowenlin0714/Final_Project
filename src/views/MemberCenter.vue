@@ -32,12 +32,12 @@
                 b-row
                   b-col(cols="12" lg="8").mx-auto.mt-4
                     b-tab(title="官方訊息")
-                      p(v-if="user.toMember === 0").text-center.my-4 目前沒有訊息
-                       div(v-for="msg in user.toMember" class="msgbox").bg-light
+                      p(v-if="user.toMember.length === 0").text-center.my-4 目前沒有訊息
+                      div(v-for="msg in user.toMember" class="msgbox").bg-light
                         p {{msg.detail}}
                         span {{msg.date}}
                     b-tab(title="傳送訊息")
-                      p(v-if="user.toAdmin === 0").text-center.my-4 目前沒有訊息
+                      p(v-if="user.toAdmin.length === 0").text-center.my-4 目前沒有訊息
                       div(v-for="msg in user.toAdmin" v-else class="msgbox").bg-light
                         p {{msg.detail}}
                         span {{msg.date}}
@@ -345,6 +345,7 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/users/' + this.user.id).then((res) => {
+      console.log(res)
       for (const one of res.data.result.orders) {
         one.products.map(product => {
           product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file
