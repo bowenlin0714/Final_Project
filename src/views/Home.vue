@@ -12,7 +12,7 @@
         img-width="1024"
         img-height="480"
       )
-        a(href="https://www.beast-kingdom.com.tw/", title="title" target="_blank")
+        a(href="#", title="title" target="_blank")
           b-carousel-slide(
             v-for="(banner,index) in this.$store.state.bannerlists"
             :img-src="banner.src"
