@@ -13,7 +13,7 @@
             template(#cell(detail)='row')
               b-button(variant="info"  @click="row.toggleDetails") 完整訊息
 
-            template(v-slot:row-details="row") {{row.index}}
+            template(v-slot:row-details="row")
               div.bg-white
                 b-table(
                   stacked="md"

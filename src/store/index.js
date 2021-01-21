@@ -30,7 +30,8 @@ export default new Vuex.Store({
       payaccount: '',
       isAdmin: false,
       toAdmin: [],
-      toMember: []
+      toMember: [],
+      isBan: ''
     },
     memberlists: null,
     formlists: null,
@@ -62,6 +63,8 @@ export default new Vuex.Store({
       state.user.fav = data.fav
       state.user.toAdmin = data.toAdmin
       state.user.toMember = data.toMember
+      state.user.isBan = data.isBan
+
       // console.log(data)
     },
     logout (state) {
@@ -77,6 +80,7 @@ export default new Vuex.Store({
       state.user.fav = []
       state.user.toAdmin = []
       state.user.toMember = []
+      state.user.isBan = ''
     },
     memberlists (state, data) {
       state.memberlists = []

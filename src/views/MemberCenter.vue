@@ -10,6 +10,7 @@
             h4.d-inline 會員資料 :
             b-button(class="editbtn" @click="edituser" size="sm" v-if="this.isEdit").mb-2.ml-3 確定
             b-button(class="editbtn" @click="edit" size="sm" v-else).mb-2.ml-3 編輯
+            span(v-if="user.isBan").ml-3.text-danger 封鎖中，欲解鎖請洽客服
             div.my-2 ● 名稱:
               b-form-input(size="sm" v-model="user.name" v-if="isEdit").w-25.d-inline.ml-3
               span(v-else).ml-3 {{user.name}}
