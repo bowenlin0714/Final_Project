@@ -263,7 +263,7 @@ export default {
           }
         })
         if (rel) {
-          user.shopcar.push({ amount: this.cartProducts.amount, p_id: data })
+          user.shopcar.push({ select: true, amount: this.cartProducts.amount, p_id: data })
           // this.productdetail.amount -= this.cartProducts.amount
         }
         this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {

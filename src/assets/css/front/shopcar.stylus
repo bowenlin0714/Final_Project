@@ -44,9 +44,9 @@
     text-align:center
    tbody
     tr
-      [aria-colindex="1"]
-        width: 8%
       [aria-colindex="2"]
+        width: 8%
+      [aria-colindex="3"]
           display: flex
           justify-content: center
           align-items:center
@@ -55,15 +55,15 @@
           // padding: 0.5rem
           // background-color: white
           margin:auto
-      [aria-colindex="3"]    
+      [aria-colindex="4"]    
           width: 40%
           text-align: left !important
       td
         vertical-align:middle !important
       @media (max-width:768px)  
-        [aria-colindex="1"],[aria-colindex="3"]  
+        [aria-colindex="2"],[aria-colindex="4"]  
           width: 100%
-        [aria-colindex="2"] 
+        [aria-colindex="3"] 
           width: 80%
           height:80%
   .next 

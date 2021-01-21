@@ -1,3 +1,7 @@
+.text
+  color: rgb(100,100,100)
+  line-height: 2rem
+
 .mask
   width:100%;
   height 402px
@@ -175,15 +179,10 @@
             clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
             text-shadow: 2px 2px 2px black
 @media (max-width: 576px)
-  .fine
-    div 
-    &:after
-      width: 70% !important
-      left 17% !important
 
   .aboutPage
     h1
-      font-size: 400%
+      font-size: 3rem
   .bgTest
     background-size: 150% 80%;
   .mask

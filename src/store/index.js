@@ -82,6 +82,9 @@ export default new Vuex.Store({
       state.memberlists = []
       state.memberlists = (data)
     },
+    changeSelect (state, data) {
+      state.user.shopcar = data.shopcar
+    },
     formlists (state, data) {
       state.formlists = []
       state.formlists = (data)

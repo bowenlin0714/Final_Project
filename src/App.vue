@@ -8,7 +8,8 @@
             div
     b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow
       b-container
-        b-navbar-brand(to='/' style="font-weight: bolder") BUYFIG
+        b-navbar-brand(to='/' )
+          img(src="./assets/mylog.svg" style="height:3rem")
         a( title="title" @click="toCart").class.ml-auto.d-flex.position-relative.mr-3.d-block.d-lg-none
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange.sm

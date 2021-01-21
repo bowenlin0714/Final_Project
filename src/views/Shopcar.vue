@@ -25,6 +25,8 @@
               style=""
               :fields='fields'
             ).rounded.mt-3.p-5
+              template(#cell(selected)='data' )
+                b-form-checkbox(v-model="data.item.select" @change="changeSelect") {{data.item.select}}
               template(#cell(img)='data' )
                 img(:src="data.item.p_id.src" style="max-height:100%;max-width:100%")
               template(#cell(amount)='data')
@@ -194,6 +196,10 @@ export default {
       ],
       fields: [
         {
+          key: 'selected',
+          label: ''
+        },
+        {
           key: 'p_id.productNumber',
           label: '商品編號'
         },
@@ -246,15 +252,13 @@ export default {
     }
   },
   methods: {
-    test () {
-      this.$swal.fire({
-        width: '20rem',
-        padding: '1rem',
-        title: '確認購買',
-        showDenyButton: true,
-        showCancelButton: false,
-        denyButtonText: '取消',
-        confirmButtonText: '確定'
+    changeSelect () {
+      console.log(this.user)
+      this.$store.commit('changeSelect', this.user)
+      this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
+        shopcar: this.cartproducts
+      }).then(res => {
+        console.log(res)
       })
     },
     changeamount (data) {
@@ -329,6 +333,7 @@ export default {
             const note = this.order.note
             const shipping = this.order.howtosend.shipping
             const total = this.total + this.order.howtosend.shipping
+
             user.orders.push({
               name: name,
               phone: phone,
@@ -342,7 +347,9 @@ export default {
               note: note,
               shipping: shipping,
               total: total,
-              products: user.shopcar
+              products: this.cartproducts.filter(product => {
+                return product.select === true
+              })
 
             })
             this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
@@ -372,12 +379,10 @@ export default {
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/users/' + this.$store.state.user.id).then((res) => {
       this.images = res.data.result.shopcar.map(image => {
-        console.log(image)
         image.p_id.src = process.env.VUE_APP_API + '/products/' + image.p_id.images[0].file
         return image
       })
       var data = this.images
-      console.log(data)
       this.$store.commit('cartproducts', data)
     })
   }
