@@ -26,9 +26,9 @@
               :fields='fields'
             ).rounded.mt-3.p-5
               template(#cell(selected)='data' )
-                b-form-checkbox(v-model="data.item.select" @change="changeSelect") {{data.item.select}}
+                b-form-checkbox(v-model="data.item.select" @change="changeSelect")
               template(#cell(img)='data' )
-                img(:src="data.item.p_id.src" style="max-height:100%;max-width:100%")
+                img(:src="data.item.p_id.src")
               template(#cell(amount)='data')
                 b-form-spinbutton(
                   v-model="data.item.amount"
@@ -356,7 +356,6 @@ export default {
               lastbuydate: date,
               orders: user.orders
             }).then(res => {
-              console.log(res)
               for (let i = 0; i < user.shopcar.length; i++) {
                 this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + user.shopcar[i].p_id._id, {
                   amount: user.shopcar[i].p_id.amount -= user.shopcar[i].amount,
@@ -364,9 +363,13 @@ export default {
                 }).then(res => {
                   console.log(res)
                   this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
-                    shopcar: []
+                    shopcar: this.cartproducts.filter(product => {
+                      return product.select !== true
+                    })
                   }).then(res => {
-                    this.$store.commit('cartproducts', [])
+                    this.$store.commit('cartproducts', this.cartproducts.filter(product => {
+                      return product.select !== true
+                    }))
                   })
                 })
               }

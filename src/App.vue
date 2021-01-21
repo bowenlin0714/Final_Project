@@ -33,6 +33,7 @@
       a(href="#")
         font-awesome-icon(:icon="['fas','chevron-circle-up']")
     b-container(fluid).p-0
+
       router-view
       Footer
 
