@@ -24,13 +24,21 @@
               font-awesome-icon(:icon=['fas', 'image'] )
               span.ml-2 --輪播圖管理
         b-col(cols="12" lg="10"  class="bgright").min-vh-100
-          b-container(v-if="$route.path =='/admin'")
+          b-container(v-if="$route.path =='/admin'" fluid)
             b-row
-              b-col(cols="12" class="title").text-center.mx-auto
+              b-col(cols="12" class="title").mx-auto.text-white
                 h1 BUYFIG
                 h2 管理者後台
                 b-form-input(v-model="msg" placeholder="請輸入").my-4.w-100
-                b-button(@click="sendmsg").bg-info 發布訊息
+                b-button(@click="sendmsg").bg-info.mb-3 發布訊息
+                div(style="line-height:2.5rem;font-size:2rem")
+                  p 今日營業額: {{todayTotal}}
+                  p 總營業額: {{revenue}}
+                  p 會員人數: {{users.length}}
+                  p 熱銷前五名 :
+                  ol
+                    li(v-for="(product, i) in products" v-if="i<5")
+                      p {{product.name}}
           router-view
       div(class="block d-lg-none")
         b-nav(vertical class="").shadow
@@ -56,7 +64,10 @@ export default {
   data () {
     return {
       msg: '',
-      users: null
+      revenue: 0,
+      todayTotal: 0,
+      users: null,
+      products: []
     }
   },
   methods: {
@@ -82,8 +93,35 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/users/').then(res => {
+      const now = new Date()
+      const year = now.getFullYear()
+      const month = now.getMonth() + 1
+      const day = now.getDate()
+      const date = year + '/' + month + '/' + day
       this.users = res.data.result
-      console.log(this.users)
+
+      let revenue = 0
+      let todayTotal = 0
+      const array = []
+      for (const user of this.users) {
+        for (const order of user.orders) {
+          revenue += order.total
+          array.push(order)
+        }
+      }
+      const result = array.filter(order => {
+        return order.date === date
+      })
+      for (const data of result) {
+        todayTotal += data.total
+      }
+
+      this.revenue = revenue
+      this.todayTotal = todayTotal
+    })
+
+    this.axios.get(process.env.VUE_APP_API + '/products').then(res => {
+      this.products = res.data.result
     })
   }
 }
