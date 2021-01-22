@@ -44,6 +44,7 @@ export default new Vuex.Store({
     cartproducts: [],
     hotproducts: [],
     unfinishOrder: [],
+    orderlists: [],
     tag: '',
     comments: '',
     addShow: false,
@@ -103,6 +104,9 @@ export default new Vuex.Store({
         array.push(this.state.onShoplists[i])
       }
       this.state.hotproducts = array.sort(() => Math.random() - 0.5)
+    },
+    orderlists (state, data) {
+      state.orderlists = data
     },
     onShoplists (state, data) {
       state.onShoplists = []

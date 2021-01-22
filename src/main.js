@@ -20,6 +20,12 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import Notifications from 'vue-notification'
 import VueFab from 'vue-float-action-button'
+import ECharts from 'vue-echarts'
+
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/component/tooltip'
+import 'echarts-gl'
+
 // import swal from 'sweetalert2'
 
 import App from './App.vue'
@@ -37,6 +43,7 @@ library.add(
   faMoneyBill, faCircle, faTimes, faCheck, faFacebookSquare, faChevronCircleUp, faInstagram, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faTruck, faStickyNote, faHeart, faHeartsolid
 )
 
+Vue.component('v-chart', ECharts)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 axios.defaults.withCredentials = true

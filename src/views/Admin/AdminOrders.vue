@@ -4,6 +4,13 @@
       b-row
         b-col(cols="12")
           h1.my-3.mb-2.text-center 訂單管理
+          b-col(cols="12"  lg="3").ml-auto
+            b-form-input(
+                type="text"
+                placeholder="Type to search"
+                v-model="keyword"
+                style="right:0"
+              ).mb-3
           b-table(
           class=""
           class="mx-auto"
@@ -87,8 +94,8 @@ export default {
   name: 'AdminOrders',
   data () {
     return {
-      orderlists: [],
       images: null,
+      keyword: '',
       user: '',
       orderdetail: '',
       orderlength: '',
@@ -169,7 +176,18 @@ export default {
     }
   },
   computed: {
-
+    orderlists () {
+      var result = ''
+      if (this.keyword === '') {
+        result = this.$store.state.orderlists
+        return result
+      } else {
+        result = this.$store.state.orderlists.filter(order => {
+          return order.name.search(this.keyword) !== -1
+        })
+      }
+      return result
+    }
   },
   methods: {
     handlepaid (row, index2) {
@@ -215,7 +233,7 @@ export default {
           })
         }
       }
-      this.orderlists = result
+      this.$store.commit('orderlists', result)
     })
   }
 }

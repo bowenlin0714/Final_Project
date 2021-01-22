@@ -28,7 +28,6 @@
             b-row
               b-col(cols="12" class="title").mx-auto.text-white
                 h1 BUYFIG
-                h2 管理者後台
                 b-form-input(v-model="msg" placeholder="請輸入").my-4.w-100
                 b-button(@click="sendmsg").bg-info.mb-3 發布訊息
                 div(style="line-height:2.5rem;font-size:2rem")
@@ -58,16 +57,18 @@
 
 <script>
 import '@/assets/css/back.stylus'
-
 export default {
   name: 'AdminHome',
+
   data () {
     return {
+
       msg: '',
       revenue: 0,
       todayTotal: 0,
       users: null,
       products: []
+
     }
   },
   methods: {
