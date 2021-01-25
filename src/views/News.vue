@@ -2,6 +2,7 @@
 
   #news
     b-container.shadow
+
       b-row
         b-col(cols="12").mx-auto
           b-breadcrumb(:items="breads")
@@ -26,14 +27,11 @@
 </template>
 
 <script>
-import VueLotteryRolling from 'vue-lottery-rolling'
 export default {
   name: 'News',
-  components: {
-    'vue-lottery-rolling': VueLotteryRolling
-  },
   data () {
     return {
+
       breads: [
         {
           text: '首頁',

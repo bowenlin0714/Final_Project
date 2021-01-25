@@ -28,6 +28,11 @@
             b-row
               b-col(cols="12" class="title").mx-auto.text-white
                 h1 BUYFIG
+                b-col(cols="3")
+                  h3 每日營業額
+                  ve-histogram(:data="chartData")
+                  h3 商品數量
+                  ve-pie(:data="piesData")
                 b-form-input(v-model="msg" placeholder="請輸入").my-4.w-100
                 b-button(@click="sendmsg").bg-info.mb-3 發布訊息
                 div(style="line-height:2.5rem;font-size:2rem")
@@ -57,12 +62,20 @@
 
 <script>
 import '@/assets/css/back.stylus'
+
 export default {
   name: 'AdminHome',
 
   data () {
     return {
-
+      chartData: {
+        columns: ['date', 'total'],
+        rows: []
+      },
+      piesData: {
+        columns: ['category', 'amount'],
+        rows: []
+      },
       msg: '',
       revenue: 0,
       todayTotal: 0,
@@ -113,6 +126,26 @@ export default {
       const result = array.filter(order => {
         return order.date === date
       })
+
+      // 日期
+      const originChart = this.$_.groupBy(array, (a) => {
+        return a.date
+      })
+      for (const key in originChart) {
+        originChart[key] = originChart[key].map(data => data.total).reduce((accumulator, currentValue) => {
+          return accumulator + currentValue
+        })
+      }
+      const chartArray = []
+      for (const i in originChart) {
+        const linshiObj = {
+          date: i,
+          total: originChart[i]
+        }
+        chartArray.push(linshiObj)
+      }
+      this.chartData.rows = chartArray
+
       for (const data of result) {
         todayTotal += data.total
       }
@@ -123,6 +156,27 @@ export default {
 
     this.axios.get(process.env.VUE_APP_API + '/products').then(res => {
       this.products = res.data.result
+
+      // 分類種類
+
+      const originChart = this.$_.groupBy(res.data.result, (a) => {
+        return a.category
+      })
+      console.log(originChart)
+      for (const key in originChart) {
+        originChart[key] = originChart[key].map(data => data.amount).reduce((accumulator, currentValue) => {
+          return accumulator + currentValue
+        })
+      }
+      const productArray = []
+      for (const i in originChart) {
+        const linshiObj = {
+          category: i,
+          amount: originChart[i]
+        }
+        productArray.push(linshiObj)
+      }
+      this.piesData.rows = productArray
     })
   }
 }

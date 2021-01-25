@@ -21,10 +21,11 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 import Notifications from 'vue-notification'
 import VueFab from 'vue-float-action-button'
 import ECharts from 'vue-echarts'
+import VCharts from 'v-charts'
+import underscore from 'vue-underscore'
 
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
-import 'echarts-gl'
 
 // import swal from 'sweetalert2'
 
@@ -61,6 +62,8 @@ Vue.use(VueI18n)
 Vue.use(VueWow)
 Vue.use(cheerio)
 Vue.use(VueFab)
+Vue.use(VCharts)
+Vue.use(underscore)
 
 Vue.directive('ripple', Ripple)
 
