@@ -41,10 +41,10 @@
                   div(style="width:100%;display:flex;flex-direction:column;height:100px")
                     b-button(@click="checkEdit(item)" v-b-modal.editForm).bg-success.mt-2 詳細內容 / 編輯
                     b-button(@click="delProducts(item)").bg-danger.mt-2.mr-0 刪除
-          p(class="footer").text-center.pt-2.mb-0 第 {{currentPage}} 頁，共 {{productlists.length}} 筆結果
+          p(class="footer").text-center.pt-2.mb-0 第 {{currentPage}} 頁，共 {{itemsForList.length}} 筆結果
           b-pagination(
             v-model="currentPage"
-            :total-rows="productlists.length"
+            :total-rows="itemsForList.length"
             :per-page="perPage"
             aria-controls="itemList"
             align="center"

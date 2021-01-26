@@ -2,11 +2,18 @@
 
 #adminhome
   background:black
+.charttitle
+  width:100%;
+  height:auto;
+  background:linear-gradient( white,grey);
+  color: black
+  padding: 0.8rem
   
 .bgleft
   background:black
   color: deepgrey
   transition: 0.3s
+  
 .navleft   
   a 
     color: white
@@ -29,17 +36,20 @@
       text-shadow: 5px 5px 5px black
     h2 
       font-size: 3rem
-      color: white 
+      color:  #FF3B3F
       text-shadow: 5px 5px 5px black
 
 
 
 @media (max-width:767px) 
-
   .bgleft {
     transform: translateX(-100%)
   }
+  .bgright
+    margin-left: 0
 @media (max-width:992px) 
+  .bgright
+      margin-left: 0
   .modal-footer
   .btn
     width:100% !important

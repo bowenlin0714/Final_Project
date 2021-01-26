@@ -17,7 +17,7 @@
             placeholder="Type to Search"
             v-model="keyword"
           ).position-sticky
-        b-col(cols='12' class="")
+        b-col(cols='12' )
           b-table(
             class=""
             stacked="md"

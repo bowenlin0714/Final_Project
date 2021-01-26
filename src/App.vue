@@ -6,7 +6,7 @@
           .ldio-xoybongjwx
             div
             div
-    b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow
+    b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow.vw-100
       b-container
         b-navbar-brand(to='/' )
           img(src="./assets/mylog.svg" style="height:3rem")
@@ -18,7 +18,7 @@
         b-collapse#nav-collapse(is-nav style="width:6rem !important")
           b-navbar-nav(class = "mainnav").ml-auto
             b-nav-item(class="mainNavitem" to="/products") 商品列表
-            b-nav-item(class="mainNavitem" @click="toCart") 購物車
+            b-nav-item(class="mainNavitem" @click="toCart").d-none.d-lg-block 購物車
               .orange.lg
                 p(style="").position-absolute.text-white {{this.$store.state.user.shopcar.length}}
             b-nav-item(class="mainNavitem" to="/news") 公仔新知
@@ -66,7 +66,6 @@ export default {
 
   },
   methods: {
-
     toCart () {
       if (this.user.name === '') {
         this.$router.push('/login')

@@ -23,22 +23,34 @@
             b-nav-item(to="/admin/adminbanners").text-left.ml-4
               font-awesome-icon(:icon=['fas', 'image'] )
               span.ml-2 --輪播圖管理
-        b-col(cols="12" lg="10"  class="bgright").min-vh-100
+
+        b-col(cols="12" lg="10"  class="bgright" ).min-vh-100
           b-container(v-if="$route.path =='/admin'" fluid)
             b-row
-              b-col(cols="12" class="title").mx-auto.text-white
-                h1 BUYFIG
-                b-col(cols="3")
-                  h3 每日營業額
-                  ve-histogram(:data="chartData")
-                  h3 商品數量
-                  ve-pie(:data="piesData")
+              b-col(cols="12" lg="9" class="title").mx-auto.text-white
+                h2 BUYFIG
                 b-form-input(v-model="msg" placeholder="請輸入").my-4.w-100
                 b-button(@click="sendmsg").bg-info.mb-3 發布訊息
                 div(style="line-height:2.5rem;font-size:2rem")
-                  p 今日營業額: {{todayTotal}}
-                  p 總營業額: {{revenue}}
-                  p 會員人數: {{users.length}}
+                  h6 今日營業額: {{todayTotal}}
+                  h6 總營業額: {{revenue}}
+                  h6 會員人數: {{users.length}}
+                b-col(cols="12").mx-auto.p-0.my-3
+                  div(class="charttitle")
+                    h6 每日營業額
+                  div.bg-white.p-3
+                    ve-histogram(:data="chartData" :settings="chartSettings")
+                  div.d-flex.flex-column.flex-lg-row
+                    b-col(cols="12" lg="6").p-0.my-3
+                      div(class="charttitle")
+                        h6 每日回饋單數量
+                      div.bg-white
+                        ve-histogram(:data="formsData" :settings="chartSettings" )
+                    b-col(cols="12" lg="5").ml-auto.p-0.my-3
+                      div(class="charttitle")
+                        h6 商品數量
+                      div.bg-white
+                        ve-pie(:data="piesData" :settings="chartSettings")
                   p 熱銷前五名 :
                   ol
                     li(v-for="(product, i) in products" v-if="i<5")
@@ -67,6 +79,12 @@ export default {
   name: 'AdminHome',
 
   data () {
+    this.chartSettings = {
+      labelMap: {
+        amount: '數量',
+        total: '總計'
+      }
+    }
     return {
       chartData: {
         columns: ['date', 'total'],
@@ -74,6 +92,10 @@ export default {
       },
       piesData: {
         columns: ['category', 'amount'],
+        rows: []
+      },
+      formsData: {
+        columns: ['date', 'amount'],
         rows: []
       },
       msg: '',
@@ -144,7 +166,7 @@ export default {
         }
         chartArray.push(linshiObj)
       }
-      this.chartData.rows = chartArray
+      this.chartData.rows = chartArray.slice(-5)
 
       for (const data of result) {
         todayTotal += data.total
@@ -152,6 +174,21 @@ export default {
 
       this.revenue = revenue
       this.todayTotal = todayTotal
+    })
+    // 回饋單數量
+    this.axios.get(process.env.VUE_APP_API + '/forms').then(res => {
+      const originChart = this.$_.groupBy(res.data.result, (a) => {
+        return a.date
+      })
+      const formsArray = []
+      for (const i in originChart) {
+        const linshiObj = {
+          date: i,
+          amount: originChart[i].length
+        }
+        formsArray.push(linshiObj)
+      }
+      this.formsData.rows = formsArray.slice(-5)
     })
 
     this.axios.get(process.env.VUE_APP_API + '/products').then(res => {
@@ -162,7 +199,6 @@ export default {
       const originChart = this.$_.groupBy(res.data.result, (a) => {
         return a.category
       })
-      console.log(originChart)
       for (const key in originChart) {
         originChart[key] = originChart[key].map(data => data.amount).reduce((accumulator, currentValue) => {
           return accumulator + currentValue

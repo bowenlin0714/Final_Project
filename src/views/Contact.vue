@@ -12,7 +12,7 @@
               b-form-input(
                 name="name"
                 v-model="name"
-                placeholder="請輸入"
+                placeholder="name"
                 :state="validateState('name')"
                 v-validate="{ required: true }"
                 data-vv-as="姓名 :")
@@ -21,7 +21,7 @@
               b-form-input(
                 name="email"
                 v-model="email"
-                placeholder="請輸入"
+                placeholder="e-mail"
                 :state="validateState('email')"
                 v-validate="{ required: true, email: true }"
                 data-vv-as="e-mail"
@@ -31,7 +31,7 @@
               b-form-input(
                 name="phone"
                 v-model="phone"
-                placeholder="請輸入"
+                placeholder="phone"
                 :state="validateState('phone')"
                 v-validate="{ required: true, phone }"
                 data-vv-as="手機")

@@ -13,7 +13,7 @@ export default new Vuex.Store({
       { value: 'C', text: 'PVC人偶' },
       { value: 'D', text: 'GK' },
       { value: 'E', text: '可動人偶' },
-      { value: 'F', text: '扭蛋 / 盒玩' },
+      { value: 'F', text: '扭蛋' },
       { value: 'G', text: '設計師公仔' },
       { value: 'H', text: '其他' }
 
