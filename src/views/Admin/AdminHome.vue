@@ -36,6 +36,10 @@
                   h6 今日營業額: {{todayTotal}}
                   h6 總營業額: {{revenue}}
                   h6 會員人數: {{users.length}}
+                  p 熱銷前五名 :
+                  ol
+                    li(v-for="(product, i) in products" v-if="i<5")
+                      p {{product.name}}
                 b-col(cols="12").mx-auto.p-0.my-3
                   div(class="charttitle")
                     h6 每日營業額
@@ -52,10 +56,6 @@
                         h6 商品數量
                       div.bg-white
                         ve-pie(:data="piesData" :settings="chartSettings")
-                  p 熱銷前五名 :
-                  ol
-                    li(v-for="(product, i) in products" v-if="i<5")
-                      p {{product.name}}
 
           router-view
         radial-menu(
