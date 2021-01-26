@@ -30,8 +30,10 @@
             b-row
               b-col(cols="12" lg="9" class="title").mx-auto.text-white
                 h2 BUYFIG
-                b-form-input(v-model="msg" placeholder="請輸入").my-4.w-100
-                b-button(@click="sendmsg").bg-info.mb-3 發布訊息
+                b-input-group().my-4
+                  b-form-input(v-model="msg" placeholder="請輸入")
+                  b-input-group-append()
+                    b-button(@click="sendmsg" ).bg-info 發布訊息
                 div(style="line-height:2.5rem;font-size:2rem")
                   h6 今日營業額: {{todayTotal}}
                   h6 總營業額: {{revenue}}
