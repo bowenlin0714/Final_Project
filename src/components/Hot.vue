@@ -5,8 +5,8 @@
         template(slot-scope="{ index, isCurrent, leftIndex, rightIndex }")
           img(src="../assets/hot.png" class="hot" style="filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.7))")
           div(class="hotdiv" style="overflow:hidden;width:100%;height:100%")
-            b-button(class="hotbutton" )
-              a(href="#/productsdetail" @click="showdetail(hot)" ).text-white 立即搶購
+            b-button(class="hotbutton" href="#/productsdetail" @click="showdetail(hot)")
+              a.text-white 立即搶購
             img(:src="hot.src[0]" style="max-width:100%;overflow:hidden")
 
     carousel-3d(style="overflow:hidden" :controls-visible="true" :space="365" :disable3d="true").mb-5.d-block.d-lg-none

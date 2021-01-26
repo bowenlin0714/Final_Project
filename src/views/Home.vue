@@ -122,6 +122,7 @@ export default {
       var data = this.images
       this.$store.commit('onShoplists', data)
     })
+
     this.axios.get(process.env.VUE_APP_API + '/banners').then((res) => {
       const result = res.data.result.filter((banner) => {
         return banner.isShow === true
