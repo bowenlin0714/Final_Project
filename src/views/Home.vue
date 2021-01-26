@@ -85,6 +85,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      images: [],
       slide: 0,
       sliding: null
     }
@@ -109,6 +110,18 @@ export default {
     }
   },
   mounted () {
+    this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
+      this.images = response.data.result.map(image => {
+        var result = []
+        for (let i = 0; i < image.images.length; i++) {
+          result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
+          image.src = result
+        }
+        return image
+      })
+      var data = this.images
+      this.$store.commit('onShoplists', data)
+    })
     this.axios.get(process.env.VUE_APP_API + '/banners').then((res) => {
       const result = res.data.result.filter((banner) => {
         return banner.isShow === true

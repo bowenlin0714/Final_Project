@@ -5,7 +5,7 @@
         b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block " ).min-vh-100
 
           b-nav(vertical class="navleft" style="text-align:center" )
-            h1.mt-4.mb-4 管理者後台
+            h1.mt-4.mb-4 BUYFIG
             b-nav-item(to="/admin").text-left.h4.ml-4
               font-awesome-icon(:icon=['fas', 'home'] )
               span.ml-2 後台首頁
@@ -29,7 +29,7 @@
           b-container(v-if="$route.path =='/admin'" fluid)
             b-row
               b-col(cols="12" lg="9" class="title").mx-auto.text-white
-                h2 BUYFIG
+                h1.my-3.text-center 後台首頁
                 b-input-group().my-4
                   b-form-input(v-model="msg" placeholder="請輸入")
                   b-input-group-append()
@@ -41,7 +41,7 @@
                   p 熱銷前五名 :
                   ol
                     li(v-for="(product, i) in products" v-if="i<5")
-                      p {{product.name}}
+                      h6 {{product.name}}
                 b-col(cols="12").mx-auto.p-0.my-3
                   div(class="charttitle")
                     h6 每日營業額
