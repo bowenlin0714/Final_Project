@@ -286,8 +286,19 @@ export default {
       this.step2 = false
     },
     tostep2 () {
-      this.step1 = false
-      this.step2 = true
+      if (this.cartproducts.length === 0) {
+        this.$swal.fire({
+          toast: true,
+          position: 'top-start',
+          icon: 'warning',
+          title: '購物車沒有商品',
+          showConfirmButton: false,
+          timer: 3000
+        })
+      } else {
+        this.step1 = false
+        this.step2 = true
+      }
     },
     buy (user) {
       if (user.isBan === true) {

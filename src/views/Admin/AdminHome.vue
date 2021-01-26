@@ -1,8 +1,9 @@
 <template lang="pug">
   #adminhome.h-100
-    b-container(fluid class="").h-100
+    b-container(fluid ).h-100
       b-row().h-100
         b-col(cols="12" lg="2"  class=" bgleft d-none d-lg-block " ).min-vh-100
+
           b-nav(vertical class="navleft" style="text-align:center" )
             h1.mt-4.mb-4 管理者後台
             b-nav-item(to="/admin").text-left.h4.ml-4
@@ -55,15 +56,53 @@
                   ol
                     li(v-for="(product, i) in products" v-if="i<5")
                       p {{product.name}}
+
           router-view
       div(class="block d-lg-none")
-        b-nav(vertical class="").shadow
-            b-nav-item(to="/admin") 管理員首頁
-            b-nav-item(to="/admin/adminproducts") 商品管理
-            b-nav-item(to="/admin/adminmembers") 會員資料管理
-            b-nav-item(to="/admin/adminorders") 訂單管理`
-            b-nav-item(to="/admin/adminopinions") 意見表管理
-            b-nav-item(to="/admin/adminbanners") 輪播圖管理
+        radial-menu(
+          style=""
+          class="circlebtn"
+          :itemSize="50"
+          :radius="120"
+          :angle-restriction="180"
+        ).shadow
+          radial-menu-item(
+            style="background-color: white"
+            @click="toorders"
+          ).shadow
+            font-awesome-icon(:icon=['fas', 'file-contract'] )
+          radial-menu-item(
+            style="background-color: white"
+            @click="tobanners"
+          ).shadow
+            font-awesome-icon(:icon=['fas', 'image'] )
+          radial-menu-item(
+            style="background-color: white"
+            @click="toforms"
+          ).shadow
+            font-awesome-icon(:icon=['fas', 'list'] )
+          radial-menu-item(
+            style="background-color: white"
+            @click="tomember"
+          ).shadow
+            font-awesome-icon(:icon=['fas', 'user-astronaut'] )
+          radial-menu-item(
+            style="background-color: white"
+            @click="toproduct"
+          ).shadow
+            font-awesome-icon(:icon=['fas', 'shopping-cart'] )
+          radial-menu-item(
+            style="background-color: white"
+            @click="tohome"
+          ).shadow
+            font-awesome-icon(:icon=['fas', 'home'] )
+        //- b-nav(vertical class="").shadow
+        //-     b-nav-item(to="/admin") 管理員首頁
+        //-     b-nav-item(to="/admin/adminproducts") 商品管理
+        //-     b-nav-item(to="/admin/adminmembers") 會員資料管理
+        //-     b-nav-item(to="/admin/adminorders") 訂單管理`
+        //-     b-nav-item(to="/admin/adminopinions") 意見表管理
+        //-     b-nav-item(to="/admin/adminbanners") 輪播圖管理
 
 </template>
 
@@ -74,10 +113,13 @@
 
 <script>
 import '@/assets/css/back.stylus'
-
+import { RadialMenu, RadialMenuItem } from 'vue-radial-menu'
 export default {
   name: 'AdminHome',
-
+  components: {
+    RadialMenu,
+    RadialMenuItem
+  },
   data () {
     this.chartSettings = {
       labelMap: {
@@ -86,6 +128,8 @@ export default {
       }
     }
     return {
+      items: ['foo', 'bar', 'hello', 'world', 'more', 'items'],
+      lastClicked: 'click on something!',
       chartData: {
         columns: ['date', 'total'],
         rows: []
@@ -107,6 +151,24 @@ export default {
     }
   },
   methods: {
+    toproduct () {
+      this.$router.push('/admin/adminproducts')
+    },
+    tohome () {
+      this.$router.push('/admin')
+    },
+    tomember () {
+      this.$router.push('/admin/adminmembers')
+    },
+    toforms () {
+      this.$router.push('/admin/adminopinions')
+    },
+    toorders () {
+      this.$router.push('/admin/adminorders')
+    },
+    tobanners () {
+      this.$router.push('/admin/adminbanners')
+    },
     sendmsg () {
       var now = new Date()
       var year = now.getFullYear()

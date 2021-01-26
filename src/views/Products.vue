@@ -15,7 +15,7 @@
                   style="right:0"
                 ).w-75.ml-2
           b-col(cols="10").d-block.d-lg-none.mx-auto
-            b-dropdown(text="選擇類別" block menu-class="w-100" variant="info").mb-4
+            b-dropdown(text="選擇類別" block menu-class="w-100").mb-4
               b-dropdown-item-button(
                 v-for="item in this.$store.state.categories"
                 @click="tagCategory(item)") {{item.text}}
