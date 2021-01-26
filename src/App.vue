@@ -1,7 +1,7 @@
 <template lang="pug">
   #app.d-flex.flex-column.justify-content-between
     notifications(group="foo" position="top")
-    loading(:active.sync="isLoading"  )
+    loading(:active.sync="isLoading" )
         .loadingio-spinner-ripple-3q2sldg35oh
           .ldio-xoybongjwx
             div

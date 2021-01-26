@@ -31,9 +31,11 @@ html,body
   overflow-x:hidden
   min-height:100vh    
 @media (max-width: 576px)
+  html,body 
+  margin-top: 2rem
   .carousel-item
     img 
-      height: 17rem
+      height: 16rem
 @media (min-width: 576px) and (max-width: 768px)
   .carousel-item
     img 

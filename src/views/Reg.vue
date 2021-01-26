@@ -89,7 +89,7 @@
                         )
                     input(type='checkbox'  checked value="lll" v-model ="isAdmin" :true-value="true" :true-false="false" v-if="isAdmin")
                     br
-                    b-col(cols="10").mx-auto
+                    b-col(cols="12" lg="10").mx-auto
                       b-button(@click="onSubmit" style="border-radius:20px").py-2.shadow.w-100 註冊
                     p.mt-4.mb-0 已經有帳號了嗎?點我
                       a(href="#/login") 登入
