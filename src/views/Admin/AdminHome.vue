@@ -58,7 +58,6 @@
                       p {{product.name}}
 
           router-view
-      div(class="block d-lg-none")
         radial-menu(
           style=""
           class="circlebtn"
@@ -96,13 +95,6 @@
             @click="tohome"
           ).shadow
             font-awesome-icon(:icon=['fas', 'home'] )
-        //- b-nav(vertical class="").shadow
-        //-     b-nav-item(to="/admin") 管理員首頁
-        //-     b-nav-item(to="/admin/adminproducts") 商品管理
-        //-     b-nav-item(to="/admin/adminmembers") 會員資料管理
-        //-     b-nav-item(to="/admin/adminorders") 訂單管理`
-        //-     b-nav-item(to="/admin/adminopinions") 意見表管理
-        //-     b-nav-item(to="/admin/adminbanners") 輪播圖管理
 
 </template>
 
