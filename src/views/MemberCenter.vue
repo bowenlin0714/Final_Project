@@ -39,10 +39,10 @@
                         span {{msg.date}}
                     b-tab(title="傳送訊息")
                       p(v-if="user.toAdmin.length === 0").text-center.my-4 目前沒有訊息
-                      div(v-for="msg in user.toAdmin" v-else class="msgbox").bg-light
+                      div(v-for="msg in user.toAdmin" v-else class="msgbox").bg-light.d-flex.flex-row-reverse
                         p {{msg.detail}}
-                        span {{msg.date}}
-                      b-form.my-3
+                        span.mr-3 {{msg.date}}
+                      b-form(@submit.stop.prevent="sendmsg").my-3
                         b-form-input(
                           name="message"
                           v-model="message"
@@ -53,7 +53,7 @@
                         b-form-invalid-feedback() {{ veeErrors.first('message') }}
                         b-row
                           b-col(cols="12" lg="3").ml-auto
-                            b-button(class="msgbutton" @click="sendmsg").w-100.mt-3 傳送訊息
+                            b-button(class="msgbutton"  @click="sendmsg").w-100.mt-3 傳送訊息
             hr
             h4  追蹤中商品 :
             b-table(
@@ -308,25 +308,30 @@ export default {
       this.isEdit = true
     },
     sendmsg () {
-      var now = new Date()
-      var year = now.getFullYear()
-      var month = now.getMonth() + 1
-      var day = now.getDate()
-      var date = year + '/' + month + '/' + day
-      var data = {
-        detail: this.message,
-        date: date
-      }
-      this.user.toAdmin.push(data)
-      this.$validator.validateAll().then(res => {
-        if (!res) {
+      this.$validator.validateAll().then(result => {
+        if (!result) {
         } else {
-          this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
-            toAdmin: this.user.toAdmin
-          }).then(res => {
-            location.reload()
-            this.message = ''
-            // this.$store.commit('toAdmin', data)
+          var now = new Date()
+          var year = now.getFullYear()
+          var month = now.getMonth() + 1
+          var day = now.getDate()
+          var date = year + '/' + month + '/' + day
+          var data = {
+            detail: this.message,
+            date: date
+          }
+          this.user.toAdmin.push(data)
+          this.$validator.validateAll().then(res => {
+            if (!res) {
+            } else {
+              this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
+                toAdmin: this.user.toAdmin
+              }).then(res => {
+                this.message = ''
+                this.$validator.reset()
+              // this.$store.commit('toAdmin', data)
+              })
+            }
           })
         }
       })
