@@ -2,7 +2,7 @@
   #shopcar
     b-container(style="min-height:68vh").shadow
       b-row
-        b-breadcrumb(:items="breads")
+        b-breadcrumb(:items="breads").mt-2.ml-3
         b-col(cols="12" v-if="step1")
           b-container()
             b-row

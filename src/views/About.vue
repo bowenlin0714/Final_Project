@@ -3,12 +3,12 @@
     b-container().shadow
       b-row
         b-col(cols="12").p-0
-          b-breadcrumb(:items="breads")
+          b-breadcrumb(:items="breads").mt-2.ml-3
           .mask()
             div(class="bgTest" id="bgTest" :style="{'background-position-y':positionY1+'px'}")
               div.maskText
                 h1 WHY BUYFIG
-                h3 一 為什麼選擇BUYFIG 一
+                h3 一 為什麼選擇BUfYFIG 一
           .aboutPage
             h1.text-center.my-5 三大保證
             b-container(fluid).bg-white

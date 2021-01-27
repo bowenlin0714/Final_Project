@@ -2,8 +2,8 @@
   #reg
     b-container.shadow
       b-row
-        b-col(cols="12").my-3
-          b-breadcrumb(:items="breads")
+        b-col(cols="12").mb-3
+          b-breadcrumb(:items="breads").mt-2
           b-container
             b-row.mb-3
               b-col(cols="12" lg="4" ).bg-dark.ml-auto.shadow.left.p-5

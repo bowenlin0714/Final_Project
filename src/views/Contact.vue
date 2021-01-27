@@ -1,7 +1,7 @@
 <template lang="pug">
   #contact
     b-container(style="min-height:70vh").shadow
-      b-breadcrumb
+      b-breadcrumb.mt-2
         b-breadcrumb-item(to="/") 首頁
         b-breadcrumb-item(active) 聯絡我們
       b-row

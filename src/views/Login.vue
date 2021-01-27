@@ -3,7 +3,7 @@
     b-container(style="min-height:70vh").shadow
       b-row
         b-col(cols="12")
-          b-breadcrumb(:items="breads")
+          b-breadcrumb(:items="breads").mt-2
           b-container()
             b-row.my-5
               b-col(cols="12" lg="5" class="logleft").border.ml-auto.rounded-left.bg-white.shadow

@@ -2,7 +2,7 @@
   #membercenter
     b-container.shadow
       b-row
-        b-breadcrumb(:items="breads")
+        b-breadcrumb(:items="breads").mt-2.ml-3
         b-container
           b-col(cols="12" ).bg-white.mb-3.p-5
             .title.mb-5

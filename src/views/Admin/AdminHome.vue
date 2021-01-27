@@ -54,7 +54,7 @@
                 div.bg-white.text-dark.p-2
                   ol.p-3
                     li(v-for="(product, i) in products" v-if="i<5").m-3
-                      h6 {{product.name}}
+                      p {{product.name}}
                 b-col(cols="12").mx-auto.p-0.my-3
                   div(class="charttitle") 每日營業額
                   div.bg-white.p-3

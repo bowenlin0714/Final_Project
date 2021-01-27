@@ -2,10 +2,9 @@
 
   #news
     b-container.shadow
-
       b-row
         b-col(cols="12").mx-auto
-          b-breadcrumb(:items="breads")
+          b-breadcrumb(:items="breads").mt-2
           ul.p-0
             b-row
               b-col(cols="12" lg="11").mx-auto

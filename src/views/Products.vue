@@ -2,7 +2,7 @@
   b-container(class="products").shadow
     b-row
       b-col(cols="12")
-        b-breadcrumb(:items="breads")
+        b-breadcrumb(:items="breads").mt-2
       b-col(cols="12")
         b-row
           b-col(cols="12" lg="3" ).ml-auto.mb-3
