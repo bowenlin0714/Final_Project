@@ -13,7 +13,7 @@ html,body
   
 
   @media  (max-width:768px)
-    font-size: 75%
+    // font-size: 75%
     .mainNavitem
       a
         font-size: 1.5rem
