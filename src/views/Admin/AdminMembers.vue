@@ -1,6 +1,6 @@
 <template lang="pug">
   #adminmembers.min-vh-100
-    b-container().text-white
+    b-container()
       h1.my-3.mb-2.text-center 會員資料管理
       b-row
         b-col(cols="12" lg="6")
@@ -9,7 +9,8 @@
               b-form-radio(v-model="selected" value = "全部" checked) 顯示全部
               b-form-radio(v-model="selected" value = '顯示正常會員') 顯示正常會員
               b-form-radio(v-model="selected" value = '顯示已封鎖會員') 顯示已封鎖會員
-        b-col(cols="12" lg="3").mb-4.ml-auto
+        b-col(cols="12" lg="3").mb-4.ml-auto.d-flex.text-white
+          font-awesome-icon( :icon=['fas', 'search'] ).h4.mt-2.mr-3
           b-form-input(
             id="filter-input"
             type="search"

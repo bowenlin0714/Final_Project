@@ -6,14 +6,14 @@
         b-col(cols="12" v-if="step1")
           b-container()
             b-row
-              b-col(cols="12").mx-auto.d-flex.justify-content-center.align-items-center
-                div(class="step" ).mr-5
+              b-col(cols="12" lg="6").mx-auto.d-flex.justify-content-around.align-items-center
+                div(class="step" )
                   p 1
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step " ).mx-5
+                div(class="step " )
                   p 2
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step " ).ml-5
+                div(class="step " )
                   p 3
           hr
           div.bg-white.pb-3
@@ -60,14 +60,14 @@
         b-col(cols="12" v-if="step2")
           b-container()
             b-row
-              b-col(cols="12").mx-auto.d-flex.justify-content-center.align-items-center
-                div(class="step step2" ).mr-5
+              b-col(cols="12" lg="6").mx-auto.d-flex.justify-content-around.align-items-center
+                div(class="step step2" )
                   p 1
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step step2" ).mx-5
+                div(class="step step2" )
                   p 2
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step step2" ).ml-5
+                div(class="step step2" )
                   p 3
           hr
           b-form(v-if="step2").bg-white.p-3
@@ -131,14 +131,14 @@
         b-col(cols="12" v-if="step3")
           b-container()
             b-row
-              b-col(cols="12").mx-auto.d-flex.justify-content-center.align-items-center
-                div(class="step step3" ).mr-5
+              b-col(cols="12" lg="6").mx-auto.d-flex.justify-content-around.align-items-center
+                div(class="step step3" )
                   p 1
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step step3" ).mx-5
+                div(class="step step3" )
                   p 2
                 font-awesome-icon( :icon=['fas', 'arrow-alt-circle-right'] ).h3.m-0
-                div(class="step step3" ).ml-5
+                div(class="step step3" )
                   p 3
           hr
           div(class="thank").d-flex.justify-content-center.align-items-center.rounded

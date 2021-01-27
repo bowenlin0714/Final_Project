@@ -3,7 +3,7 @@
     b-container.shadow
       b-row
         b-col(cols="12")
-          b-breadcrumb
+          b-breadcrumb.mt-2
             b-breadcrumb-item(to="/") 首頁
             b-breadcrumb-item(to="/products") 商品列表
             b-breadcrumb-item(to="/products" @click="tagCategory(category)") {{breadtag[0].text}}
@@ -121,7 +121,7 @@
                 | 提醒您，退回的商品必須是全新的狀態、而且完整包裝(含商品本體、配件、贈品、保證書、原廠包裝及所有附隨文件或資料的完整性)， 切勿缺漏任何             | 配件、請勿自行拆解檢查商品或損毀原廠外盒。原廠外盒及原廠包裝都屬於商品的一部分，或有遺失、毀損或缺件，可能影響您退貨的權益，也可能依照            | 損毀程度扣除為回復原狀所必要的費用。
         b-col(cols="12")
           hr
-          h4.text-center.my-4 相關商品
+          h4.text-center.my-4.mb-5.relative 相關商品
           Hot
 
 </template>

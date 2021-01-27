@@ -23,6 +23,7 @@ import VueFab from 'vue-float-action-button'
 import ECharts from 'vue-echarts'
 import VCharts from 'v-charts'
 import underscore from 'vue-underscore'
+import VueScrollTo from 'vue-scrollto'
 
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
@@ -64,6 +65,7 @@ Vue.use(cheerio)
 Vue.use(VueFab)
 Vue.use(VCharts)
 Vue.use(underscore)
+Vue.use(VueScrollTo)
 
 Vue.directive('ripple', Ripple)
 

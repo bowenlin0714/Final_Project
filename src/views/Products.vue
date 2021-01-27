@@ -127,6 +127,7 @@ export default {
     },
     showdetail (data) {
       this.$store.commit('showdetail', data)
+      window.scrollTo(0, 0)
     }
   },
   mounted () {

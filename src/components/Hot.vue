@@ -24,6 +24,7 @@ export default {
   methods: {
     showdetail (hot) {
       this.$store.commit('showdetail', hot)
+      window.scrollTo(0, 0)
     }
   },
   mounted () {

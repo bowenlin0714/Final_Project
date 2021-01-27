@@ -32,7 +32,7 @@
                       v-model="password"
                       placeholder="password"
                       :state="validateState('password')"
-                      v-validate="{ required: true, min:4 }"
+                      v-validate="{ required: true }"
                       data-vv-as="密碼"
                     )
                     b-form-invalid-feedback().mb-3 {{ veeErrors.first('password') }}
@@ -114,6 +114,14 @@ export default {
               }
             })
             .catch(err => {
+              this.$swal.fire({
+                toast: true,
+                position: 'top-start',
+                icon: 'warning',
+                title: '帳號或密碼錯誤',
+                showConfirmButton: false,
+                timer: 3000
+              })
               console.log(err)
             })
         }

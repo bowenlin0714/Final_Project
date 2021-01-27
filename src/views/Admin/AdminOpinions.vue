@@ -1,6 +1,6 @@
 <template lang="pug">
   #adminopinions.min-vh-100
-    b-container(class="").text-white
+    b-container(class="")
       h1(class="my-3 mb-2").text-center 意見表管理
       b-row
         b-col(cols="12" lg="6")
@@ -10,7 +10,8 @@
               b-form-radio(v-model="selected" value = "全部" checked) 顯示全部
               b-form-radio(v-model="selected" value = '已回覆') 顯示已回覆
               b-form-radio(v-model="selected" value = '未回覆') 顯示未回覆
-        b-col(cols="12" lg="3").mb-4.ml-auto
+        b-col(cols="12" lg="3").mb-4.ml-auto.d-flex.text-white
+          font-awesome-icon( :icon=['fas', 'search'] ).h4.mt-2.mr-3
           b-form-input(
             id="filter-input"
             type="search"

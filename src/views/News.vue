@@ -1,5 +1,4 @@
 <template lang="pug">
-
   #news
     b-container.shadow
       b-row

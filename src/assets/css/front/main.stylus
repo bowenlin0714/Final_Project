@@ -35,7 +35,7 @@ html,body
     margin-top: 2rem
   .carousel-item
     img 
-      height: 16rem
+      height: 15rem
 @media (min-width: 576px) and (max-width: 768px)
   .carousel-item
     img 

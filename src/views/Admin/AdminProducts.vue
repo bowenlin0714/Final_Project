@@ -4,7 +4,8 @@
       div.d-flex.align-items-center.justify-content-center.position-relative
         h1(class="my-3 mb-2" style="z-index:2").text-left 商品管理
       b-row
-        b-col(cols="12"  lg="3").ml-auto
+        b-col(cols="12"  lg="3").ml-auto.d-flex.text-white
+          font-awesome-icon( :icon=['fas', 'search'] ).h4.mt-2.mr-3
           b-form-input(
               type="text"
               placeholder="Type to search"
