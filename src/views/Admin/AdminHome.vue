@@ -29,44 +29,54 @@
           b-container(v-if="$route.path =='/admin'" fluid)
             b-row
               b-col(cols="12" lg="9" class="title").mx-auto.text-white
-                h1.my-3.text-center 後台首頁
-                b-input-group().my-4
+                div.d-flex.flex-column.justify-content-around.m-4.flex-lg-row.align-items-center
+                  .circle
+                    div.text-center
+                      h4 {{users.length}}
+                      p  會員人數
+                  .circle
+                    div.text-center
+                      h4 {{notres.length}}
+                      p  未回覆回饋單
+                  .circle
+                    div.text-center
+                      h4 {{todayTotal}}
+                      p 今日營業額
+                  .circle
+                    div.text-center
+                      h4 {{revenue}}
+                      p  總營業額
+                b-input-group().my-5
                   b-form-input(v-model="msg" placeholder="請輸入")
                   b-input-group-append()
                     b-button(@click="sendmsg" ).bg-info 發布訊息
-                div(style="line-height:2.5rem;font-size:2rem")
-                  h6 今日營業額: {{todayTotal}}
-                  h6 總營業額: {{revenue}}
-                  h6 會員人數: {{users.length}}
-                  p 熱銷前五名 :
-                  ol
-                    li(v-for="(product, i) in products" v-if="i<5")
+                div(class="charttitle") 熱銷前五名 :
+                div.bg-white.text-dark.p-2
+                  ol.p-3
+                    li(v-for="(product, i) in products" v-if="i<5").m-3
                       h6 {{product.name}}
                 b-col(cols="12").mx-auto.p-0.my-3
-                  div(class="charttitle")
-                    h6 每日營業額
+                  div(class="charttitle") 每日營業額
                   div.bg-white.p-3
                     ve-histogram(:data="chartData" :settings="chartSettings")
                   div.d-flex.flex-column.flex-lg-row
                     b-col(cols="12" lg="6").p-0.my-3
-                      div(class="charttitle")
-                        h6 每日回饋單數量
+                      div(class="charttitle") 每日回饋單數量
                       div.bg-white
                         ve-histogram(:data="formsData" :settings="chartSettings" )
                     b-col(cols="12" lg="5").ml-auto.p-0.my-3
-                      div(class="charttitle")
-                        h6 商品數量
+                      div(class="charttitle") 商品數量
                       div.bg-white
                         ve-pie(:data="piesData" :settings="chartSettings")
 
           router-view
         radial-menu(
-          style=""
+          style="z-index:99999999999"
           class="circlebtn"
           :itemSize="50"
           :radius="120"
           :angle-restriction="180"
-        ).shadow
+        ).shadow.d-block.d-lg-none
           radial-menu-item(
             style="background-color: white"
             @click="toorders"
@@ -122,6 +132,7 @@ export default {
       }
     }
     return {
+      notres: '',
       items: ['foo', 'bar', 'hello', 'world', 'more', 'items'],
       lastClicked: 'click on something!',
       chartData: {
@@ -139,7 +150,7 @@ export default {
       msg: '',
       revenue: 0,
       todayTotal: 0,
-      users: null,
+      users: '',
       products: []
 
     }
@@ -233,6 +244,7 @@ export default {
     })
     // 回饋單數量
     this.axios.get(process.env.VUE_APP_API + '/forms').then(res => {
+      console.log(res.data.result)
       const originChart = this.$_.groupBy(res.data.result, (a) => {
         return a.date
       })
@@ -245,6 +257,9 @@ export default {
         formsArray.push(linshiObj)
       }
       this.formsData.rows = formsArray.slice(-5)
+      this.notres = res.data.result.filter(form => {
+        return form.isRes === false
+      })
     })
 
     this.axios.get(process.env.VUE_APP_API + '/products').then(res => {

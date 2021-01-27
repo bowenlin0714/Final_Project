@@ -29,7 +29,7 @@
                 ).mb-2 請輸入檔案敘述
               b-form-invalid-feedback().mb-3 {{ veeErrors.first('input1') }}
             b-form-group(label="上傳圖片 :" label-for="input2" id="input2").mb-0
-              img-inputer(v-model="image" theme="light" size="middle" )
+              img-inputer(v-model="image" theme="light" size="middle" placeholder="點擊或拖曳圖片")
         b-table(
             small
             id="brtable"

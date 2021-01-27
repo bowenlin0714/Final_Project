@@ -159,13 +159,13 @@
                       b-container(fluid)
                         b-row
                           b-col(lg="6" cols="12").text-center.pb-2.pt-2
-                            img-inputer(size="normal" v-model="image" )
+                            img-inputer(size="normal" v-model="image"  placeholder="點擊或拖曳圖片")
                           b-col(lg="6" cols="12").text-center.pb-2.pt-2
-                            img-inputer(size="normal" v-model="image2" )
+                            img-inputer(size="normal" v-model="image2"  placeholder="點擊或拖曳圖片")
                           b-col(lg="6" cols="12").text-center.pb-2.pt-2
-                            img-inputer(size="normal" v-model="image3" )
+                            img-inputer(size="normal" v-model="image3"  placeholder="點擊或拖曳圖片")
                           b-col(lg="6" cols="12").text-center.pb-2.pt-2
-                            img-inputer(size="normal" v-model="image4" )
+                            img-inputer(size="normal" v-model="image4"  placeholder="點擊或拖曳圖片")
                   b-col(cols="6")
                     b-form-group(
                       label="商品價格"

@@ -1,6 +1,6 @@
 <template lang="pug">
   #adminmembers.min-vh-100
-    b-container()
+    b-container().text-white
       h1.my-3.mb-2.text-center 會員資料管理
       b-row
         b-col(cols="12" lg="6")
@@ -21,7 +21,7 @@
             stacked="md"
             id="membertable"
             class="mx-auto"
-            :items='memberlists'
+            :items='filterlists'
             :fields='fields' fixed
             :filter = "keyword"
             :filter-included-fields="filterOn"
@@ -30,11 +30,6 @@
             :per-page="perPage"
             striped=true
             ).text-lg-center
-            template(#cell(address)='row')
-              b-button(variant="info" @click.stop="row.toggleDetails") 會員地址
-            template(v-slot:row-details="row")
-              p 地址: {{row.item.address}}
-              b-button( @click="row.toggleDetails").bg-info 關閉
             template(#cell(isBan)='data')
               b-button(style="border-style:none;" @click.stop="checkBan(data, data.index)").bg-transparent.border-none
                 span(v-if="data.item.isBan").text-danger 封鎖中
@@ -42,15 +37,15 @@
             template(#cell(delete)='data')
               b-button(variant="danger" @click="delmember(data, data.index)") 刪除
           div.w-100
-            p(v-if="memberlists.length == 0").text-center.h1 目前沒有內容
-      p(style="text-align:center").text-center 第 {{currentPage}} 頁 共 {{memberlists.length}} 筆結果
+            p(v-if="filterlists.length == 0").text-center 目前沒有內容
+      p.text-center 第 {{currentPage}} 頁 共 {{filterlists.length}} 筆結果
       b-pagination(
         v-model="currentPage"
         :total-rows="rows"
         aria-controls="membertable"
         :per-page="perPage"
         align="center"
-        )
+        ).pt-3
 </template>
 
 <script>
@@ -64,7 +59,7 @@ export default {
         address: ''
       },
       sortBy: 'account',
-      keyword: null,
+      keyword: '',
       filterOn: [],
       perPage: 6,
       selected: null,
@@ -90,10 +85,6 @@ export default {
           label: '電話號碼'
         },
         {
-          key: 'address',
-          label: '會員地址'
-        },
-        {
           key: 'isBan',
           label: '會員狀態'
         },
@@ -114,6 +105,18 @@ export default {
         return this.$store.state.memberlists
       }
       // return result
+    },
+    filterlists () {
+      var result = ''
+      if (this.keyword === '') {
+        result = this.memberlists
+        return result
+      } else {
+        result = this.memberlists.filter(member => {
+          return member.name.search(this.keyword) !== -1
+        })
+      }
+      return result
     },
     rows () {
       return this.memberlists.length

@@ -1,6 +1,6 @@
 <template lang="pug">
   #adminopinions.min-vh-100
-    b-container(class="")
+    b-container(class="").text-white
       h1(class="my-3 mb-2").text-center 意見表管理
       b-row
         b-col(cols="12" lg="6")
@@ -25,7 +25,7 @@
             class="mx-auto"
             :filter = "keyword"
             :filter-included-fields="filterOn"
-            :items='formlists'
+            :items='filterlists'
             :fields='fields'
             :current-page="currentPage"
             :per-page="perPage"
@@ -48,15 +48,14 @@
               b-button(variant="danger" @click.stop="delforms(data, data.index)" ) 刪除 {{checkDel}}
         div.w-100
           p(v-if="formlists.length == 0").text-center.ml-center 目前沒有內容
-      p(style="text-align:center").text-center 分類排序:{{ sortBy }}
-      p(style="text-align:center").text-center 第 {{currentPage}} 頁 共 {{formlists.length}} 筆結果
+      p.text-center 第 {{currentPage}} 頁 共 {{filterlists.length}} 筆結果
       b-pagination(
         v-model="currentPage"
         :total-rows="rows"
         aria-controls="membertable"
         :per-page="perPage"
         align="center"
-        )
+        ).pt-3
 </template>
 
 <script>
@@ -68,7 +67,7 @@ export default {
       sortBy: 'date',
       sortDesc: false,
       checkDel: '',
-      keyword: null,
+      keyword: '',
       filterOn: [],
       selected: null,
       selectedForm: null,
@@ -130,9 +129,18 @@ export default {
       } else {
         return this.$store.state.formlists
       }
-      // return this.keyword
-      //   ? this.$store.state.formlists.filter(item => item.name.includes(this.keyword) || item.email.includes(this.keyword))
-      //   : this.$store.state.formlists
+    },
+    filterlists () {
+      var result = ''
+      if (this.keyword === '') {
+        result = this.formlists
+        return result
+      } else {
+        result = this.formlists.filter(form => {
+          return form.name.search(this.keyword) !== -1
+        })
+      }
+      return result
     },
     rows () {
       return this.formlists.length

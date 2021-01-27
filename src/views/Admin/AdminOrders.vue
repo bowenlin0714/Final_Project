@@ -12,14 +12,15 @@
                 style="right:0"
               ).mb-3
           b-table(
-          class=""
-          class="mx-auto"
-          :items='orderlists'
-          :fields='fields'
+            class=""
+            class="mx-auto"
+            :items='orderlists'
+            :fields='fields'
           ).text-white.text-center
             template(#cell(detail)='row')
               b-button(variant="info"  @click="row.toggleDetails") 完整訊息
-
+            template(#cell(amount)='data')
+              p  {{data.item.orders.length}}
             template(v-slot:row-details="row")
               div.bg-white
                 b-table(
@@ -35,13 +36,22 @@
                   template(#cell(shipment)='data')
                     b-button(v-if="data.item.shipment === '未出貨'" @click="handleship(row, data.index)" )
                       p.text-danger {{data.item.shipment}}
-                    b-button(v-else @click="notship(row, data.index)" )
+                    b-button(v-else-if="data.item.shipment === '已出貨'" @click="notship(row, data.index)" )
                       p.text-info {{data.item.shipment}}
+                    p(v-else).text-success {{data.item.shipment}}
+
                 hr
                 b-container.d-flex.flex-row-reverse
                   b-button( @click="row.toggleDetails").bg-danger.mb-2 關閉
-            template(#cell(amount)='data')
-              p  {{data.item.orders.length}}
+          p.text-center 第 {{currentPage}} 頁 共 {{orderlists.length}} 筆結果
+          b-pagination(
+            v-model="currentPage"
+            :total-rows="orderlists.length"
+            :per-page="perPage"
+            aria-controls="itemList"
+            align="center"
+          ).pt-3
+
         b-modal(id="orderdetail" title="訂單明細 : "
         size="xl" hide-footer)
           b-container
@@ -57,10 +67,13 @@
                 p.my-1  運送地址 : {{orderdetail.where}}
                 p.my-1  付款方式 : {{orderdetail.howtopay}}
                   span.ml-3 付款狀態 :
-                  span.text-danger {{orderdetail.ispaid}}
+                  span(v-if="orderdetail.ispaid").text-success 已付款
+                  span(v-else).text-danger 未付款
                 p 運送方式 : {{orderdetail.method}}
                   span.ml-3  出貨狀態 :
-                  span.text-danger {{orderdetail.shipment}}
+                  span(v-if="orderdetail.shipment == '未出貨'").text-danger 未出貨
+                  span(v-else-if="orderdetail.shipment == '已出貨'").text-info 已出貨
+                  span(v-else).text-success 已收貨
                 b-table(
                   stacked="md"
                   :items="orderdetail.products"
@@ -86,6 +99,7 @@
                   p 運費 : {{orderdetail.shipping}}
                   hr
                   h4 合計 : {{orderdetail.total}}
+
 </template>
 
 <script>
@@ -94,6 +108,8 @@ export default {
   name: 'AdminOrders',
   data () {
     return {
+      perPage: 8,
+      currentPage: 1,
       images: null,
       keyword: '',
       user: '',
@@ -188,6 +204,7 @@ export default {
       }
       return result
     }
+
   },
   methods: {
     handlepaid (row, index2) {

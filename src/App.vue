@@ -29,11 +29,10 @@
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else) 會員中心
             b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin") 管理者頁面
             b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout") 登出
-    #socialLink(v-if="$route.path!=='/admin'")
+    #socialLink(v-if="$route.path =='/' || $route.path =='/about' || $route.path =='/shopcar' || $route.path =='/products' || $route.path =='/productsdetail' || $route.path =='/contact'  || $route.path =='/news' || $route.path =='/login' || $route.path =='/reg' || $route.path =='/membercenter'")
       a(href="#")
         font-awesome-icon(:icon="['fas','chevron-circle-up']")
     b-container(fluid).p-0
-
       router-view
       Footer
 
