@@ -22,16 +22,20 @@
                     @click="tagCategory(category)"
                     style="font-size:0.9rem"
                     v-else).w-100.shadow-sm {{category.text}}
-
         b-col(cols="12" lg="9" class="right").border.bg-white.pt-3
             b-row
               b-col(cols="12" lg="7")
                 div(class="bigimg").ml-1.border
-                  img(v-show="preview" :src="productdetail.src[0]")
-                  img(:src="bigURL")
+                  img(v-show="preview" :src="productdetail.src[0]" @click="showImg")
+                  img(:src="bigURL" @click="showImg")
                 ul.d-flex
-                  li(v-for="image in productdetail.src" style="").m-2.border
+                  li(v-for="(image,index) in productdetail.src" style="").m-2.border
                     img(:src="image" @click="changeimg(image)").w-100.h-auto
+                  vue-easy-lightbox(
+                    :visible="visible"
+                    :imgs="productdetail.src"
+                    @hide="handleHide"
+                  )
               b-col(cols="12" lg="5")
                 div(style="min-height:50vh").d-flex.flex-column.justify-content-around
                   div.d-flex.justify-content-lg-between
@@ -141,7 +145,7 @@ export default {
   name: 'productsdetail',
   data () {
     return {
-      // checkfav: false,
+      visible: false,
       id: '',
       account: '',
       comment: '',
@@ -194,6 +198,12 @@ export default {
     }
   },
   methods: {
+    showImg () {
+      this.visible = true
+    },
+    handleHide () {
+      this.visible = false
+    },
     validateState (ref) {
       if (
         this.veeFields[ref] &&
@@ -239,7 +249,8 @@ export default {
       if (this.user.name === '') {
         this.$swal.fire({
           toast: true,
-          position: 'top-start',
+          position: 'bottom-start',
+          padding: '1rem',
           icon: 'warning',
           title: '請先登入',
           showConfirmButton: false,
@@ -305,7 +316,8 @@ export default {
       if (this.user.name === '') {
         this.$swal.fire({
           toast: true,
-          position: 'top-start',
+          position: 'bottom-start',
+          padding: '1rem',
           icon: 'warning',
           title: '請先登入',
           showConfirmButton: false,

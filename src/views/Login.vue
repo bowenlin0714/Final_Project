@@ -90,7 +90,8 @@ export default {
               if (res.data.success) {
                 this.$swal.fire({
                   toast: true,
-                  position: 'top-start',
+                  position: 'bottom-start',
+                  padding: '1rem',
                   icon: 'success',
                   title: '登入成功',
                   showConfirmButton: false,
@@ -105,7 +106,8 @@ export default {
               } else {
                 this.$swal.fire({
                   toast: true,
-                  position: 'top-start',
+                  position: 'bottom-start',
+                  padding: '1rem',
                   icon: 'warning',
                   title: '登入失敗',
                   showConfirmButton: false,
@@ -116,7 +118,8 @@ export default {
             .catch(err => {
               this.$swal.fire({
                 toast: true,
-                position: 'top-start',
+                position: 'bottom-start',
+                padding: '1rem',
                 icon: 'warning',
                 title: '帳號或密碼錯誤',
                 showConfirmButton: false,
@@ -134,5 +137,4 @@ export default {
 </script>
 
 <style lang="stylus">
-
 </style>

@@ -7,7 +7,7 @@
           b-col(cols="12" ).bg-white.mb-3.p-5
             .title.mb-5
              p Member Center
-            h4.d-inline 會員資料 :
+            h4.d-inline.my-4 會員資料 :
             b-button(class="editbtn" @click="edituser" size="sm" v-if="this.isEdit").mb-2.ml-3 確定
             b-button(class="editbtn" @click="edit" size="sm" v-else).mb-2.ml-3 編輯
             span(v-if="user.isBan").ml-3.text-danger 封鎖中，欲解鎖請洽客服
@@ -27,7 +27,7 @@
               b-form-input(size="sm" v-model="user.payaccount" v-if="isEdit").w-25.d-inline.ml-3
               span(v-else).ml-3 {{user.payaccount}}
             hr
-            h4  訊息中心 :
+            h4.my-3  訊息中心 :
             b-card(n-body)
               b-tabs
                 b-row
@@ -55,7 +55,7 @@
                           b-col(cols="12" lg="3").ml-auto
                             b-button(class="msgbutton"  @click="sendmsg").w-100.mt-3 傳送訊息
             hr
-            h4  追蹤中商品 :
+            h4.my-3  追蹤中商品 :
             b-table(
               stacked="md"
               :items="user.fav"
@@ -70,7 +70,7 @@
             p(v-if="user.fav.length === 0").text-center 目前沒有內容
             hr
             div
-              h4  我的訂單 :
+              h4.my-3  我的訂單 :
               b-card(n-body)
                 b-tabs
                   b-tab(title="未完成")

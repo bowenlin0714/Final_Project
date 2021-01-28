@@ -42,10 +42,10 @@
                   div(style="width:100%;display:flex;flex-direction:column;height:100px")
                     b-button(@click="checkEdit(item)" v-b-modal.editForm).bg-success.mt-2 詳細內容 / 編輯
                     b-button(@click="delProducts(item)").bg-danger.mt-2.mr-0 刪除
-          p(class="footer").text-center.pt-2.mb-0 第 {{currentPage}} 頁，共 {{itemsForList.length}} 筆結果
+          p(class="footer").text-center.pt-2.mb-0 第 {{currentPage}} 頁，共 {{finallists.length}} 筆結果
           b-pagination(
             v-model="currentPage"
-            :total-rows="itemsForList.length"
+            :total-rows="finallists.length"
             :per-page="perPage"
             aria-controls="itemList"
             align="center"
@@ -310,18 +310,6 @@ export default {
     categories () {
       return this.$store.state.categories
     },
-    finallists () {
-      var result = ''
-      if (this.keyword === '') {
-        result = this.productlists
-        return result
-      } else {
-        result = this.productlists.filter(product => {
-          return product.name.search(this.keyword) !== -1
-        })
-      }
-      return result
-    },
     productlists () {
       var result = ''
       if (this.tag === '') {
@@ -330,6 +318,18 @@ export default {
       } else {
         result = this.$store.state.productlists.filter(product => {
           return product.category === this.tag
+        })
+      }
+      return result
+    },
+    finallists () {
+      var result = ''
+      if (this.keyword === '') {
+        result = this.productlists
+        return result
+      } else {
+        result = this.productlists.filter(product => {
+          return product.name.search(this.keyword) !== -1
         })
       }
       return result

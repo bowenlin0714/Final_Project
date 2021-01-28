@@ -2,6 +2,7 @@
   #home
     b-container.border.p-0.shadow
       b-carousel(
+        v-if="bannerlists.length > 0"
         controls
         no-touch
         @sliding-start="onSlideStart"
@@ -14,7 +15,7 @@
       )
         a(href="#", title="title" target="_blank")
           b-carousel-slide(
-            v-for="(banner,index) in this.$store.state.bannerlists"
+            v-for="(banner,index) in bannerlists"
             :img-src="banner.src"
           )
       div.titlepic.my-3
@@ -31,6 +32,7 @@
             span Hot!!
             p.d-inline 熱門商品
       Hot
+      p
       div.titlepic.my-3
          u-animate-container
           u-animate(
@@ -86,6 +88,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      test: null,
       images: [],
       slide: 0,
       sliding: null
@@ -100,6 +103,9 @@ export default {
   computed: {
     news () {
       return this.$store.state.news
+    },
+    bannerlists () {
+      return this.$store.state.bannerlists
     }
   },
   methods: {
@@ -111,19 +117,7 @@ export default {
     }
   },
   mounted () {
-    this.axios.get(process.env.VUE_APP_API + '/products/').then((response) => {
-      this.images = response.data.result.map(image => {
-        var result = []
-        for (let i = 0; i < image.images.length; i++) {
-          result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
-          image.src = result
-        }
-        return image
-      })
-      var data = this.images
-      this.$store.commit('onShoplists', data)
-    })
-
+    // banner
     this.axios.get(process.env.VUE_APP_API + '/banners').then((res) => {
       const result = res.data.result.filter((banner) => {
         return banner.isShow === true

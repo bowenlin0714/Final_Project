@@ -284,7 +284,8 @@ export default {
       if (this.cartproducts.length === 0) {
         this.$swal.fire({
           toast: true,
-          position: 'top-start',
+          position: 'bottom-start',
+          padding: '1rem',
           icon: 'warning',
           title: '購物車沒有商品',
           showConfirmButton: false,
@@ -299,7 +300,8 @@ export default {
       if (user.isBan === true) {
         this.$swal.fire({
           toast: true,
-          position: 'top-start',
+          position: 'bottom-start',
+          padding: '1rem',
           icon: 'error',
           title: '封鎖中，請洽客服',
           showConfirmButton: false,
@@ -309,7 +311,8 @@ export default {
         if (this.cartproducts.length === 0) {
           this.$swal.fire({
             toast: true,
-            position: 'top-start',
+            position: 'bottom-start',
+            padding: '1rem',
             icon: 'warning',
             title: '購物車沒有商品',
             showConfirmButton: false,

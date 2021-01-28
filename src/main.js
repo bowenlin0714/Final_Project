@@ -24,6 +24,8 @@ import ECharts from 'vue-echarts'
 import VCharts from 'v-charts'
 import underscore from 'vue-underscore'
 import VueScrollTo from 'vue-scrollto'
+import Lightbox from 'vue-easy-lightbox'
+import infiniteScroll from 'vue-infinite-scroll'
 
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
@@ -66,6 +68,8 @@ Vue.use(VueFab)
 Vue.use(VCharts)
 Vue.use(underscore)
 Vue.use(VueScrollTo)
+Vue.use(Lightbox)
+Vue.use(infiniteScroll)
 
 Vue.directive('ripple', Ripple)
 

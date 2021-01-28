@@ -143,7 +143,8 @@ export default {
               if (res.data.success) {
                 this.$swal.fire({
                   toast: true,
-                  position: 'top-start',
+                  position: 'bottom-start',
+                  padding: '1rem',
                   icon: 'success',
                   title: '註冊成功',
                   showConfirmButton: false,

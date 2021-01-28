@@ -50,6 +50,8 @@ pre
     img 
       max-height: 100%
       max-width: 100%
+      &:hover
+        cursor pointer
   .right     
     .d-flex
       li

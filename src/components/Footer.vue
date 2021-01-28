@@ -8,7 +8,7 @@
           .footer
             b-container
               b-row
-                b-col(cols="6" md="3").text-center.text-md-left
+                b-col(cols="6" md="3").text-center.text-md-left.px-4
                   p.mb-1
                     font-awesome-icon(:icon="['fas','info-circle']")
                     | 關於我們

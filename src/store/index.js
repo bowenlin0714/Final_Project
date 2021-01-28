@@ -35,10 +35,10 @@ export default new Vuex.Store({
     },
     memberlists: null,
     formlists: null,
-    bannerlists: null,
+    bannerlists: [],
     productlists: null,
     productdetail: null,
-    onShoplists: null,
+    onShoplists: [],
     commentlists: null,
     cartlists: null,
     cartproducts: [],
@@ -95,12 +95,11 @@ export default new Vuex.Store({
       state.formlists = (data)
     },
     bannerlists (state, data) {
-      state.bannerlists = []
       state.bannerlists = (data)
     },
     hotproducts () {
       const array = []
-      for (var i = 0; i < this.state.onShoplists.length; i++) {
+      for (var i = 0; i < 5; i++) {
         array.push(this.state.onShoplists[i])
       }
       this.state.hotproducts = array.sort(() => Math.random() - 0.5)

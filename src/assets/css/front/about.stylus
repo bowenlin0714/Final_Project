@@ -41,7 +41,7 @@
     // height: 2rem
     font-weight: bold
     &:after
-      drawline(12rem, -1rem)
+      drawline(11rem, -0.7rem)
   .row
     .col-12
       padding-top: 25vh
@@ -77,9 +77,9 @@
             left: -4%
             top: -4%
           .h4
-            font-size: 4rem
-            width: 20rem
-            height 6rem
+            font-size: 3rem
+            width: 18rem
+            height 5rem
             display: flex
             justify-content: center
             align-items: center
@@ -121,9 +121,9 @@
             right: -4%
             top: -4%
           .h4
-            font-size: 4rem
-            width: 20rem
-            height 6rem
+            font-size: 3rem
+            width: 18rem
+            height 5rem
             display: flex
             justify-content: center
             align-items: center
@@ -167,9 +167,9 @@
             left: -4%
             top: -4%
           .h4
-            font-size: 4rem
-            width: 20rem
-            height 6rem
+            font-size: 3rem
+            width: 18rem
+            height 5rem
             display: flex
             justify-content: center
             align-items: center
@@ -182,7 +182,7 @@
 
   .aboutPage
     h1
-      font-size: 2.5rem
+      font-size: 2.3rem
   .bgTest
     background-size: 150% 80%;
   .mask
@@ -191,8 +191,8 @@
   .maskText
     h1
       font-size: 4rem !important
-    h3  
-      font-size: 2rem !important
+    h3 
+      font-size: 1.8rem !important
 
 @media (min-width: 576px) and (max-width:768px)
   .fine

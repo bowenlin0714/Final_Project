@@ -18,7 +18,7 @@
             b-dropdown(text="選擇類別" block menu-class="w-100").mb-4
               b-dropdown-item-button(
                 v-for="item in this.$store.state.categories"
-                @click="tagCategory(item)") {{item.text}}
+                @click="tagCategory(item)").my-2 {{item.text}}
 
       b-col(cols="2")
         b-list-group(v-for="(category, index) in category" :key="index").p-1.d-none.d-lg-block
@@ -35,7 +35,9 @@
                   v-else).w-100.shadow-sm {{category.text}}
       b-col(cols="12" lg="10")
         b-row(style="min-height:60vh").d-flex.justify-content-center.justify-content-lg-start
-          h3(v-if="finalLists.length===0").m-auto 目前沒有商品
+          div(v-if="finalLists.length===0").m-auto.d-flex.flex-column
+            img(src="../assets/murcat.png" style="width:10rem")
+            h5.text-center 目前沒有商品
           b-col(cols="10" lg="4" v-for="item in finalLists")
             a(href="#/productsdetail", title="title" style="text-decoration:none" @click="showdetail(item)")
               b-card(class="productCard").mb-3.shadow.border.pb-0
@@ -47,10 +49,10 @@
                  span.text-danger.mr-3(v-if="item.onsale").h5 特價: NT: {{item.countPrice}}
                  s(v-if="item.onsale") NT: {{item.price}}
                  span(v-else) NT: {{item.price}}
-                //-  font-awesome-icon( :icon=['fas', 'heart'] ).text-danger.m-0.text-right
+        p.text-center 第 {{currentPage}} 頁 共 {{searchLists.length}} 筆結果
         b-pagination(
             v-model="currentPage"
-            :total-rows="filterLists.length"
+            :total-rows="searchLists.length"
             :per-page="perPage"
             aria-controls="itemList"
             align="center"

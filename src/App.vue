@@ -36,7 +36,7 @@
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''")
               span.mx-2 {{user.account}}
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else)
-              font-awesome-icon(:icon="['fas','user-astronaut']" class="shopicon").mx-2
+              font-awesome-icon(:icon="['fas','user-astronaut']" class="shopicon").mx-2.d-lg-none
               span  會員中心
             b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin")
               font-awesome-icon(:icon="['fas','user-cog']" class="shopicon").mx-2.d-lg-none
@@ -98,10 +98,10 @@ export default {
     },
     toCart () {
       if (this.user.name === '') {
-        this.$router.push('/login')
         this.$swal.fire({
           toast: true,
-          position: 'top-start',
+          padding: '1rem',
+          position: 'bottom-start',
           icon: 'warning',
           title: '請先登入',
           showConfirmButton: false,
@@ -126,7 +126,8 @@ export default {
           if (res.data.success) {
             this.$swal.fire({
               toast: true,
-              position: 'top-start',
+              position: 'bottom-start',
+              padding: '1rem',
               icon: 'success',
               title: '登出成功',
               showConfirmButton: false,
@@ -169,13 +170,24 @@ export default {
     }
   },
   mounted () {
-    // this.isLoading = true
-
     this.heartbeat()
     setInterval(() => {
       this.heartbeat()
     }, 5000)
-
+    // 商品
+    this.axios.get(process.env.VUE_APP_API + '/products/').then((res) => {
+      this.images = res.data.result.map(image => {
+        var result = []
+        for (let i = 0; i < image.images.length; i++) {
+          result.push(process.env.VUE_APP_API + '/products/' + image.images[i].file)
+          image.src = result
+        }
+        return image
+      })
+      var data = this.images
+      this.$store.commit('onShoplists', data)
+    })
+    // 新聞
     this.axios.get(process.env.VUE_APP_API + '/news')
       .then(res => {
         setTimeout(() => {

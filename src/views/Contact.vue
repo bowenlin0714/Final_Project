@@ -89,7 +89,8 @@ export default {
               if (res.data.success) {
                 this.$swal.fire({
                   toast: true,
-                  position: 'top-start',
+                  position: 'bottom-start',
+                  padding: '1rem',
                   icon: 'success',
                   title: '送出成功!! 我們會盡快跟您聯絡',
                   showConfirmButton: false,
