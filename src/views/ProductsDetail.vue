@@ -283,16 +283,16 @@ export default {
       this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + data._id, {
         comments: comments
       })
-      // .then(res => {
-      //   if (res.data.success) {
-      //     this.$store.commit('delcomment', index)
-      //   } else {
-      //     alert('發生錯誤')
-      //   }
-      // })
-      // .catch(err => {
-      //   alert(err.response.data.message)
-      // })
+        .then(res => {
+          if (res.data.success) {
+            this.$store.commit('delcomment', index)
+          } else {
+            alert('發生錯誤')
+          }
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
     },
     tagCategory (data) {
       this.$store.state.tag = data.value
@@ -325,7 +325,6 @@ export default {
             stars: this.rating
           }
           data.comments.push(comments)
-          console.log(data.comments)
 
           this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
             comments: data.comments

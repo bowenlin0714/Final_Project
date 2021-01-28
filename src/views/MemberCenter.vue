@@ -351,7 +351,6 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/users/' + this.user.id).then((res) => {
-      console.log(res)
       for (const one of res.data.result.orders) {
         one.products.map(product => {
           product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file

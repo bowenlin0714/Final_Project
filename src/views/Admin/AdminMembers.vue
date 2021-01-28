@@ -125,7 +125,6 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/users/').then((response) => {
-      console.log(response.data.result)
       var data = response.data.result.filter((item) => {
         return item.isAdmin === false
       })

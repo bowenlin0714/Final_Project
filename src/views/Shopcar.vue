@@ -253,19 +253,16 @@ export default {
   },
   methods: {
     changeSelect () {
-      console.log(this.user)
       this.$store.commit('changeSelect', this.user)
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
         shopcar: this.cartproducts
       }).then(res => {
-        console.log(res)
       })
     },
     changeamount (data) {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, {
         shopcar: this.cartproducts
       }).then(res => {
-        console.log(res)
       })
     },
     checkedit () {
@@ -273,11 +270,9 @@ export default {
     },
     delshopitem (index) {
       this.$store.state.user.shopcar.splice(index, 1)
-      console.log(index)
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.$store.state.user.id, {
         shopcar: this.$store.state.user.shopcar
       }).then(res => {
-        console.log(res)
         // this.$store.state.user.shopcar =
       })
     },
@@ -382,7 +377,6 @@ export default {
                     amount: user.shopcar[i].p_id.amount -= user.shopcar[i].amount,
                     sold: user.shopcar[i].p_id.sold += user.shopcar[i].amount
                   }).then(res => {
-                    console.log(res)
                     this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + user.id, {
                       shopcar: this.cartproducts.filter(product => {
                         return product.select !== true

@@ -138,7 +138,6 @@ export default {
         .catch(err => {
           alert(err.response.data.message)
         })
-      console.log(data.item._id)
     },
     sendData (data, index) {
       this.selected = data
@@ -152,7 +151,6 @@ export default {
         if (!this.image.type.includes('image')) {
           alert('檔案格式不符')
         } else {
-          console.log(this.image)
           const fd = new FormData()
           fd.append('image', this.image)
           fd.append('description', this.description)
@@ -160,7 +158,6 @@ export default {
             .then(res => {
               if (res.data.success) {
               // 將新增的圖片塞進相簿陣列
-                console.log(res)
                 res.data.result.src = process.env.VUE_APP_API + '/banners/file/' + res.data.result.file
                 res.data.result.title = res.data.result.description
                 res.data.result.isEdit = false
@@ -195,7 +192,6 @@ export default {
       this.axios.patch(process.env.VUE_APP_API + '/banners/edit/' + data._id, { description: this.description })
         .then(res => {
           if (res.data.success) {
-            console.log(res)
             this.$store.commit('editBanners', { description: this.description, index })
           } else {
             alert('發生錯誤')
@@ -211,7 +207,6 @@ export default {
     delbanners (data, index) {
       var deldata = data
       var delIndex = index
-      console.log(deldata, delIndex)
       this.checkDel = ''
       this.$bvModal.msgBoxConfirm('確定要刪除嗎', {
         title: data.item.date,
@@ -243,7 +238,6 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/banners').then((response) => {
-      console.log(response.data.result)
       this.images = response.data.result.map(image => {
         image.src = process.env.VUE_APP_API + '/banners/' + image.file
         return image

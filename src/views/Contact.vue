@@ -84,10 +84,8 @@ export default {
           var month = date.getMonth() + 1
           var day = date.getDate()
           this.date = year + '/' + month + '/' + day
-          console.log(this.$data)
           this.axios.post(process.env.VUE_APP_API + '/forms/create', this.$data)
             .then(res => {
-              console.log(res)
               if (res.data.success) {
                 this.$swal.fire({
                   toast: true,

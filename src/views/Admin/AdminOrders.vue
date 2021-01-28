@@ -4,7 +4,7 @@
       b-row
         b-col(cols="12")
           h1.my-3.mb-2.text-center 訂單管理
-          b-col(cols="12"  lg="3").ml-auto.d-flex
+          b-col(cols="12"  lg="3").ml-auto.d-flex.text-white
             font-awesome-icon( :icon=['fas', 'search'] ).h4.mt-2.mr-3
             b-form-input(
                 type="text"
@@ -213,7 +213,6 @@ export default {
       const index1 = row.index
       this.orderlists[index1].orders[index2].ispaid = !this.orderlists[index1].orders[index2].ispaid
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + id, { orders: this.orderlists[index1].orders }).then(res => {
-        console.log(res)
       })
     },
     handleship (row, index2) {
@@ -221,7 +220,6 @@ export default {
       const index1 = row.index
       this.orderlists[index1].orders[index2].shipment = '已出貨'
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + id, { orders: this.orderlists[index1].orders }).then(res => {
-        console.log(res)
       })
     },
     notship (row, index2) {
@@ -229,7 +227,6 @@ export default {
       const index1 = row.index
       this.orderlists[index1].orders[index2].shipment = '未出貨'
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + id, { orders: this.orderlists[index1].orders }).then(res => {
-        console.log(res)
       })
     },
     showOrderdetail (data) {
@@ -246,7 +243,6 @@ export default {
       for (const one of result) {
         for (const two of one.orders) {
           this.images = two.products.map(product => {
-            console.log(product)
             product.p_id.src = process.env.VUE_APP_API + '/products/' + product.p_id.images[0].file
           })
         }

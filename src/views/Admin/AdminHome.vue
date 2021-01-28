@@ -29,23 +29,25 @@
           b-container(v-if="$route.path =='/admin'" fluid)
             b-row
               b-col(cols="12" lg="9" class="title").mx-auto.text-white
-                div.d-flex.flex-column.justify-content-around.m-4.flex-lg-row.align-items-center
-                  .circle
-                    div.text-center
-                      h4 {{users.length}}
-                      p  會員人數
-                  .circle
-                    div.text-center
-                      h4 {{notres.length}}
-                      p  未回覆回饋單
-                  .circle
-                    div.text-center
-                      h4 {{todayTotal}}
-                      p 今日營業額
-                  .circle
-                    div.text-center
-                      h4 {{revenue}}
-                      p  總營業額
+                div.d-flex.flex-column.justify-content-around.m-4.flex-lg-row.align-items-center.w-100.mx-auto
+                  div.d-flex.w-100.justify-content-around
+                    .circle
+                      div.text-center
+                        h4 {{users.length}}
+                        p  會員人數
+                    .circle
+                      div.text-center
+                        h4 {{notres.length}}
+                        p  未回覆回饋單
+                  div.d-flex.w-100.justify-content-around
+                    .circle
+                      div.text-center
+                        h4 {{todayTotal}}
+                        p 今日營業額
+                    .circle
+                      div.text-center
+                        h4 {{revenue}}
+                        p  總營業額
                 b-input-group().my-5
                   b-form-input(v-model="msg" placeholder="請輸入")
                   b-input-group-append()
@@ -244,7 +246,6 @@ export default {
     })
     // 回饋單數量
     this.axios.get(process.env.VUE_APP_API + '/forms').then(res => {
-      console.log(res.data.result)
       const originChart = this.$_.groupBy(res.data.result, (a) => {
         return a.date
       })

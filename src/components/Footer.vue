@@ -16,7 +16,7 @@
                     a(href="#/about" title="關於我們") 關於我們
                   p(style="font-size:1rem").p-0.my-2.text-white  營業時間 : 9:00am ~  8:00pm
                   p(style="font-size:1rem").p-0.my-2.text-white  客服時間 : 9:00am ~  10:00pm
-                  p(style="font-size:1rem").p-0.my-2.text-white  電話 : 0975888888 (02)2395-2222
+                  p(style="font-size:1rem").p-0.my-2.text-white  電話 : 0988555555  (02)2300-9966
                   p(style="font-size:1rem").p-0.my-2.text-white  地址 : 243新北市泰山區貴子里致遠新村55之1號
                 b-col(cols="6" md="3").text-center.text-md-left
                   p.mb-1

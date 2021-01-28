@@ -170,7 +170,6 @@ export default new Vuex.Store({
       state.bannerlists.splice(index, 1)
     },
     editBanners (state, data) {
-      console.log(data.description)
       state.bannerlists[data.index].description = data.description
     },
     editProducts (state, data) {

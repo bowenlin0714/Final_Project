@@ -98,7 +98,6 @@ export default {
           return product.category === this.$store.state.tag
         })
       }
-      console.log(result)
       return result
     },
     searchLists () {

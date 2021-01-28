@@ -149,7 +149,6 @@ export default {
   },
   mounted () {
     this.axios.get(process.env.VUE_APP_API + '/forms').then((response) => {
-      console.log(response.data.result)
       var data = response.data.result
       this.$store.commit('formlists', data)
     })
@@ -157,8 +156,6 @@ export default {
   methods: {
     delforms (data, index) {
       var deldata = data
-      var delIndex = index
-      console.log(deldata, delIndex)
       this.checkDel = ''
       this.$bvModal.msgBoxConfirm('確定要刪除嗎', {
         title: data.item.date,
@@ -191,14 +188,11 @@ export default {
       this.showDetail = true
       this.detailTexts.name = item.name
       this.detailTexts.opinion = item.opinion
-      console.log(this.detailTexts)
     },
     showForm2 (item, index) {
       this.showDetail = true
-      console.log(this.showDetail)
       this.detailTexts.name = item.item.name
       this.detailTexts.opinion = item.item.opinion
-      console.log(this.detailTexts)
     },
 
     checkRes (data) {

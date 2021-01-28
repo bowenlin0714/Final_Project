@@ -21,8 +21,8 @@
         b-col(cols="1").p-0
           b-button(v-b-modal.addForm  style="height:3rem").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
           b-list-group(v-for="(category, index) in categories" :key="index").p-1.d-none.d-lg-block
-            b-list-group-item.p-0.text-center.d-block
-              b-button(@click="tagCategory(category)" style="font-size:14px").w-100.bg-info {{category.text}}
+            b-list-group-item.p-0.text-center.d-block.bg-transparent
+              b-button(@click="tagCategory(category)" style="font-size:0.9rem").w-100.bg-info {{category.text}}
         b-col(cols="12" lg="11")
           .products.p-4.pb-5
             h3(v-if="itemsForList.length === 0").text-white.text-center 目前沒有商品
@@ -421,7 +421,6 @@ export default {
           const day = now.getDate()
           this.newForm.date = year + '/' + month + '/' + day
           var final = this.newForm
-          console.log(final.name)
           const fd = new FormData()
           fd.append('image', this.image)
           fd.append('image', this.image2)
@@ -441,7 +440,6 @@ export default {
           // fd.append('comment', null)
           this.axios.post(process.env.VUE_APP_API + '/products/create', fd)
             .then(res => {
-              console.log(res)
               if (res.data.success) {
                 this.newForm.name = ''
                 this.image = null
