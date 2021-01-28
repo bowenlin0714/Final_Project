@@ -63,15 +63,16 @@
           b-col(cols="12" lg="9").mx-auto
             li(v-for="(data, i) in news" v-if="i<6")
               b-card(no-body).my-2
-                b-row
-                  b-col(cols="3").d-none.d-sm-block
-                    a(:href="'https://www.toy-people.com/' + data.href" target="blank")
-                      .img(:style="{ background: data.img }")
-                  b-col(cols="12" lg="9").p-5
-                    a(:href="'https://www.toy-people.com/' + data.href" target="blank")
-                      h3 {{data.text}}
-                    p {{data.innertext}}
-                    p.text-right.mt-3 更新日期 : {{data.times}}
+                b-container
+                  b-row
+                    b-col(cols="12" lg="3" style="min-height:12rem").border.p-0
+                      a(:href="'https://www.toy-people.com/' + data.href" target="blank")
+                        .img(:style="{ background: data.img }")
+                    b-col(cols="12" lg="9").p-5
+                      a(:href="'https://www.toy-people.com/' + data.href" target="blank")
+                        h3 {{data.text}}
+                      p {{data.innertext}}
+                      p.text-right.mt-3 更新日期 : {{data.times}}
             a(href="#/news")
               p.text-right.my-3 查看更多....
 

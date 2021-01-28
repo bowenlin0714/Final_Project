@@ -12,9 +12,9 @@
                   b-card(no-body).my-2
                     b-container
                       b-row
-                        b-col(cols="3").d-none.d-sm-block.border.p-0
+                        b-col(cols="12" lg="3" style="min-height:12rem").border.p-0
                           a(:href="'https://www.toy-people.com/' + data.href" target="blank")
-                            .img(:style="{ background: data.img, }")
+                            .img(:style="{ background: data.img }")
                         b-col(cols="12" lg="9").p-5
                           a(:href="'https://www.toy-people.com/' + data.href" target="blank")
                             h3 {{data.text}}

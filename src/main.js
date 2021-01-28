@@ -36,13 +36,13 @@ import router from './router'
 import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCircle, faTimes, faCheck, faChevronCircleUp, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faMoneyBill, faTruck, faStickyNote, faHeart as faHeartsolid } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faTimes, faCheck, faChevronCircleUp, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faMoneyBill, faTruck, faStickyNote, faNewspaper, faPhone, faUserCog, faDiceD6, faDoorOpen, faHeart as faHeartsolid } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookSquare, faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import Ripple from 'vue-ripple-directive'
 
 library.add(
-  faMoneyBill, faCircle, faTimes, faCheck, faFacebookSquare, faChevronCircleUp, faInstagram, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faTruck, faStickyNote, faHeart, faHeartsolid
+  faMoneyBill, faCircle, faTimes, faCheck, faFacebookSquare, faChevronCircleUp, faInstagram, faShoppingCart, faInfoCircle, faHandPointRight, faLink, faHandshake, faUserAstronaut, faHome, faList, faFileContract, faImage, faSearch, faTrashAlt, faArrowAltCircleRight, faTruck, faStickyNote, faHeart, faHeartsolid, faUserCog, faPhone, faNewspaper, faDiceD6, faDoorOpen
 )
 
 Vue.component('v-chart', ECharts)

@@ -6,10 +6,10 @@
           .ldio-xoybongjwx
             div
             div
-    b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow.vw-100
+    b-navbar(toggleable='lg' type='dark'  class="fixed-top nav" ).shadow.vw-100.p-2
       b-container
-        b-navbar-brand(to='/' )
-          img(src="./assets/mylog.svg" style="height:3rem")
+        b-navbar-brand(to='/' ).bg-white
+          img(src="./assets/mylog.svg" style="height:3rem").px-2
         a( title="title" @click="toCart").class.ml-auto.d-flex.position-relative.mr-3.d-block.d-lg-none
             font-awesome-icon(:icon="['fas','shopping-cart']" class="shopicon")
             .orange.sm
@@ -17,18 +17,33 @@
         b-navbar-toggle(target='nav-collapse')
         b-collapse#nav-collapse(is-nav style="width:6rem !important")
           b-navbar-nav(class = "mainnav").ml-auto
-            b-nav-item(class="mainNavitem" @click="toProduct") 商品列表
+            b-nav-item(class="mainNavitem" @click="toProduct")
+               font-awesome-icon(:icon="['fas','dice-d6']" class="shopicon").mx-2.d-lg-none
+               span  商品列表
             b-nav-item(class="mainNavitem" @click="toCart").d-none.d-lg-block 購物車
               .orange.lg
                 p(style="").position-absolute.text-white {{this.$store.state.user.shopcar.length}}
-            b-nav-item(class="mainNavitem" @click="toNews") 公仔新知
-            b-nav-item(class="mainNavitem" @click="toContact") 聯絡我們
-            b-nav-item(class="mainNavitem" @click="toAbout") 關於我們
+            b-nav-item(class="mainNavitem" @click="toNews")
+              font-awesome-icon(:icon="['fas','newspaper']" class="shopicon").mx-2.d-lg-none
+              span  公仔新知
+            b-nav-item(class="mainNavitem" @click="toContact")
+              font-awesome-icon(:icon="['fas','phone']" class="shopicon").mx-2.d-lg-none
+              span  聯絡我們
+            b-nav-item(class="mainNavitem" @click="toAbout")
+              font-awesome-icon(:icon="['fas','info-circle']" class="shopicon").mx-2.d-lg-none
+              span  關於我們
             b-nav-item(disabled).d-none.d-lg-block |
-            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''") {{user.account}}
-            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else) 會員中心
-            b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin") 管理者頁面
-            b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout") 登出
+            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''")
+              span.mx-2 {{user.account}}
+            b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else)
+              font-awesome-icon(:icon="['fas','user-astronaut']" class="shopicon").mx-2
+              span  會員中心
+            b-nav-item(class="mainNavitem" v-if="isAdmin" to="/admin")
+              font-awesome-icon(:icon="['fas','user-cog']" class="shopicon").mx-2.d-lg-none
+              span  管理者頁面
+            b-nav-item(class="mainNavitem" v-if="user.id.length > 0" @click = "logout")
+              font-awesome-icon(:icon="['fas','door-open']" class="shopicon").mx-2.d-lg-none
+              span  登出
     #socialLink(v-if="$route.path =='/' || $route.path =='/about' || $route.path =='/shopcar' || $route.path =='/products' || $route.path =='/productsdetail' || $route.path =='/contact'  || $route.path =='/news' || $route.path =='/login' || $route.path =='/reg' || $route.path =='/membercenter'")
       a(v-scroll-to="'#app'")
         font-awesome-icon(:icon="['fas','chevron-circle-up']")
