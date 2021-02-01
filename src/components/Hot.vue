@@ -37,7 +37,6 @@ export default {
     }
   },
   mounted () {
-    this.$store.commit('hotproducts')
   }
 
 }

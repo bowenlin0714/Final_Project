@@ -35,8 +35,8 @@
               b-button(style="border-style:none;" @click.stop="checkBan(data, data.index)").bg-transparent.border-none
                 span(v-if="data.item.isBan").text-danger 封鎖中
                 span(v-else ).text-success 正常
-            template(#cell(delete)='data')
-              b-button(variant="danger" @click="delmember(data, data.index)") 刪除
+            template(#cell(delete)='data' )
+              b-button(variant="danger" @click="delmember(data, data.index)" v-if="data.item.isBan") 刪除
           div.w-100
             p(v-if="filterlists.length == 0").text-center 目前沒有內容
       p.text-center 第 {{currentPage}} 頁 共 {{filterlists.length}} 筆結果

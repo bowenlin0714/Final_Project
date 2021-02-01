@@ -20,18 +20,18 @@
                 v-for="item in this.$store.state.categories"
                 @click="tagCategory(item)").my-2 {{item.text}}
 
-      b-col(cols="2")
+      b-col(cols="10" lg="2").mx-auto
         b-dropdown(text=" 排序 " size="sm").w-100.p-1.mb-2
-          b-dropdown-item(@click="sortnumber" size="sm" style="vertical-align: middle;")
+          b-dropdown-item(@click="sortnumber" ).w-100
             span 價格
             font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
-          b-dropdown-item(@click="sortreverse")
+          b-dropdown-item(@click="sortreverse").w-100
             span 價格
             font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
-          b-dropdown-item(@click="sortdate")
+          b-dropdown-item(@click="sortdate").w-100
             span 日期
             font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
-          b-dropdown-item(@click="datereverse")
+          b-dropdown-item(@click="datereverse").w-100
             span 日期
             font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
         b-list-group(v-for="(category, index) in category" :key="index").p-1.d-none.d-lg-block
@@ -138,12 +138,12 @@ export default {
   methods: {
     sortdate () {
       this.searchLists.sort(function (a, b) {
-        return parseInt(a.date.split('/').join('')) - parseInt(b.date.split('/').join(''))
+        return parseInt(a.productNumber) - parseInt(b.productNumber)
       })
     },
     datereverse () {
       this.searchLists.sort(function (a, b) {
-        return parseInt(b.date.split('/').join('')) - parseInt(a.date.split('/').join(''))
+        return parseInt(b.productNumber) - parseInt(a.productNumber)
       })
     },
     sortnumber () {

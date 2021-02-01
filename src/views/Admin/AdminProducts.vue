@@ -20,6 +20,25 @@
       b-row
         b-col(cols="1").p-0
           b-button(v-b-modal.addForm  style="height:3rem").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
+          b-dropdown(text=" 排序 " size="sm" variant="info").w-100.p-1.mb-2
+            b-dropdown-item(@click="sortnumber" size="sm" style="vertical-align: middle;")
+              span 價格
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
+            b-dropdown-item(@click="sortreverse")
+              span 價格
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+            b-dropdown-item(@click="sortdate")
+              span 日期
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+            b-dropdown-item(@click="datereverse")
+              span 日期
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
+            b-dropdown-item(@click="sortsold")
+              span 售出
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+            b-dropdown-item(@click="soldreverse")
+              span 售出
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
           b-list-group(v-for="(category, index) in categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block.bg-transparent
               b-button(@click="tagCategory(category)" style="font-size:0.9rem").w-100.bg-info {{category.text}}
@@ -342,6 +361,36 @@ export default {
     }
   },
   methods: {
+    sortsold () {
+      this.finallists.sort(function (a, b) {
+        return parseInt(a.sold) - parseInt(b.sold)
+      })
+    },
+    soldreverse () {
+      this.finallists.sort(function (a, b) {
+        return parseInt(b.sold) - parseInt(a.sold)
+      })
+    },
+    sortdate () {
+      this.finallists.sort(function (a, b) {
+        return parseInt(a.productNumber) - parseInt(b.productNumber)
+      })
+    },
+    datereverse () {
+      this.finallists.sort(function (a, b) {
+        return parseInt(b.productNumber) - parseInt(a.productNumber)
+      })
+    },
+    sortnumber () {
+      this.finallists.sort(function (a, b) {
+        return a.price - b.price
+      })
+    },
+    sortreverse () {
+      this.finallists.sort(function (a, b) {
+        return b.price - a.price
+      })
+    },
     handleOk (bvModalEvt) {
       bvModalEvt.preventDefault()
       this.onSubmit()
