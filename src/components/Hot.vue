@@ -29,7 +29,11 @@ export default {
   },
   computed: {
     hotlists () {
-      return this.$store.state.hotproducts
+      const array = []
+      for (var i = 0; i < 5; i++) {
+        array.push(this.$store.state.onShoplists[i])
+      }
+      return array.sort(() => Math.random() - 0.5)
     }
   },
   mounted () {
