@@ -25,7 +25,7 @@
         b-col(cols="12" lg="9" class="right").border.bg-white.pt-3
             b-row
               b-col(cols="12" lg="7")
-                div(class="bigimg").ml-1.border
+                div(class="bigimg" @click="showImg").ml-1.border
                   img(v-show="preview" :src="productdetail.src[0]" @click="showImg")
                   img(:src="bigURL" @click="showImg")
                 ul.d-flex
@@ -46,8 +46,8 @@
 
                   p {{productdetail.name}}
                   s(v-if="productdetail.onsale").d-block NT :{{productdetail.price}}
-                  p.h3.text-danger(v-if="productdetail.onsale") NT: {{productdetail.countPrice}}
-                  p.h4(v-else) NT: {{productdetail.price}}
+                  p.h3.text-danger(v-if="productdetail.onsale") NT$: {{productdetail.countPrice}}
+                  p.h4(v-else) NT$: {{productdetail.price}}
                   p 商品數量: {{productdetail.amount }}
                   div.d-flex.align-items-center
                     p(for="amount" ).d-block.mt-3 購買數量 :

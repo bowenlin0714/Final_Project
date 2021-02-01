@@ -11,7 +11,7 @@ export default new Vuex.Store({
       { value: 'A', text: '日本景品' },
       { value: 'B', text: '組裝模型' },
       { value: 'C', text: 'PVC人偶' },
-      { value: 'D', text: 'GK' },
+      { value: 'D', text: 'GK/雕像' },
       { value: 'E', text: '可動人偶' },
       { value: 'F', text: '扭蛋' },
       { value: 'G', text: '設計師公仔' },

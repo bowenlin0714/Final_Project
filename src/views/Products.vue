@@ -21,6 +21,19 @@
                 @click="tagCategory(item)").my-2 {{item.text}}
 
       b-col(cols="2")
+        b-dropdown(text=" 排序 " size="sm").w-100.p-1.mb-2
+          b-dropdown-item(@click="sortnumber" size="sm" style="vertical-align: middle;")
+            span 價格
+            font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
+          b-dropdown-item(@click="sortreverse")
+            span 價格
+            font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+          b-dropdown-item(@click="sortdate")
+            span 日期
+            font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+          b-dropdown-item(@click="datereverse")
+            span 日期
+            font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
         b-list-group(v-for="(category, index) in category" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block
               div(v-ripple class="button is-primary")
@@ -46,9 +59,9 @@
                 b-card-text(style="height: 4rem").mt-2
                   p {{item.name}}
                 b-card-text(style="vertical-align: middle").d-flex.align-items-center.mt-2
-                 span.text-danger.mr-3(v-if="item.onsale").h5 特價: NT: {{item.countPrice}}
-                 s(v-if="item.onsale") NT: {{item.price}}
-                 span(v-else) NT: {{item.price}}
+                 span.text-danger.mr-3(v-if="item.onsale").h5 特價: NT$: {{item.countPrice}}
+                 s(v-if="item.onsale") NT$: {{item.price}}
+                 span(v-else) NT$: {{item.price}}
         p.text-center 第 {{currentPage}} 頁 共 {{searchLists.length}} 筆結果
         b-pagination(
             v-model="currentPage"
@@ -123,6 +136,26 @@ export default {
     }
   },
   methods: {
+    sortdate () {
+      this.searchLists.sort(function (a, b) {
+        return parseInt(a.date.split('/').join('')) - parseInt(b.date.split('/').join(''))
+      })
+    },
+    datereverse () {
+      this.searchLists.sort(function (a, b) {
+        return parseInt(b.date.split('/').join('')) - parseInt(a.date.split('/').join(''))
+      })
+    },
+    sortnumber () {
+      this.searchLists.sort(function (a, b) {
+        return a.price - b.price
+      })
+    },
+    sortreverse () {
+      this.searchLists.sort(function (a, b) {
+        return b.price - a.price
+      })
+    },
     tagCategory (data) {
       this.$store.state.tag = data.value
     },
