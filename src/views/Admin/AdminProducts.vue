@@ -18,9 +18,9 @@
           b-dropdown(text="選擇類別" block menu-class="w-100" variant="info").mb-3
             b-dropdown-item-button(v-for="item in categories" @click="tagCategory(item)") {{item.text}}
       b-row
-        b-col(cols="1").p-0
+        b-col(cols="11" lg="1").p-0.mx-auto
           b-button(v-b-modal.addForm  style="height:3rem").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
-          b-dropdown(text=" 排序 " size="sm" variant="info").w-100.p-1.mb-2
+          b-dropdown(text=" 排序 "  variant="info").w-100.mb-3
             b-dropdown-item(@click="sortnumber" size="sm" style="vertical-align: middle;")
               span 價格
               font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2

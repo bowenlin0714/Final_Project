@@ -21,7 +21,7 @@
                 @click="tagCategory(item)").my-2 {{item.text}}
 
       b-col(cols="10" lg="2").mx-auto
-        b-dropdown(text=" 排序 " size="sm").w-100.p-1.mb-2
+        b-dropdown(text=" 排序 " ).w-100.mb-3
           b-dropdown-item(@click="sortnumber" ).w-100
             span 價格
             font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
