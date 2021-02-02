@@ -6,7 +6,7 @@
           b-breadcrumb(:items="breads").mt-2
           ul.p-0
             b-row
-              b-col(cols="12" lg="11").mx-auto
+              b-col(cols="12" lg="10").mx-auto
                 h2.text-center.mb-4 Toy News
                 li(v-for="data in news")
                   b-card(no-body).my-2

@@ -62,7 +62,7 @@
             p.d-inline 公仔新知
       b-container
         b-row
-          b-col(cols="12" lg="9").mx-auto
+          b-col(cols="12" lg="10").mx-auto
             li(v-for="(data, i) in news" v-if="i<6")
               b-card(no-body).my-2
                 b-container
