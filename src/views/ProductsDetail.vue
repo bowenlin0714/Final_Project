@@ -325,29 +325,41 @@ export default {
         })
         this.$router.push('/login')
       } else {
-        this.$validator.validateAll().then(result => {
-          if (!result) {
-            return
-          }
-
-          this.id = data._id
-          var comments = {
-            accounts: this.$store.state.user.account,
-            comment: this.comment,
-            stars: this.rating
-          }
-          data.comments.push(comments)
-
-          this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
-            comments: data.comments
-          }).then(res => {
-            if (res.data.success) {
-              this.$store.commit('sendcomments', data)
-            }
-            this.comment = ''
-            this.rating = null
+        if (this.user.isBan === true) {
+          this.$swal.fire({
+            toast: true,
+            position: 'bottom-start',
+            padding: '1rem',
+            icon: 'error',
+            title: '封鎖中，欲解鎖請洽客服',
+            showConfirmButton: false,
+            timer: 3000
           })
-        })
+        } else {
+          this.$validator.validateAll().then(result => {
+            if (!result) {
+              return
+            }
+
+            this.id = data._id
+            var comments = {
+              accounts: this.$store.state.user.account,
+              comment: this.comment,
+              stars: this.rating
+            }
+            data.comments.push(comments)
+
+            this.axios.patch(process.env.VUE_APP_API + '/products/edit/' + this.id, {
+              comments: data.comments
+            }).then(res => {
+              if (res.data.success) {
+                this.$store.commit('sendcomments', data)
+              }
+              this.comment = ''
+              this.rating = null
+            })
+          })
+        }
       }
     }
   }

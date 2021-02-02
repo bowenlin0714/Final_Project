@@ -34,7 +34,9 @@
               span  關於我們
             b-nav-item(disabled).d-none.d-lg-block |
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-if="user.account !== ''")
-              span.mx-2 {{user.account}}
+              div( style="vertical-align:middle;")
+                font-awesome-icon(:icon="['fas','minus-circle']").mx-2.text-danger
+                span(class="disable").mx-2 {{user.account}}
             b-nav-item(class="mainNavitem" to="/membercenter" @click="tomembercenter" v-else)
               font-awesome-icon(:icon="['fas','user-astronaut']" class="shopicon").mx-2.d-lg-none
               span  會員中心

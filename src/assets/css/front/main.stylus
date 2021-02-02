@@ -27,6 +27,14 @@ html,body
   background-color: transparent !important;
   a
     color: black
+// .disable
+//   &:after
+//     content:'封鎖中'
+//     font-size: 0.9rem
+//     color: red
+//     position: absolute
+//     top: -0.5rem
+//     left 0.8rem
 #app
   overflow-x:hidden
   min-height:100vh    

@@ -303,7 +303,7 @@ export default {
           position: 'bottom-start',
           padding: '1rem',
           icon: 'error',
-          title: '封鎖中，請洽客服',
+          title: '封鎖中，欲解鎖請洽客服',
           showConfirmButton: false,
           timer: 3000
         })
