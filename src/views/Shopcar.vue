@@ -147,7 +147,6 @@
               p Thank You !
               p 收到商品後有任何問題,請盡量於三天內與我們聯繫,我們會盡快為您處理
               p 電話 : 0988555555 (02)2300-9966
-              p 商品編號: {{user.orders[0]._id}}
           hr
           b-col(cols="12" lg="5" class="steps").ml-auto
             div.d-flex
