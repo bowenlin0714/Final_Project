@@ -305,7 +305,20 @@ export default {
       this.axios.patch(process.env.VUE_APP_API + '/users/edit/' + this.user.id, this.user)
     },
     edit () {
-      this.isEdit = true
+      console.log(this.user.isBan)
+      if (this.user.isBan === true) {
+        this.$swal.fire({
+          toast: true,
+          position: 'bottom-start',
+          padding: '1rem',
+          icon: 'error',
+          title: '封鎖中，欲解鎖請洽客服',
+          showConfirmButton: false,
+          timer: 3000
+        })
+      } else {
+        this.isEdit = true
+      }
     },
     sendmsg () {
       this.$validator.validateAll().then(result => {
