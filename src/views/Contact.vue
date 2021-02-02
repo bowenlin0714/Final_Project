@@ -7,7 +7,7 @@
       b-row
         b-col(cols="12" lg="6").bg-white.rounded.mx-auto.mb-5.p-5.shadow
           b-form(@submit.stop.prevent="onSubmit")
-            h3.text-center.contactus.position-relative Contact us
+            h2.text-center.contactus.position-relative Contact us
             b-form-group(label="姓名 :" label-for="name")
               b-form-input(
                 name="name"
