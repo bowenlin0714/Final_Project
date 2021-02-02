@@ -21,24 +21,30 @@
         b-col(cols="11" lg="1").p-0.mx-auto
           b-button(v-b-modal.addForm  style="height:3rem").bg-success.w-100.mb-3.d-none.d-lg-block 新增商品
           b-dropdown(text=" 排序 "  variant="info").w-100.mb-3
+            b-dropdown-item(@click="sortamount" size="sm" style="vertical-align: middle;")
+              span 數量
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-3
+            b-dropdown-item(@click="amountreverse" size="sm" style="vertical-align: middle;")
+              span 數量
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-3
             b-dropdown-item(@click="sortnumber" size="sm" style="vertical-align: middle;")
               span 價格
-              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-3
             b-dropdown-item(@click="sortreverse")
               span 價格
-              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-3
             b-dropdown-item(@click="sortdate")
               span 日期
-              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-3
             b-dropdown-item(@click="datereverse")
               span 日期
-              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-3
             b-dropdown-item(@click="sortsold")
               span 售出
-              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-2
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-down'] ).ml-3
             b-dropdown-item(@click="soldreverse")
               span 售出
-              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-2
+              font-awesome-icon( :icon=['fas', 'long-arrow-alt-up'] ).ml-3
           b-list-group(v-for="(category, index) in categories" :key="index").p-1.d-none.d-lg-block
             b-list-group-item.p-0.text-center.d-block.bg-transparent
               b-button(@click="tagCategory(category)" style="font-size:0.9rem").w-100.bg-info {{category.text}}
@@ -361,6 +367,16 @@ export default {
     }
   },
   methods: {
+    sortamount () {
+      this.finallists.sort(function (a, b) {
+        return parseInt(a.amount) - parseInt(b.amount)
+      })
+    },
+    amountreverse () {
+      this.finallists.sort(function (a, b) {
+        return parseInt(b.amount) - parseInt(a.amount)
+      })
+    },
     sortsold () {
       this.finallists.sort(function (a, b) {
         return parseInt(a.sold) - parseInt(b.sold)
