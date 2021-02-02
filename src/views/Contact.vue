@@ -81,8 +81,8 @@ export default {
         } else {
           var date = new Date()
           var year = date.getFullYear()
-          var month = date.getMonth() + 1
-          var day = date.getDate() - 2
+          var month = date.getMonth()
+          var day = date.getDate()
           this.date = year + '/' + month + '/' + day
           this.axios.post(process.env.VUE_APP_API + '/forms/create', this.$data)
             .then(res => {
