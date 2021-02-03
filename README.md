@@ -5,3 +5,8 @@ https://bowenlin0714.github.io/Final_Project/
 
 ## 後端使用技術
  mongodb
+ node.js
+## 前端使用技術 
+ bootstrap
+ Vue
+ 
