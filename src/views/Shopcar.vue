@@ -334,7 +334,7 @@ export default {
               const now = new Date()
               const year = now.getFullYear()
               const month = now.getMonth()
-              const day = now.getDate()
+              const day = now.getDate() - 1
 
               const name = this.user.name
               const phone = this.user.phone
