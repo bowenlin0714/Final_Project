@@ -333,8 +333,8 @@ export default {
               this.step2 = false
               const now = new Date()
               const year = now.getFullYear()
-              const month = now.getMonth()
-              const day = now.getDate() - 1
+              const month = now.getMonth() - 1
+              const day = now.getDate()
 
               const name = this.user.name
               const phone = this.user.phone
